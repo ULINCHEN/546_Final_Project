@@ -7,7 +7,11 @@ Second-hand trading application
 Group members：
 
 Youlin Chen
+
 Chunzhi Li
+
 Siyan Liu
+
 Yetong Chen
+
 Wei Guo
