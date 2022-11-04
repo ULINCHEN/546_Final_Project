@@ -1,8 +1,7 @@
 # 546_Final_Project
 This is Sit CS546 team project repo
 
-
-Second-hand trading application
+{Project Name: undefine}
 
 Group members：
 
