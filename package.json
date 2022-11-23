@@ -1,0 +1,27 @@
+{
+  "name": "stray_animal_info_app",
+  "version": "1.0.0",
+  "description": "This is Sit CS546 team project repo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULINCHEN/546_Final_Project.git"
+  },
+  "author": "Youlin_Chen&Chunzhi_Li$Siyan_Liu&Yetong_Chen&Wei_Guo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ULINCHEN/546_Final_Project/issues"
+  },
+  "homepage": "https://github.com/ULINCHEN/546_Final_Project#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "mongodb": "^4.12.1"
+  }
+}
