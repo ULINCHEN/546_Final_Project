@@ -15,7 +15,7 @@ const constructorMethod = (app) => {
 
     app.use('*', (req, res) => {
         res.render('error', {
-            errorMsg: "页面不存在"
+            errorMsg: "Page Not Exsit"
         })
     });
 };

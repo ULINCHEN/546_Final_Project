@@ -7,15 +7,24 @@ body {
     font-family: 'Arvo', serif;
 }
 
+.main {
+    height: 700px;
+    width: 1000px;
+    border-radius: 15px;
+    overflow: scroll;
+    margin-top: 50px;
+    background-color: #cccccc;
+}
+
 .post {
     background-color: #dddcda;
     margin-top: 50px;
     display: grid;
     justify-content: space-between;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    grid-auto-rows: 300px;
+    grid-auto-rows: 400px;
     grid-gap: 50px;
-    height: 100vh;
+    height: 700px;
     width: 1000px;
     border-radius: 15px;
     overflow: scroll;
@@ -99,9 +108,8 @@ nav>div>img {
     margin-left: 3%;
     margin-right: 3%;
     border-radius: 15px;
-    height: 300px;
+    height: 400px;
     width: 200px;
-    overflow: scroll;
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
 }
@@ -114,7 +122,7 @@ nav>div>img {
 }
 
 .postCard>img {
-    height: 50%;
+    height: 150px;
     width: 100%;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
@@ -131,10 +139,6 @@ nav>div>img {
     background-image: url('https://images.unsplash.com/photo-1597633544424-4da83804df40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
     background-color: #cccccc;
     background-position: 45% 85%;
-    margin-top: 50px;
-    height: 60vh;
-    width: 80vh;
-    border-radius: 15px;
 }
 
 .loginPage>div {
@@ -160,11 +164,26 @@ nav>div>img {
 }
 
 .loginPage>div>form {
-    padding-left: 200px;
+    padding-left: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     height: 30%;
     width: 100%;
+}
+
+.signIn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signIn>form {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-evenly;
+    width: 50%;
 }

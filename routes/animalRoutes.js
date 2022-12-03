@@ -7,9 +7,10 @@ router.route("/")
     .get(async (req, res) => {
         //code here for GET
         const postData = await getAllAnimalPosts();
-        res.render('allPost', {
-            title: "all animal post",
-            postData: postData
+
+        res.render('animalPosts', {
+            postData: postData,
+
         })
     });
 
