@@ -1,12 +1,15 @@
 const express = require('express');
+const { createAnimalPost, getAllAnimalPosts } = require('../data/animalData');
 const router = express.Router();
 
 
 router.route("/")
     .get(async (req, res) => {
         //code here for GET
+        const postData = await getAllAnimalPosts();
         res.render('allPost', {
-            title: "all animal post"
+            title: "all animal post",
+            postData: postData
         })
     });
 
