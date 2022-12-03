@@ -1,4 +1,17 @@
 <main>
-    <p>{{title}}</p>
-    <p>展示所有帖子，动物或志愿者，取决于传进来什么数据</p>
+    {{#if postData}}
+    {{#each postData}}
+    <div class="postCard">
+        <img src={{animal_photo}} alt="Picture">
+        <div class="infoArea">
+            <p>Find Time: {{find_time}}</p>
+            <p>Name: {{animal_name}}</p>
+            <p>Species: {{species}}</p>
+            <p>Health Condition: {{health_condition}}</p>
+            <p>Location: {{location_id}}</p>
+            <p>{{comment_id}}</p>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
 </main>

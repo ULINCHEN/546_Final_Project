@@ -1,0 +1,119 @@
+body {
+    background-color: #0C3B2E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+main {
+    background-color: #dddcda;
+    margin-top: 50px;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
+    width: 80%;
+    border-radius: 15px;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
+nav {
+    background-color: #6D9773;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    height: 10vh;
+    width: 60%;
+    margin-top: 5%;
+}
+
+nav>div {
+
+    flex-direction: column;
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+nav>ul {
+    width: 50%;
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav>ul>li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 150px;
+}
+
+nav>ul>li:hover {
+    background-color: #455f49;
+}
+
+nav>ul>li>a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.8rem;
+    color: #FFBA00;
+    height: 100%;
+    width: 100%;
+}
+
+nav>div>p {
+    height: 30%;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFBA00;
+}
+
+nav>div>img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.postCard {
+    background-color: #6D9773;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 15px;
+    height: 300px;
+    width: 200px;
+    overflow: scroll;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+}
+
+.postCard:hover {
+    box-shadow: 5px 5px 5px rgb(57, 56, 56);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+}
+
+.postCard>img {
+    height: 50%;
+    width: 100%;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.postCard>.infoArea {
+    color: white;
+    margin: 2px;
+}

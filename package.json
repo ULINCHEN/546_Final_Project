@@ -1,5 +1,5 @@
 {
-  "name": "stray_animal_info_app",
+  "name": "team_project",
   "version": "1.0.0",
   "description": "This is Sit CS546 team project repo",
   "main": "app.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/ULINCHEN/546_Final_Project.git"
   },
-  "author": "Youlin_Chen&Chunzhi_Li$Siyan_Liu&Yetong_Chen&Wei_Guo",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ULINCHEN/546_Final_Project/issues"

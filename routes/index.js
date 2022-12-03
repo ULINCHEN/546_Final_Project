@@ -1,12 +1,13 @@
 const animalRoutes = require('./animalRoutes');
 const userRoutes = require('./userRoutes');
 const volunteerRoutes = require('./volunteerRoutes');
-const mainPageRoutes = require('./mainPageRoutes');
 
 
 const constructorMethod = (app) => {
 
-    app.use('/', mainPageRoutes);
+    app.get('/', (req, res) => {
+        res.redirect('/animal');
+    });
 
     app.use('/animal', animalRoutes);
     app.use('/volunteer', volunteerRoutes);
