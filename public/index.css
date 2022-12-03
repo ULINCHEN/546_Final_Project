@@ -4,20 +4,24 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    font-family: 'Arvo', serif;
 }
 
-main {
+.post {
     background-color: #dddcda;
     margin-top: 50px;
-    justify-content: center;
-    display: flex;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-auto-rows: 300px;
+    grid-gap: 50px;
     height: 100vh;
-    width: 80%;
+    width: 1000px;
     border-radius: 15px;
-    flex-wrap: wrap;
     overflow: scroll;
 }
+
+
 
 nav {
     background-color: #6D9773;
@@ -26,7 +30,7 @@ nav {
     justify-content: space-evenly;
     border-radius: 15px;
     height: 10vh;
-    width: 60%;
+    width: 1000px;
     margin-top: 5%;
 }
 
@@ -36,6 +40,12 @@ nav>div {
     width: 20%;
     display: flex;
     align-items: center;
+}
+
+nav>div>p {
+    margin-top: -5px;
+    font-size: 2em;
+    color: #FFBA00;
 }
 
 nav>ul {
@@ -54,7 +64,7 @@ nav>ul>li {
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 150px;
+    width: 210px;
 }
 
 nav>ul>li:hover {
@@ -73,25 +83,21 @@ nav>ul>li>a {
     width: 100%;
 }
 
-nav>div>p {
-    height: 30%;
-    font-size: 2em;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #FFBA00;
-}
+
 
 nav>div>img {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     border-radius: 50%;
 }
 
 .postCard {
+    border: #FFBA00 2px solid;
     background-color: #6D9773;
     margin-top: 1%;
     margin-bottom: 1%;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
     border-radius: 15px;
     height: 300px;
     width: 200px;
@@ -99,6 +105,7 @@ nav>div>img {
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
 }
+
 
 .postCard:hover {
     box-shadow: 5px 5px 5px rgb(57, 56, 56);
@@ -116,4 +123,48 @@ nav>div>img {
 .postCard>.infoArea {
     color: white;
     margin: 2px;
+}
+
+.loginPage {
+    display: flex;
+    flex-direction: row;
+    background-image: url('https://images.unsplash.com/photo-1597633544424-4da83804df40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+    background-color: #cccccc;
+    background-position: 45% 85%;
+    margin-top: 50px;
+    height: 60vh;
+    width: 80vh;
+    border-radius: 15px;
+}
+
+.loginPage>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+.logInText1 {
+    float: left;
+    width: 300px;
+    padding-bottom: 230px;
+    padding-left: 30px;
+}
+
+.logInText2 {
+    float: left;
+    width: 300px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+}
+
+.loginPage>div>form {
+    padding-left: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 30%;
+    width: 100%;
 }
