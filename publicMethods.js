@@ -1,7 +1,7 @@
 // 这里写公用方法 数据校验等
 
 // username and password validation
-const usernameValidation = (username) => {
+const accountValidation = (username) => {
     if (!username) throw "Please provide a username";
     if (typeof username != 'string') throw "username type should be string";
     username = username.trim().toLowerCase();
@@ -62,7 +62,7 @@ const getDate = () => {
     return curDate;
 }
 
-module.exports = { usernameValidation, passwordValidation, checkName, getDate };
+module.exports = { accountValidation, passwordValidation, checkName, getDate };
 
 
 

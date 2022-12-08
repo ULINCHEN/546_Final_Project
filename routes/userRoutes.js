@@ -6,7 +6,9 @@ router.route("/")
     .get(async (req, res) => {
         //code here for GET
         res.render('userCenter', {
-            title: "current user data"
+            title: "current user data",
+            first_name: "jake",
+            last_name: "ma"
         })
     });
 
@@ -41,7 +43,7 @@ router.route("/mypost")
         //code here for GET
         //这里需要有个方法通过用户id拉出其发布的帖子信息
         res.render('animalPost', {
-            title: "followed page"
+            title: "my post page"
         })
     });
 

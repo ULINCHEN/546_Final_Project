@@ -1,5 +1,62 @@
-<main class="main">
-    <p>{{title}}</p>
-    <p>当前id:{{id}}</p>
-    <p>帖子详情内容</p>
+<main class="container">
+    {{#if post}}
+    <div class="container">
+
+        <!--img slide-->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <p>Update Time: {{post.find_time}}</p>
+        <p>Animal Name: {{post.animal_name}}</p>
+        <p>Species: {{post.species}}</p>
+        <p>Health Condition: {{post.health_condition}}</p>
+        <p>{{post.description}}</p>
+        <p>Location: </p>
+
+        <button type="button" class="col-4 mb-3 btn btn-primary">Add to My Follow List</button>
+        <a href="/animal" class="col-4">Go Back</a>
+
+        <p>Comments: </p>
+        <div class="container">
+            <p class="row">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum impedit facilis quibusdam
+                exercitationem
+                deleniti cum quia possimus excepturi magni quam. Porro molestiae inventore voluptatibus! Dolor mollitia
+                sequi dolorem nostrum praesentium.</p>
+            <p class="row">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, error possimus earum
+                numquam est
+                delectus nulla commodi libero excepturi eligendi molestias soluta consequuntur amet id illum eveniet
+                architecto repellat tenetur!</p>
+        </div>
+    </div>
+    {{/if}}
+
 </main>

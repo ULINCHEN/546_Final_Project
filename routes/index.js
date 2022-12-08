@@ -15,7 +15,7 @@ const constructorMethod = (app) => {
 
     app.use('*', (req, res) => {
         res.render('error', {
-            errorMsg: "Page Not Exsit"
+            errorMsg: "Page Not Found"
         })
     });
 };
