@@ -1,32 +1,34 @@
-<main class="post main">
-    {{#if postData}}
-    {{#each postData}}
-
-    <div class="postCard" id={{_id}}>
-        <img src={{animal_photo}} alt="Picture">
-        <div class="infoArea">
-            <p>Find Time: {{find_time}}</p>
-            <p>Name: {{animal_name}}</p>
-            <p>Species: {{species}}</p>
-            <p>Health Condition: {{health_condition}}</p>
-            <p>Location: {{location_id}}</p>
-            <p>{{comment_id}}</p>
-
+<main class="container px-4 text-center">
+    <div class="container row row-cols-auto">
+        {{#if postData}}
+        {{#each postData}}
+        <div class="gx-3 gy-3">
+            <div class="card col" style="width: 18rem;" id={{_id}}>
+                <img src={{animal_photo}} class="card-img-top" alt="Picture">
+                <div class="card-body">
+                    <h5 class="card-title">Find Time: {{find_time}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Name: {{animal_name}}</li>
+                    <li class="list-group-item">Species: {{species}}</li>
+                    <li class="list-group-item">Health Condition: {{health_condition}}</li>
+                    <li class="list-group-item">Location: {{location_id}}</li>
+                </ul>
+            </div>
         </div>
+        <script>
+            var id = "{{_id}}";
+            var address = '/animal/detail/' + id;
+            var card = document.getElementById(id).querySelector('div');
+            var newlink = document.createElement('a');
+            newlink.href = address;
+            newlink.className = "list-link";
+            newlink.textContent = 'Get Detail';
+            card.appendChild(newlink);
+        </script>
+        {{/each}}
+        {{/if}}
     </div>
-    <script>
-        var id = "{{_id}}";
-
-        var address = '/animal/detail/' + id;
-
-        var card = document.getElementById(id);
-        var newlink = document.createElement('a');
-        newlink.href = address;
-        newlink.textContent = 'More Detail';
-        card.appendChild(newlink);
-    </script>
-    {{/each}}
-    {{/if}}
 </main>
 
-/* 如果用户未上传图片 则显示一张通用图片*/
+<!--* 如果用户未上传图片 则显示一张通用图片*-->

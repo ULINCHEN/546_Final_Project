@@ -1,4 +1,5 @@
 const { animalPostCollection } = require('../config/mongoCollection');
+const { ObjectId } = require('mongodb');
 
 const createAnimalPost = async (
     animalName,
@@ -47,6 +48,19 @@ const getAllAnimalPosts = async () => {
     return postList;
 }
 
+const getAnimalPostById = async (id) => {
+    if (!id) throw 'You mush provide an ID to search for';
+    if (typeof id !== 'string') throw 'Type of ID must be a string';
+    if (id.trim().length === 0) throw 'ID can not be an empty string or just spaces';
+    id = id.trim();
+    if (!ObjectId.isValid(id)) throw 'Invalid ID';
+    const col = await animalPostCollection();
+    const post = await col.findOne({ _id: ObjectId(id) });
+    if (post == null) throw `No post with id: ${Id}`;
+    console.log(post);
+    return post;
+}
 
 
-module.exports = { createAnimalPost, getAllAnimalPosts }
+
+module.exports = { createAnimalPost, getAllAnimalPosts, getAnimalPostById }

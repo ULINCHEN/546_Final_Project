@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const { getAllVolunteerPosts } = require('../data');
 
 
 router.route("/")
     .get(async (req, res) => {
         //code here for GET
+        const postData = await getAllVolunteerPosts();
+        console.log(postData);
+
+
         res.render('volunteerPosts', {
-            title: "all volunteer post"
+            postData: postData
         })
     });
 

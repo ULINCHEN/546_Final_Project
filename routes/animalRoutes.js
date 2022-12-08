@@ -1,5 +1,5 @@
 const express = require('express');
-const { createAnimalPost, getAllAnimalPosts } = require('../data/animalData');
+const { createAnimalPost, getAllAnimalPosts, getAnimalPostById } = require('../data');
 const router = express.Router();
 
 
@@ -18,9 +18,13 @@ router.route("/")
 router.route("/detail/:id")
     .get(async (req, res) => {
         //code here for GET
+        let id = req.params.id;
+        console.log(id);
+        let post = await getAnimalPostById(id);
+
         res.render('postDetail', {
-            title: "animal details",
-            id: req.params.id
+            id: req.params.id,
+            post: post
         })
     });
 

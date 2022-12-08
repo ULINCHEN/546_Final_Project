@@ -1,26 +1,14 @@
-const dbConnection = require('./mongoConnection');
-
-
-/**
- * 
- * @param {*} collection - collection name
- * @returns - return a connected collection
- */
-
-const getCollectionFn = (collection) => {
-    let _col = undefined;
-
-    return async () => {
-        if (!_col) {
-            const db = await dbConnection.dbConnection();
-            _col = await db.collection(collection);
-        }
-
-        return _col;
-    };
-};
+const { createAnimalPost, getAllAnimalPosts, getAnimalPostById } = require('./animalData');
+const { createUser, checkUser } = require('./userData');
+const { createVolunteer, getAllVolunteerPosts } = require('./volunteerData');
 
 
 module.exports = {
-    userCollection: getCollectionFn('user_collection'),
-};
+    createAnimalPost,
+    getAllAnimalPosts,
+    getAnimalPostById,
+    createUser,
+    checkUser,
+    createVolunteer,
+    getAllVolunteerPosts
+}

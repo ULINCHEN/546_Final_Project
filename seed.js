@@ -3,16 +3,20 @@
 
 // const { userCollection } = require('../config/mongoCollections');
 const { dbConnection, closeConnection } = require('./config/mongoConnection');
-const { userCollection, animalPostCollection } = require('./config/mongoCollection');
+const { userCollection, animalPostCollection, volunteerCollection } = require('./config/mongoCollection');
 const { createAnimalPost, getAllAnimalPosts } = require('./data/animalData');
+const { createVolunteer } = require('./data/volunteerData');
+const { createUser } = require('./data/userData');
 const { getDate } = require('./publicMethods');
 
 const main = async () => {
 
     const db = await dbConnection();
     await db.dropDatabase();
+    let dataScale = 25;
 
-    let animalName = 'testdog1';
+    // fake animal post data
+    let baseName = 'testdog';
     let species = 'dog';
     let description = 'testtesttesttesttesttesttesttesttesttesttesttest';
     let healthCondition = 'bad';
@@ -22,26 +26,42 @@ const main = async () => {
 
     // first add user, should be add to database
     try {
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
+        for (let i = 0; i < dataScale; ++i) {
+            let animalName = baseName + i;
+            await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
 
+
+    // fake user data
+    let first_name = 'Owen';
+    let last_name = 'Wang';
+    let user_account = 'owenwang@gmail.com';
+    let user_password = '1234567ABCabc';
+
+    try {
+        for (let i = 0; i < dataScale; ++i) {
+            await createUser(user_account + i, user_password, first_name, last_name);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+    // fake volunteer data
+    let name = 'Paws hospital';
+    let contact = 'testtest@gmail.com';
+    location = 'Jersey City, 6th st';
+    let type = 'organazation';
+    let decription = 'An organazation that orders free treatment for stray animals.';
+
+    try {
+        for (let i = 0; i < dataScale; ++i) {
+            await createVolunteer(name, contact + i, location, type, decription);
+        }
     }
     catch (e) {
         console.log(e);
@@ -49,13 +69,26 @@ const main = async () => {
 
 
 
-
-
     // connect to database and return all document
-    const col = await animalPostCollection();
-    const cursor = await col.find({}).toArray();
+    let col = await animalPostCollection();
+    let cursor = await col.find().toArray();
 
-    console.log('all doc: ', cursor);
+
+    console.log('all animal post: ', cursor);
+
+
+    col = await userCollection();
+    cursor = await col.find().toArray();
+
+    console.log('all user data: ', cursor);
+
+
+    col = await volunteerCollection();
+    cursor = await col.find().toArray();
+
+    console.log('all volunteer data: ', cursor);
+
+
     console.log("Seeding Process Finished");
 
     // close 

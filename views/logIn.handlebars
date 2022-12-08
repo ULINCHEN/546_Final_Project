@@ -1,18 +1,27 @@
-<main class="loginPage main">
-    <div>
-        <p class="logInText1">Did you know that there are 70 million stray animals in the United States?</p>
-        <p class="logInText2">Of the massive population in shelters, just 3–4 million stray animals get adopted. </p>
+<main class="container px-4 text-center">
+    <div class="container">
+        <p class="px-1 text-muted">Did you know that there are 70 million stray animals in the United States?</p>
+        <p class="px-1 text-muted">Of the massive population in shelters, just 3–4 million stray animals get adopted.
+        </p>
+        <h1>Welcome Back</h1>
     </div>
-    <div>
-        <form action="" method="POST">
-            <p>Please LogIn</p>
-            <label for="username">USER NAME</label>
-            <input type="text" name="username">
-            <label for="password">PASSWORD</label>
-            <input type="password" name="password">
-            <button type="submit">submit</button>
-            <a href="/user/signin">Not our user?</a>
+    <div class="container row">
+        <div class="col-4"></div>
+        <form class="container col-4">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Account</label>
+                <input type="email" class="form-control" id="inputAccount" aria-describedby="">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword">
+            </div>
+            <div class="mb-3">
+                <p id="errorMessage">Account or password incorrect</p>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <a href="/user/signin">Not our user yet?</a>
         </form>
-
+        <div class="col-4"></div>
     </div>
 </main>

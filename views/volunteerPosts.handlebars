@@ -1,3 +1,21 @@
-<main class="main">
-    <p>{{title}}</p>
+<main class="container px-4 text-center">
+    <div class="container row row-cols-auto">
+        {{#if postData}}
+        {{#each postData}}
+        <div class="gx-3 gy-3">
+            <div class="card col" style="width: 18rem;" id={{_id}}>
+                <div class="card-body">
+                    <h5 class="card-title">{{volunteer_name}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">location: {{volunteer_location}}</li>
+                    <li class="list-group-item">Contact: {{volunteer_contact}}</li>
+                    <li class="list-group-item">Type: {{volunteer_type}}</li>
+                    <li class="list-group-item">{{volunteer_decription}}</li>
+                </ul>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
 </main>
