@@ -13,6 +13,12 @@ main {
     margin-top: 5rem;
 }
 
+.userCenterInfo {
+    height: 450px;
+    border: 1px solid gray;
+    border-radius: 15px;
+}
+
 .card {
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
