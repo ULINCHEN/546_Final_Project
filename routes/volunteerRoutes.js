@@ -28,9 +28,14 @@ router.route("/detail/:id")
 router.route("/new")
     .get(async (req, res) => {
         //code here for GET
-        res.render('addPost', {
+        res.render('addVolunteerPost', {
             title: "add new volunteer post",
         })
-    });
+    })
+
+    .post(async (req, res) => {
+        console.log(req.body);
+        res.render('addVolunteerPost');
+    })
 
 module.exports = router;

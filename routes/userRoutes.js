@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.route("/")
+router.route("/usercenter/:id")
     .get(async (req, res) => {
         //code here for GET
         res.render('userCenter', {
@@ -44,6 +44,15 @@ router.route("/mypost")
         //这里需要有个方法通过用户id拉出其发布的帖子信息
         res.render('animalPost', {
             title: "my post page"
+        })
+    });
+
+router.route("/edit/:id")
+    .get(async (req, res) => {
+        //code here for GET
+        //这里需要将对应ID的用户资料传到页面
+        res.render('editUserInfo', {
+
         })
     });
 

@@ -34,6 +34,11 @@ router.route("/new")
         res.render('addPost', {
             title: "add new animal post",
         })
-    });
+    })
+
+    .post(async (req, res) => {
+        console.log(req.body);
+        res.render('addPost');
+    })
 
 module.exports = router;
