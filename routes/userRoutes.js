@@ -5,7 +5,7 @@ const data = require('../data');
 const userData = data.userData;
 const animalData = data.animalData;
 
-router.route("/")
+router.route("/usercenter/:id")
     .get(async (req, res) => {
         //code here for GET
         if (req.session.user) {
@@ -161,5 +161,18 @@ router.route("/mypost")
             return res.redirect('/user/login');
         }
     });
+
+router.route("/edit/:id")
+    .get(async (req, res) => {
+        //code here for GET
+        //这里需要将对应ID的用户资料传到页面
+        res.render('editUserInfo', {
+
+        })
+    })
+    .post(async (req, res) => {
+        console.log(req.body);
+        res.redirect('/user/login');
+    })
 
 module.exports = router;

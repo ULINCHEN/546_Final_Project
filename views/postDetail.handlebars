@@ -1,62 +1,111 @@
 <main class="container">
     {{#if post}}
     <div class="container">
-
-        <!--img slide-->
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+        <div class="row">
+            <div class="col-12 col-sm-3"></div>
+            <!--img slide-->
+            <div id="carouselExampleControls" class="carousel slide col-sm-6" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6">
+                <hr>
+                <p>Update Time: {{post.find_time}}</p>
+                <hr>
+                <p>Animal Name: {{post.animal_name}}</p>
+                <hr>
+                <p>Species: {{post.species}}</p>
+                <hr>
+                <p>Health Condition: {{post.health_condition}}</p>
+                <hr>
+                <p>{{post.description}}</p>
+                <hr>
+                <p>Location:{{post.Location}} </p>
+                <hr>
 
-        <p>Update Time: {{post.find_time}}</p>
-        <p>Animal Name: {{post.animal_name}}</p>
-        <p>Species: {{post.species}}</p>
-        <p>Health Condition: {{post.health_condition}}</p>
-        <p>{{post.description}}</p>
-        <p>Location: </p>
-
-        <button type="button" class="col-4 mb-3 btn btn-primary">Add to My Follow List</button>
-        <a href="/animal" class="col-4">Go Back</a>
-
-        <p>Comments: </p>
+                <button type="button" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
+            </div>
+            <div class="col-3"></div>
+        </div>
         <div class="container">
-            <p class="row">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum impedit facilis quibusdam
-                exercitationem
-                deleniti cum quia possimus excepturi magni quam. Porro molestiae inventore voluptatibus! Dolor mollitia
-                sequi dolorem nostrum praesentium.</p>
-            <p class="row">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, error possimus earum
-                numquam est
-                delectus nulla commodi libero excepturi eligendi molestias soluta consequuntur amet id illum eveniet
-                architecto repellat tenetur!</p>
-        </div>
-    </div>
-    {{/if}}
+            <div class="row">
+                <div class="col-3"></div>
+                <form action="/comment/:id" method="POST" class="col-12 col-lg-6" id="commentForm">
+                    <div class="mb-3 container text-center">
+                        <label for="newComment" class="form-label mb-3">Want to say something?</label>
+                        <textarea class="form-control mb-3" id="newComment" name="newComment" rows="3"></textarea>
+                        <ul class="errorInfo"></ul>
+                        <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
+                    </div>
+                </form>
+                <div class="col-3"></div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <p class="ccol-12 col-lg-6">Comments: </p>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row">
 
+                    <div class="col-3"></div>
+                    <div class="col-12 col-lg-6">
+
+                        {{#if post.comments}}
+                        {{#each post.comments}}
+                        <div class="row">
+                            <hr>
+                            <p>content: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo sed
+                                reiciendis
+                                esse
+                                voluptatum! Non itaque, consequuntur cupiditate a reprehenderit pariatur consectetur
+                                facilis
+                                tempore
+                                veniam sapiente. A consectetur nostrum dolor.</p>
+                            <p>Author</p>
+                            <p>Date</p>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <p class="row">No Comment Yet</p>
+                        {{/if}}
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    {{else}}
+    <!--incase there is no valid data pass into this page-->
+    <p>No Detail Infomation</p>
+
+    {{/if}}
+    <a href="/animal" class="col-4">Go Back</a>
+    <script src="../public/js/addCommentValidation.js"></script>
 </main>

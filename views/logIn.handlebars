@@ -7,21 +7,22 @@
     </div>
     <div class="container row">
         <div class="col-4"></div>
-        <form class="container col-4">
+        <form class="container col-12 col-md-4" id="loginForm" action="/user/login" method="POST">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Account</label>
-                <input type="email" class="form-control" id="inputAccount" aria-describedby="">
+                <input type="text" class="form-control" id="inputAccount" name="account" aria-describedby="">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword">
+                <input type="password" class="form-control" name="password" id="inputPassword">
             </div>
             <div class="mb-3">
-                <p id="errorMessage">Account or password incorrect</p>
+                <ul class="errorInfo"></ul>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             <a href="/user/signin">Not our user yet?</a>
         </form>
         <div class="col-4"></div>
     </div>
+    <script src="../public/js/loginValidation.js"></script>
 </main>

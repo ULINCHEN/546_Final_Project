@@ -57,7 +57,6 @@ const getAnimalPostById = async (id) => {
     const col = await animalPostCollection();
     const post = await col.findOne({ _id: ObjectId(id) });
     if (post == null) throw `No post with id: ${Id}`;
-    console.log(post);
     return post;
 }
 

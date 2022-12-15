@@ -2,11 +2,11 @@
     <div class="container text-center">
         <h1>Upload a New Stray Animal Post</h1>
     </div>
-    <form action="" method="POST" class="row container">
+    <form action="/animal/new" method="POST" class="row container" id="addAnimalForm">
 
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <label for="animal_name">Name</label>
                 <input class="form-control" type="text" name="animal_name" id="animal_name">
             </div>
@@ -14,35 +14,35 @@
         </div>
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <label for="species">Species</label>
-                <select class="form-select" aria-label="Choose species">
-                    <option value="1">Cat</option>
-                    <option value="2">Dog</option>
-                    <option value="3">Others</option>
+                <select class="form-select" aria-label="Choose species" name="species" id="speciesSelecter">
+                    <option value="Cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Others">Others</option>
                 </select>
             </div>
             <div class="col-3"></div>
         </div>
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <label for="health_condition">Health Condition</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="condition" id="good" checked>
+                    <input class="form-check-input" type="radio" name="condition" id="good" value="Good" checked>
                     <label class="form-check-label" for="good">
                         Good (Uninjured, looks healthy)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="condition" id="normal">
+                    <input class="form-check-input" type="radio" name="condition" id="normal" value="Normal">
                     <label class="form-check-label" for="normal">
                         Normal (May need to provide food or have non-lethal injuries or illnesses, such as skin
                         diseases, parasites, etc.)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="condition" id="bad">
+                    <input class="form-check-input" type="radio" name="condition" id="bad" value="Bad">
                     <label class="form-check-label" for="bad">
                         Bad (Need to provide emergency medical treatment)
                     </label>
@@ -52,7 +52,7 @@
         </div>
         <div class="row input-group">
             <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
             </div>
@@ -60,29 +60,30 @@
         </div>
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <label for="description">Photo (Only three allow)</label>
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="photo1">
-                    <label class="input-group-text" for="photo1">Upload</label>
+                    <input type="file" class="form-control" name="photo1" id="photo1" accept="image/*">
                 </div>
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="photo2">
-                    <label class="input-group-text" for="photo2">Upload</label>
+                    <input type="file" class="form-control" name="photo2" id="photo2" accept="image/*">
                 </div>
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="photo3">
-                    <label class="input-group-text" for="photo3">Upload</label>
+                    <input type="file" class="form-control" name="photo3" id="photo3" accept="image/*">
                 </div>
             </div>
             <div class="col-3"></div>
         </div>
         <div class="mb-3 row">
             <div class="col-4"></div>
-            <div class="col-4">
-                <button class="col-12 btn btn-primary" type="submit">Submit</button>
+            <div class="col-12 col-lg-4 container text-center">
+                <ul class="errorInfo"></ul>
+                <button class="col-12 btn btn-primary mb-3" type="submit" id="submitBtn">Submit</button>
+                <a href="/user/usercenter/123">Back To User Center</a>
             </div>
             <div class="col-4"></div>
         </div>
+
+        <script src="../public/js/addPostValidation.js"></script>
     </form>
 </main>
