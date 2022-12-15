@@ -10,7 +10,7 @@ router.route("/usercenter/:id")
             first_name: "jake",
             last_name: "ma"
         })
-    });
+    })
 
 router.route("/login")
     .get(async (req, res) => {
@@ -18,7 +18,12 @@ router.route("/login")
         res.render('logIn', {
             title: "login page"
         })
-    });
+    })
+    .post(async (req, res) => {
+
+        console.log(req.body);
+        res.redirect('/');
+    })
 
 
 router.route("/signin")
@@ -27,7 +32,12 @@ router.route("/signin")
         res.render('signIn', {
             title: "signin page"
         })
-    });
+    })
+    .post(async (req, res) => {
+        console.log(req.body);
+        res.redirect('/user/login');
+    })
+
 
 router.route("/followed")
     .get(async (req, res) => {
@@ -54,6 +64,10 @@ router.route("/edit/:id")
         res.render('editUserInfo', {
 
         })
-    });
+    })
+    .post(async (req, res) => {
+        console.log(req.body);
+        res.redirect('/user/login');
+    })
 
 module.exports = router;
