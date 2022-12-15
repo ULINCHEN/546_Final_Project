@@ -1,0 +1,65 @@
+<main class="container">
+    <div class="container text-center">
+        <h1>Upload a New Volunteer Infomation</h1>
+    </div>
+    <form action="" method="POST" class="row container" id="volunteerForm">
+
+        <div class="row mb-3 input-group">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6">
+                <label for="volunteer_name">Name</label>
+                <input class="form-control" type="text" name="volunteer_name" id="volunteer_name">
+                <ul id="name_error"></ul>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="row mb-3 input-group">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6">
+                <label for="contact">Contact</label>
+                <input class="form-control" type="text" name="contact" id="contact">
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row mb-3 input-group">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6">
+                <label for="type">Choose Volunteer Type</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="organization" value="Organization"
+                        checked>
+                    <label class="form-check-label" for="organization">
+                        Organization
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="individual" value="Individual">
+                    <label class="form-check-label" for="individual">
+                        Individual
+                    </label>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row mb-3  input-group">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="mb-3 row">
+            <div class="col-4"></div>
+            <div class="col-12 col-lg-4 container text-center">
+                <ul class="errorInfo"></ul>
+                <button class="col-12 btn btn-primary mb-3" type="submit">Submit</button>
+                <a href="/user/usercenter/123">Back To User Center</a>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </form>
+    <script src="../public/js/addVolunteerValidation.js"></script>
+</main>

@@ -1,4 +1,26 @@
-<main class="container px-4 text-center">
+<main class="container px-4">
+    <hr>
+    <div class="row container text-center">
+        <h5>Fun Fact</h5>
+        <p id="catFact"></p>
+    </div>
+    <hr>
+    <div class="dropdown text-center">
+        <span>Choose your location: </span>
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{#if location}}
+            {{location}}
+            {{else}}
+            All
+            {{/if}}
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/animal/location/hoboken">Hoboken</a></li>
+            <li><a class="dropdown-item" href="/animal/location/jersey_city">Jersey City</a></li>
+            <li><a class="dropdown-item" href="/animal/location/newyork">NewYork City</a></li>
+            <li><a class="dropdown-item" href="/animal/location/newport">New Port</a></li>
+        </ul>
+    </div>
     <div class="container row row-cols-auto">
         {{#if postData}}
         {{#each postData}}
@@ -6,10 +28,10 @@
             <div class="card col" style="width: 18rem;" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top" alt="Picture">
                 <div class="card-body">
-                    <h5 class="card-title">Find Time: {{find_time}}</h5>
+                    <h1 class="card-title">{{animal_name}}</h1>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: {{animal_name}}</li>
+                    <li class="list-group-item">Find Time: {{find_time}}</li>
                     <li class="list-group-item">Species: {{species}}</li>
                     <li class="list-group-item">Health Condition: {{health_condition}}</li>
                     <li class="list-group-item">Location: {{location_id}}</li>
@@ -29,6 +51,7 @@
         {{/each}}
         {{/if}}
     </div>
+    <script src="../public/js/getRandomFact.js"></script>
 </main>
 
 <!--* 如果用户未上传图片 则显示一张通用图片*-->
