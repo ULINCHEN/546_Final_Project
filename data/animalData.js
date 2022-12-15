@@ -1,6 +1,8 @@
 const { ObjectId } = require("mongodb");
 const db = require("../config/mongoCollection");
 const userdb = require("./userData");
+const fs = require("fs");
+const path = require("path");
 
 //create,update,search,delete
 const createAnimalPost = async (
@@ -10,7 +12,8 @@ const createAnimalPost = async (
   healthCondition,
   location,
   userid,
-  animalPhoto
+  file
+  //animalPhoto
 ) => {
   if (!animalName) throw "Animal name can not be empty";
   if (!species) throw "Species can not be empty";
@@ -27,13 +30,15 @@ const createAnimalPost = async (
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
+  // await createImg(file);
+  let filepath = file.path + "." + file.mimetype.split("/")[1];
   const postData = {
     animal_name: animalName,
     species: species,
     description: description,
     health_condition: healthCondition,
     find_time: time,
-    animal_photo: animalPhoto,
+    animal_photo: filepath,
     location_id: [],
     user_id: userid,
     comment_ids: [],
@@ -46,6 +51,46 @@ const createAnimalPost = async (
   return { insertedAnimalPost: true, animalid: info.insertedId.toString() };
 };
 
+const createImg = async (file) => {
+  console.log(file);
+  return new Promise((resolve, reject) => {
+    fs.readFile(file.path, async (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      // 拓展名
+      let extName = file.mimetype.split("/")[1];
+      // 拼接成图片名
+      // 这里可以自行修改
+      let imgName = `${file.filename}.${extName}`;
+      // 写入图片
+      // 写入自己想要存入的地址
+      await fs.writeFile(
+        path.join(`public\\uploads\\${imgName}`),
+        data,
+        (err) => {
+          if (err) {
+            reject(err);
+          }
+        }
+      );
+      // 删除二进制文件
+      await fs.unlink(file.path, (err) => {
+        if (err) {
+          reject(err);
+        }
+      });
+      // 验证是否存入
+      await fs.stat(path.join(`public\\uploads\\${imgName}`), (err) => {
+        if (err) {
+          reject(err);
+        }
+        // 成功就返回图片相对地址
+        resolve(`xxx\\${imgName}`);
+      });
+    });
+  });
+};
 /**
  * 传id进来
  *
@@ -199,4 +244,5 @@ module.exports = {
   removeAnimalById,
   putCommentIn,
   removeCommentFromA,
+  createImg,
 };
