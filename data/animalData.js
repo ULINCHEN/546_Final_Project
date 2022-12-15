@@ -102,7 +102,7 @@ const getAllAnimalPosts = async () => {
   return postList;
 };
 
-const getAnimalPostByID = async (id) => {
+const getAnimalPostById = async (id) => {
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(id) });
   if (!animal) {
@@ -152,7 +152,7 @@ const getAnimalbyuser = async (username) => {
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
     const element = animalidList[index];
-    let animal = await getAnimalPostByID(element);
+    let animal = await getAnimalPostById(element);
     animalList.push(animal);
   }
   return animalList;
@@ -192,7 +192,7 @@ const getAnimalByType = async (type) => {
 module.exports = {
   createAnimalPost,
   getAllAnimalPosts,
-  getAnimalPostByID,
+  getAnimalPostById,
   getAnimalbyuser,
   updateAnimalPost,
   getAnimalByType,
