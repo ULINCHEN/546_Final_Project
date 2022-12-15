@@ -1,12 +1,12 @@
 <main class="container px-4 text-center">
     <h1>JOIN US AND SAVE THE WORLD</h1>
     <div class="container">
-        <form class="container needs-validation" novalidate>
+        <form class="container needs-validation" action="/user/signin" method="POST" id="signInForm">
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label for="firstname" class="row form-label">First name</label>
-                    <input type="text" class="col-4 form-control" id="firstname" name="lastname" required>
+                    <input type="text" class="col-4 form-control" id="firstname" name="firstname">
                     <div class="row valid-feedback">
                         Looks good!
                     </div>
@@ -15,9 +15,9 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label for="lastname" class="row form-label">Last name</label>
-                    <input type="text" class="col-4 form-control" id="lastname" name="lastname" required>
+                    <input type="text" class="col-4 form-control" id="lastname" name="lastname">
                     <div class="row valid-feedback">
                         Looks good!
                     </div>
@@ -26,11 +26,11 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label for="account" class="row form-label">Account</label>
 
                     <input type="text" class="col-4 form-control" id="account" name="account"
-                        aria-describedby="inputGroupPrepend" required>
+                        aria-describedby="inputGroupPrepend">
                     <div class="row invalid-feedback">
                         Please choose a username.
                     </div>
@@ -39,11 +39,11 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label for="validationCustomUsername" class="row password">Password</label>
 
                     <input type="password" class="col-4 form-control" id="password" name="password"
-                        aria-describedby="inputGroupPrepend" required>
+                        aria-describedby="inputGroupPrepend">
                     <div class="row invalid-feedback">
                         Please choose a username.
                     </div>
@@ -52,11 +52,11 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <label for="password_again" class="row form-label">Type Your Password Again</label>
 
                     <input type="password" class="form-control" id="password_again" name="password_again"
-                        aria-describedby="inputGroupPrepend" required>
+                        aria-describedby="inputGroupPrepend">
                     <div class="invalid-feedback">
                         Please choose a username.
                     </div>
@@ -65,6 +65,7 @@
             </div>
 
             <div class="mt-3 col-12">
+                <ul class="errorInfo"></ul>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
 
@@ -74,5 +75,5 @@
 
         </form>
     </div>
-
+    <script src="../public/js/signInValidation.js"></script>
 </main>

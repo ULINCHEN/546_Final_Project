@@ -7,9 +7,6 @@ router.route("/")
     .get(async (req, res) => {
         //code here for GET
         const postData = await getAllVolunteerPosts();
-        console.log(postData);
-
-
         res.render('volunteerPosts', {
             postData: postData
         })

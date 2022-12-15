@@ -62,6 +62,8 @@ const getDate = () => {
     return curDate;
 }
 
+
+
 module.exports = { accountValidation, passwordValidation, checkName, getDate };
 
 
