@@ -1,5 +1,6 @@
-const { animalPostCollection } = require('../config/mongoCollection');
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
+const db = require("../config/mongoCollection");
+const userdb = require("./userData");
 
 //create,update,search,delete
 const createAnimalPost = async (
