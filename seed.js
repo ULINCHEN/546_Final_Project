@@ -38,7 +38,7 @@ const main = async () => {
       "cute!!!!!",
       "as well as me :)",
       "Stevens",
-      user2.userID
+      user2.userid
     );
     // console.log(animal1);
   } catch (error) {
@@ -51,7 +51,7 @@ const main = async () => {
       "cute!!!!!",
       "as well as me :)",
       "Street",
-      user2.userID
+      user2.userid
     );
     // console.log(animal1);
   } catch (error) {
@@ -64,7 +64,7 @@ const main = async () => {
       "cute!!!!!",
       "as well as me :)",
       "Stevens",
-      user2.userID
+      user2.userid
     );
     // console.log(animal3);
   } catch (error) {
@@ -79,7 +79,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let addcomment1 = await Data.commentData.creatComment(
+    let addcomment1 = await Data.commentData.createComment(
       "ababababaaaaa",
       "abcde@123.com",
       animal3.animalid
@@ -90,7 +90,7 @@ const main = async () => {
   }
 
   try {
-    let addcomment2 = await Data.commentData.creatComment(
+    let addcomment2 = await Data.commentData.createComment(
       "cuttttteeeeeee",
       "abcd@123.com",
       animal3.animalid

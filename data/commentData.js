@@ -7,7 +7,7 @@ const createComment = async (comment, username, animalid) => {
   let date = new Date();
   date = date.toUTCString();
   const commentdb = await db.commentCollection();
-  const User = await userdb.getUserdata(username);
+  const User = await userdb.getUserData(username);
   const userid = User._id.toString();
   const commentData = {
     text: comment,

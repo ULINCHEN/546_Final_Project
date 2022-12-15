@@ -9,7 +9,7 @@ const createVolunteerPost = async (
   description,
   username
 ) => {
-  const User = await userdb.getUserdata(username);
+  const User = await userdb.getUserData(username);
   const userid = User._id.toString();
   const VollunteerData = {
     volunteer_contact: contact,
@@ -32,7 +32,7 @@ const createVolunteerPost = async (
 };
 
 const getAllVolunteerPosts = async (username) => {
-  const user = await userdb.getUserdata(username);
+  const user = await userdb.getUserData(username);
   let volunteeridList = user.volunteer_ids;
   let volunteerList = [];
   for (let index = 0; index < volunteeridList.length; index++) {
