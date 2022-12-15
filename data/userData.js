@@ -41,9 +41,9 @@ const createUser = async (username, password, firstName, lastName) => {
   };
   // add to db
   const info = await userdb.insertOne(userData);
-  let userid = info.insertedId.toString();
+  let user_id = info.insertedId.toString();
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
-  return { insertedUser: true, userID: userid };
+  return { insertedUser: true, userid: user_id };
 };
 
 /**
@@ -89,7 +89,7 @@ const getAnimalList = async (username) => {
   return User.animal_ids;
 };
 
-const getUserdata = async (username) => {
+const getUserData = async (username) => {
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ user_account: username });
   if (!User) throw `${username} is not exist`;
@@ -225,7 +225,7 @@ module.exports = {
   getAnimalList,
   putAnimalIn,
   putVolunteerIn,
-  getUserdata,
+  getUserData,
   updateUser,
   putCommentIn,
   removeUserById,

@@ -2,7 +2,7 @@ const db = require("../config/mongoCollection");
 const userdb = require("./userData");
 const { ObjectId } = require("mongodb");
 
-const createVollunteerPost = async (
+const createVolunteerPost = async (
   contact,
   location,
   type,
@@ -31,7 +31,7 @@ const createVollunteerPost = async (
   return { volunteerid: insertInfo.insertedId.toString() };
 };
 
-const getAllVollunteerPosts = async (username) => {
+const getAllVolunteerPosts = async (username) => {
   const user = await userdb.getUserdata(username);
   let volunteeridList = user.volunteer_ids;
   let volunteerList = [];
@@ -73,8 +73,8 @@ const removeVolunteerById = async (id) => {
 };
 
 module.exports = {
-  createVollunteerPost,
-  getAllVollunteerPosts,
+  createVolunteerPost,
+  getAllVolunteerPosts,
   getVolunteerById,
   removeVolunteerById,
 };

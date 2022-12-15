@@ -3,7 +3,7 @@ const userdb = require("./userData");
 const animaldb = require("./animalData");
 const { ObjectId } = require("mongodb");
 
-const creatComment = async (comment, username, animalid) => {
+const createComment = async (comment, username, animalid) => {
   let date = new Date();
   date = date.toUTCString();
   const commentdb = await db.commentCollection();
@@ -33,7 +33,7 @@ const creatComment = async (comment, username, animalid) => {
 };
 
 const getCommentByPostId = async (animalid) => {
-  const animal = await animaldb.getAnimalPostByID(animalid);
+  const animal = await animaldb.getAnimalPostById(animalid);
   const commentidList = animal.comment_ids;
   let commentList = [];
   for (let index = 0; index < commentidList.length; index++) {
@@ -87,7 +87,7 @@ const removeCommentById = async (commentid) => {
 };
 
 module.exports = {
-  creatComment,
+  createComment,
   getCommentByPostId,
   removeCommentById,
   getCommentById,

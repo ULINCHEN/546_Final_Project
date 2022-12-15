@@ -101,7 +101,7 @@ const main = async () => {
   }
 
   try {
-    let addvolunteer = await Data.volunteerData.createVollunteerPost(
+    let addvolunteer = await Data.volunteerData.createVolunteerPost(
       "1234",
       "6th ST",
       "organazation",
@@ -113,7 +113,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let addvolunteer = await volunteerData.createVollunteerPost(
+    let addvolunteer = await volunteerData.createVolunteerPost(
       "contact",
       "location",
       "type",
