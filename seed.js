@@ -1,100 +1,206 @@
-// fake data, run this before test
+// // fake data, run this before test
 
-
-// const { userCollection } = require('../config/mongoCollections');
-const { dbConnection, closeConnection } = require('./config/mongoConnection');
-const { userCollection, animalPostCollection, volunteerCollection } = require('./config/mongoCollection');
-const { createAnimalPost, getAllAnimalPosts } = require('./data/animalData');
-const { createVolunteer } = require('./data/volunteerData');
-const { createUser } = require('./data/userData');
-const { getDate } = require('./publicMethods');
+const dbcon = require("./config/mongoConnection");
+const { volunteerData } = require("./data");
+// const db = require("./config/mongoCollection");
+const Data = require("./data");
 
 const main = async () => {
+  const Database = await dbcon.dbConnection();
+  await Database.dropDatabase();
+  try {
+    let user1 = await Data.userData.createUser(
+      "abcd@123.com",
+      "abcd123",
+      "Mary",
+      "May"
+    );
+    // console.log(user1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var user2 = await Data.userData.createUser(
+      "abcde@123.com",
+      "abcde123",
+      "Maryyyy",
+      "May"
+    );
+    // console.log(user2);
+    // console.log(user2.userID);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let animal1 = await Data.animalData.createAnimalPost(
+      "miaomiao",
+      "cat",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens",
+      user2.userID
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let animal2 = await Data.animalData.createAnimalPost(
+      "wangwang",
+      "dog",
+      "cute!!!!!",
+      "as well as me :)",
+      "Street",
+      user2.userID
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal3 = await Data.animalData.createAnimalPost(
+      "mimi",
+      "cat",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens",
+      user2.userID
+    );
+    // console.log(animal3);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let getanimalbyuser1 = await Data.animalData.getAnimalbyuser(
+      "abcde@123.com"
+    );
+    // console.log(getanimalbyuser1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment1 = await Data.commentData.creatComment(
+      "ababababaaaaa",
+      "abcde@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
 
-    const db = await dbConnection();
-    await db.dropDatabase();
-    let dataScale = 25;
+  try {
+    let addcomment2 = await Data.commentData.creatComment(
+      "cuttttteeeeeee",
+      "abcd@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
 
-    // fake animal post data
-    let baseName = 'testdog';
-    let species = 'dog';
-    let description = 'testtesttesttesttesttesttesttesttesttesttesttest';
-    let healthCondition = 'bad';
-    let time = getDate();
-    let animalPhoto = 'https://plus.unsplash.com/premium_photo-1667099521841-8078e09b47f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-    let location = 'hoboken';
-
-    // first add user, should be add to database
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            let animalName = baseName + i;
-            await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-
-    // fake user data
-    let first_name = 'Owen';
-    let last_name = 'Wang';
-    let user_account = 'owenwang@gmail.com';
-    let user_password = '1234567ABCabc';
-
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            await createUser(user_account + i, user_password, first_name, last_name);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-    // fake volunteer data
-    let name = 'Paws hospital';
-    let contact = 'testtest@gmail.com';
-    location = 'Jersey City, 6th st';
-    let type = 'organazation';
-    let decription = 'An organazation that orders free treatment for stray animals.';
-
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            await createVolunteer(name, contact + i, location, type, decription);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-
-
-    // connect to database and return all document
-    let col = await animalPostCollection();
-    let cursor = await col.find().toArray();
-
-
-    console.log('all animal post: ', cursor);
-
-
-    col = await userCollection();
-    cursor = await col.find().toArray();
-
-    console.log('all user data: ', cursor);
-
-
-    col = await volunteerCollection();
-    cursor = await col.find().toArray();
-
-    console.log('all volunteer data: ', cursor);
-
-
-    console.log("Seeding Process Finished");
-
-    // close 
-    closeConnection();
-
-}
-
+  try {
+    let addvolunteer = await Data.volunteerData.createVollunteerPost(
+      "1234",
+      "6th ST",
+      "organazation",
+      "An organazation that orders free treatment for stray animals.",
+      "abcde@123.com"
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer = await volunteerData.createVollunteerPost(
+      "contact",
+      "location",
+      "type",
+      "description",
+      "abcde@123.com"
+    );
+    console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+  //   try {
+  //     let checkuser1 = await Data.userData.checkUser("abcd@123.com", "abcd123");
+  //     console.log(checkuser1);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  dbcon.closeConnection();
+};
 
 main();
+/*
+{
+    _id: new ObjectId("639662a87cd4bcda8af046d0"),
+    animal_name: 'miaomiao',
+    species: 'cat',
+    description: 'cute!!!!!',
+    health_condition: 'as well as me :)',
+    find_time: 'Sun, 11 Dec 2022 13:10:20 GMT',
+    animal_photo: null,
+    location_id: [],
+    user_id: '639662a87cd4bcda8af046cf',
+    comment_id: []
+  },
+  {
+    _id: new ObjectId("639662a87cd4bcda8af046d2"),
+    animal_name: 'mimi',
+    species: 'cat',
+    description: 'cute!!!!!',
+    health_condition: 'as well as me :)',
+    find_time: 'Sun, 11 Dec 2022 23:07:20 GMT',
+    animal_photo: null,
+    location_id: [],
+    user_id: '639662a87cd4bcda8af046cf',
+    comment_id: []
+  },
+  {
+    _id: new ObjectId("639662a87cd4bcda8af046d1"),
+    animal_name: 'wangwang',
+    species: 'dog',
+    description: 'cute!!!!!',
+    health_condition: 'as well as me :)',
+    find_time: 'Sun, 11 Dec 2022 23:10:20 GMT',
+    animal_photo: null,
+    location_id: [],
+    user_id: '639662a87cd4bcda8af046cf',
+    comment_id: []
+  },
+  {
+    _id: new ObjectId("63969ae39c974af00e52f46c"),
+    animal_name: 'miaomiaoaaaaa',
+    species: 'cat',
+    description: 'cute!!!!!',
+    health_condition: 'as well as me :)',
+    find_time: 'Mon, 12 Dec 2022 03:07:15 GMT',
+    animal_photo: null,
+    location_id: [],
+    user_id: '639662a87cd4bcda8af046ce',
+    comment_id: []
+  },
+  {
+    _id: new ObjectId("63969cf37941d2b0acb4ee12"),
+    animal_name: 'masbdad',
+    species: 'dog',
+    description: 'cute!!!!!',
+    health_condition: 'as well as me :)',
+    find_time: 'Mon, 12 Dec 2022 03:10:15 GMT',
+    animal_photo: null,
+    location_id: [],
+    user_id: '639662a87cd4bcda8af046ce',
+    comment_id: []
+  }
+*/
