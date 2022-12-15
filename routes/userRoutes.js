@@ -1,4 +1,5 @@
 const express = require('express');
+const xss = require('xss');
 const router = express.Router();
 const publicMethods = require('../publicMethods');
 const data = require('../data');
