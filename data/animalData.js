@@ -24,16 +24,7 @@ const createAnimalPost = async (
   // locationId = somefunction(location) 这里应该要把location 转化成 locationId
   // location 暂时没加入postData
   const animaldb = await db.animalPostCollection();
-  // const Animal_exist = await animaldb.findOne({ animal_name: animalName });
-  // let useridList = [];
-  // if (Animal_exist) {
-  //   useridList = Animal_exist.user_id;
-  //   useridList.push(userid);
-  // } else {
-  //   useridList.push(userid);
-  // }
-  // let useridList = [];
-  // useridList.push(userid);
+  // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
   const postData = {
@@ -47,7 +38,6 @@ const createAnimalPost = async (
     user_id: userid,
     comment_ids: [],
   };
-
   const info = await animaldb.insertOne(postData);
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
   if (userid) {
