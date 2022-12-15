@@ -1,16 +1,23 @@
-.navbar-brand {
-    position: absolute;
-    left: 50%;
-    margin-left: -50px !important;
-    display: block;
-}
-
 nav {
     box-shadow: 0px 2px 5px rgb(78, 78, 78);
 }
 
+.navbar {
+    background-color: #91b5a9;
+}
+
+.nav-link {
+    color: #1b2622 !important;
+}
+
 main {
     margin-top: 5rem;
+}
+
+.userCenterInfo {
+    height: 450px;
+    border: 1px solid gray;
+    border-radius: 15px;
 }
 
 .card {
@@ -23,4 +30,8 @@ main {
     box-shadow: 5px 5px 5px rgb(157, 156, 156);
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
+}
+
+.errorInfo {
+    color: red;
 }

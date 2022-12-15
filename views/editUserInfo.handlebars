@@ -1,12 +1,12 @@
 <main class="container px-4 text-center">
-    <h1>JOIN US AND SAVE THE WORLD</h1>
+    <h1>Change Account Settings</h1>
     <div class="container">
-        <form class="container needs-validation" action="/user/signin" method="POST" id="signInForm">
+        <form class="container needs-validation" action="/user/edit/currentid" method="POST" id="infoEditForm">
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <label for="firstname" class="row form-label">First name</label>
-                    <input type="text" class="col-4 form-control" id="firstname" name="firstname">
+                    <input type="text" class="col-4 form-control" id="firstname" name="lastname">
                     <div class="row valid-feedback">
                         Looks good!
                     </div>
@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <label for="lastname" class="row form-label">Last name</label>
                     <input type="text" class="col-4 form-control" id="lastname" name="lastname">
                     <div class="row valid-feedback">
@@ -24,12 +24,13 @@
                 </div>
                 <div class="col-3"></div>
             </div>
+
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-12 col-md-6">
-                    <label for="account" class="row form-label">Account</label>
+                <div class="col-12 col-lg-6">
+                    <label for="validationCustomUsername" class="row password">Old Password</label>
 
-                    <input type="text" class="col-4 form-control" id="account" name="account"
+                    <input type="password" class="col-4 form-control" id="old_password" name="password"
                         aria-describedby="inputGroupPrepend">
                     <div class="row invalid-feedback">
                         Please choose a username.
@@ -39,12 +40,12 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-12 col-md-6">
-                    <label for="validationCustomUsername" class="row password">Password</label>
+                <div class="col-12 col-lg-6">
+                    <label for="password_again" class="row form-label">New Password</label>
 
-                    <input type="password" class="col-4 form-control" id="password" name="password"
+                    <input type="password" class="form-control" id="password" name="password_again"
                         aria-describedby="inputGroupPrepend">
-                    <div class="row invalid-feedback">
+                    <div class="invalid-feedback">
                         Please choose a username.
                     </div>
                 </div>
@@ -52,8 +53,8 @@
             </div>
             <div class="row">
                 <div class="col-3"></div>
-                <div class="col-12 col-md-6">
-                    <label for="password_again" class="row form-label">Type Your Password Again</label>
+                <div class="col-12 col-lg-6">
+                    <label for="password_again" class="row form-label">New Password Again</label>
 
                     <input type="password" class="form-control" id="password_again" name="password_again"
                         aria-describedby="inputGroupPrepend">
@@ -70,10 +71,11 @@
             </div>
 
             <div class="mt-3">
-                <a href="/user/login">Already have account?</a>
+                <a href="/user/usercenter/123">Back to user center</a>
             </div>
 
         </form>
+        <script src="../public/js/changeAccountSettingValidation.js"> </script>
     </div>
-    <script src="../public/js/signInValidation.js"></script>
+
 </main>
