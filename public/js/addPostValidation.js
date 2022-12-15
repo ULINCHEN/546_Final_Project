@@ -35,7 +35,7 @@ $(function () {
 
     //---------------------------------------------------------------------------------
     //jquery
-    $('#addAnimalForm').on('submit', (event) => {
+    $('#submitBtn').on('click', (event) => {
         event.preventDefault();
         const errorMsg = [];
         $('.errorInfo').empty();
@@ -57,31 +57,33 @@ $(function () {
         }
         else {
 
-            // if no error, post form data to server use ajax
-            const formData = new FormData(document.getElementById('addAnimalForm'));
+            // // if no error, post form data to server use ajax
+            // const formData = new FormData(document.getElementById('addAnimalForm'));
 
-            // ajax setting
-            const ajaxPostConfig = {
-                method: "POST",
-                url: "/animal/new",
-                data: formData,
-                processData: false,
-                contentType: false,
-                enctype: 'multipart/form-data',
-                timeout: 5000,
-                success: () => {
-                    alert("Upload Complete!");
-                },
-                error: () => {
-                    alert("Upload Fail, Please Try Again!");
-                },
-                complete: () => {
-                    formReset();
-                },
-            };
+            // // ajax setting
+            // const ajaxPostConfig = {
+            //     method: "POST",
+            //     url: "/animal/new",
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     enctype: 'multipart/form-data',
+            //     timeout: 5000,
+            //     success: () => {
+            //         alert("Upload Complete!");
+            //     },
+            //     error: () => {
+            //         alert("Upload Fail, Please Try Again!");
+            //     },
+            //     complete: () => {
+            //         formReset();
+            //     },
+            // };
 
-            // fire ajax
-            $.ajax(ajaxPostConfig);
+            // // fire ajax
+            // $.ajax(ajaxPostConfig);
+            $("#addAnimalForm").trigger('submit');
+
         }
     })
 });
