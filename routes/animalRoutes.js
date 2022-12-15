@@ -37,6 +37,18 @@ router.route("/")
             });
         }
     });
+    
+
+router.route("/location/:location")
+    .get(async (req, res) => {
+        const location = req.params.location;
+        const postData = await getAllAnimalPosts();
+        // 这里要做一个判断 如果数据库有这个地址，则可以访问，否则导向错误页面
+        res.render('animalPosts', {
+            location: location,
+            postData: postData,
+        })
+    })
 
 
 router.route("/detail/:id")
