@@ -37,12 +37,12 @@ router.route("/")
             });
         }
     });
-    
+
 
 router.route("/location/:location")
     .get(async (req, res) => {
         const location = req.params.location;
-        const postData = await getAllAnimalPosts();
+        const postData = await animalData.getAllAnimalPosts();
         // 这里要做一个判断 如果数据库有这个地址，则可以访问，否则导向错误页面
         res.render('animalPosts', {
             location: location,
@@ -77,7 +77,7 @@ router.route("/detail/:id")
             let text = xss(req.body.comment);
             let username = req.session.user.username;
             try {
-                const comment = await createComment(text, username, id);
+                const comment = await commentData.createComment(text, username, id);
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
@@ -86,7 +86,7 @@ router.route("/detail/:id")
             }
             try {
                 let post = await animalData.getAnimalPostById(id);
-                let comments = await commentData.getCommentById(id);
+                let comments = await commentData.getCommentByPostId(id);
                 res.render('postDetail', {
                     id: id,
                     post: post,
@@ -125,7 +125,7 @@ router.route("/new")
         let species = xss(req.body.species);
         let description = xss(req.body.description);
         let healthCondition = xss(req.body.condition);
-        let animalPhotos = [xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
+        let animalPhoto = [xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
         let location = xss(req.body.location);
         console.log(req.body);
 
