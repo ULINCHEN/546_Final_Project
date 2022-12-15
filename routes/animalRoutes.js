@@ -112,10 +112,10 @@ router.route("/new")
         let animalName = xss(req.body.animal_name);
         let species = xss(req.body.species);
         let description = xss(req.body.description);
-        let healthCondition = xss(req.body.healthCondition);
-        let animalPhoto = xss(req.body.animalPhoto);
+        let healthCondition = xss(req.body.condition);
+        let animalPhotos = [xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
         let location = xss(req.body.location);
-        //console.log(body);
+        console.log(req.body);
 
         if (!animalName) throw 'Animal name can not be empty';
         if (!species) throw 'Species can not be empty';
@@ -133,9 +133,10 @@ router.route("/new")
                 animalPhoto,
                 location
             );
-            return res.render
+            res.status(200);
+            return res.redirect('/animal/detail/'+new_animal_post.animalid);
         } catch (e) {
-            res.status(400);
+            res.status(500);
             return res.render('error', {
                 errorMsg: e
             });
