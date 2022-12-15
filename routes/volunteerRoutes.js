@@ -69,6 +69,7 @@ router.route("/new")
                     description,
                     username
                 );
+                return res.redirect('/volunteer/detail/' + new_volunteer_post.volunteerid);
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
