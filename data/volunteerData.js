@@ -28,6 +28,7 @@ const createVollunteerPost = async (
   if (!insertuser) {
     throw "comment_id insert error";
   }
+  return { volunteerid: insertInfo.insertedId.toString() };
 };
 
 const getAllVollunteerPosts = async (username) => {
