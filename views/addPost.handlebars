@@ -14,7 +14,7 @@
         </div>
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 mb-3">
                 <label for="species">Species</label>
                 <select class="form-select" aria-label="Choose species" name="species" id="speciesSelecter">
                     <option value="Cat">Cat</option>
@@ -26,7 +26,7 @@
         </div>
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 mb-3">
                 <label for="health_condition">Health Condition</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="condition" id="good" value="Good" checked>
@@ -52,7 +52,16 @@
         </div>
         <div class="row input-group">
             <div class="col-3"></div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 mb-3">
+                <label for="location">Location</label>
+                <input class="text form-control" name="location" id="location" cols="30" rows="5"
+                    placeholder="40 Ravine Ave, Jersey City, New Jersey"></input>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row input-group">
+            <div class="col-3"></div>
+            <div class="col-12 col-lg-6 mb-3">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
             </div>
