@@ -28,7 +28,7 @@ router.route("/detail/:id")
         let id = req.params.id;
         //console.log(id);
         try {
-            let post = await volunteerData.getVolunteerPostById(id);
+            let post = await volunteerData.getVolunteerById(id);
             res.render('postDetail', {
                 title: "volunteer details",
                 id: id,

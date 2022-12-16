@@ -86,7 +86,11 @@
         <div class="mb-3 row">
             <div class="col-4"></div>
             <div class="col-12 col-lg-4 container text-center">
-                <ul class="errorInfo"></ul>
+                <ul class="errorInfo">
+                    {{#if error}}
+                    <li>{{error}}</li>
+                    {{/if}}
+                </ul>
                 <button class="col-12 btn btn-primary mb-3" type="submit" id="submitBtn">Submit</button>
                 <a href="/user/usercenter/123">Back To User Center</a>
             </div>

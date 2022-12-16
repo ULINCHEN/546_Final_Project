@@ -1,6 +1,7 @@
 // 这里写公用方法 数据校验等
 let nodeGeocoder = require("node-geocoder");
 
+// All vaild variables
 var maxAccountLength = 50;
 var minAccountLength = 4;
 var maxPasswordLength = 50;
@@ -9,6 +10,9 @@ var maxNameLength = 25;
 var minNameLength = 3;
 var maxArticleLength = 400;
 var minArticleLength = 5;
+var vaildAnimalSpecies = ["Cat", "Dog", "Others"];
+var vaildAnimalHealthCondition = ["Good", "Normal", "Bad"];
+var vaildVolunteerType = ["Organization", "Individual"];
 
 // username and password validation
 const accountValidation = (username) => {
@@ -92,28 +96,47 @@ const getDate = () => {
 };
 
 const checkArticle = (string, type) => {
-  if (!string) throw `${type} should not be empty`;
-  if (typeof string != "string") throw `${type} should be string`;
-  string = string.trim();
-  if (string.length == 0) throw `${type} should not contains only spaces`;
-  if (string.length > maxArticleLength)
-    throw `${type} length must less than ${maxArticleLength}`;
-  if (string.length < minArticleLength)
-    throw `${type} length must greater than ${minArticleLength}`;
+    if (!string) throw `${type} should not be empty`;
+    if (typeof string != 'string') throw `${type} should be string`;
+    string = string.trim();
+    if (string.length == 0) throw `${type} should not contains only spaces`;
+    if (string.length > maxArticleLength) throw `${type} length must less than ${maxArticleLength}`;
+    if (string.length < minArticleLength) throw `${type} length must greater than ${minArticleLength}`;
+    //SpecialCharacter(XSS) checked in middleware. 
+    //string = checkSpecialCharacter(string, type);    
+    return string;
+}
 
-  string = checkSpecialCharacter(string, type);
-  return string;
-};
+const checkAnimalPost = (species, health) => {
+    if (!vaildAnimalSpecies.includes(species)) throw `${species} is not an vaild animal species.`;
+    if (!vaildAnimalHealthCondition.includes(health)) throw `${health} is not an vaild animal Health Condition.`;
+    // No localtion check now.
+    // No photo check now
+    return [species, health]
+}
 
-const convertLocation = async (location) => {
-  if (!location) throw "Please provide a location";
-  if (typeof location != "string") throw "location should be a string";
-  location = location.trim();
-  if (location.length == 0) throw "location should not contains only spaces";
+const checkVolunteerPost = (type) => {
+    if (!vaildVolunteerType.includes(type)) throw `${type} is not an vaild Volunteer type.`;
+    // No localtion check now.
+    // No photo check now
+    return type
+}
 
-  let options = {
-    provider: "openstreetmap",
-  };
+
+
+//console.log(checkAnimalPost("Cat","Good1"))
+
+
+module.exports = { 
+    accountValidation, 
+    passwordValidation, 
+    checkName, 
+    getDate,
+    checkArticle,
+    checkAnimalPost,
+    checkVolunteerPost
+ };
+
 
   let geoCoder = nodeGeocoder(options);
 
