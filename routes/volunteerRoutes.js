@@ -8,7 +8,7 @@ router.route("/")
     .get(async (req, res) => {
         //code here for GET
         try {
-            const postData = await volunteerData.getAllVolunteerPosts();
+            const postData = await volunteerData.getAllVolunteerPost();
             console.log(postData);
             res.render('volunteerPosts', {
                 postData: postData
@@ -46,7 +46,7 @@ router.route("/new")
     .get(async (req, res) => {
         //code here for GET
         if (req.session.user) {
-            return res.render('addPost', {
+            return res.render('addVolunteerPost', {
                 title: "add new volunteer post",
             });
         } else {
@@ -60,9 +60,9 @@ router.route("/new")
         //code here for GET
         if (req.session.user) {
             //add volunteer post paras
-
+            
             try {
-                const new_volunteer_post = await volunteerData.createVounteerPost(
+                const new_volunteer_post = await volunteerData.createVolunteerPost(
                     contact,
                     location,
                     type,
