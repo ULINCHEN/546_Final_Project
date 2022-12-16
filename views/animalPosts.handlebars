@@ -1,6 +1,10 @@
 <main class="container px-4 text-center">
-    <div class="container row row-cols-auto">
+    <iv class="container row row-cols-auto">
         {{#if postData}}
+        <div id="map-main">
+
+        </div>
+
         {{#each postData}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
@@ -27,8 +31,11 @@
             card.appendChild(newlink);
         </script>
         {{/each}}
+        
         {{/if}}
+
     </div>
+    <script src="/public/js/map/together.js"></script>
 </main>
 
 <!--* 如果用户未上传图片 则显示一张通用图片*-->

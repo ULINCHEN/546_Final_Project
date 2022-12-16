@@ -23,6 +23,9 @@
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
     "jquery": "^3.6.1",
-    "mongodb": "^4.12.1"
+    "leaflet-geosearch": "^3.7.0",
+    "leaflet.markercluster.layersupport": "^2.0.1",
+    "mongodb": "^4.12.1",
+    "node-geocoder": "^3.29.0"
   }
 }

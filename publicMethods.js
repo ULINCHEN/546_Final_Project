@@ -1,4 +1,6 @@
 // 这里写公用方法 数据校验等
+// package
+let nodeGeocoder = require('node-geocoder');
 
 // username and password validation
 const accountValidation = (username) => {
@@ -62,9 +64,25 @@ const getDate = () => {
     return curDate;
 }
 
+const convertLocation = async (location) => {
+    if (!location) throw "Please provide a location";
+    if (typeof location != 'string') throw "location should be a string";
+    location = location.trim();
+    if (location.length == 0) throw "location should not contains only spaces";
+
+    let options = {
+        provider: 'openstreetmap'
+    };
+    
+    let geoCoder = nodeGeocoder(options);
+    
+    let result = await geoCoder.geocode('273 16th, nj')
+    return result;
+}
 
 
-module.exports = { accountValidation, passwordValidation, checkName, getDate };
+
+module.exports = { accountValidation, passwordValidation, checkName, getDate, convertLocation };
 
 
 
