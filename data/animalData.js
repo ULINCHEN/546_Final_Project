@@ -155,6 +155,21 @@ const getAllAnimalPosts = async () => {
   return postList;
 };
 
+const putFollowInUser = async (animalid, userid) => {
+  const userdb = await db.userCollection();
+  const User = await userdb.findOne({ _id: ObjectId(userid) });
+  let FollowanimalidList = User.follow_animal_ids;
+  FollowanimalidList.push(animalid);
+  const updateinfo = await userdb.updateOne(
+    { _id: ObjectId(userid) },
+    { $set: { animal_ids: FollowanimalidList } }
+  );
+  if (!updateinfo) {
+    throw "can not put animal in user";
+  }
+  return true;
+};
+
 const getAnimalPostById = async (id) => {
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(id) });
@@ -264,5 +279,6 @@ module.exports = {
   putCommentIn,
   removeCommentFromA,
   createImg,
+  putFollowInUser,
   getFollowAnimalByUser,
 };
