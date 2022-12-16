@@ -91,7 +91,7 @@ const main = async () => {
   // }
 
   try {
-    let remove = await volunteerData.getAllVollunteerPosts("abcde@123.com"); //639b8a7f243dbaead1371918
+    let remove = await volunteerData.getVolunteerPostsByU("abcde@123.com"); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);
   } catch (error) {
