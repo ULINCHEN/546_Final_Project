@@ -136,7 +136,23 @@ router.route("/detail/:id")
     })
     .delete(async (req, res) => {
         if (req.session.user){
-            
+            //code here for DELETE
+            let userid = req.session.user.userid;
+            try {
+                const postData = await animalData.getAnimalPostById(userid);
+            } catch (e) {
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                }); 
+            }
+        
+            try {
+                await animalData.removeAnimalById(userid);
+                res.status(200).json({movieId: req.params.movieId, deleted: true});
+            } catch (e) {
+                res.status(500).json({error: e});
+            }
         } else {
 
         }
