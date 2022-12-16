@@ -11,7 +11,7 @@ router.route("/usercenter/:id")
     .get(async (req, res) => {
         //code here for GET
         if (req.session.user) {
-            //const user = await userData.getUserData(req.session.user.username);
+            const user = await userData.getUserData(req.session.user.username);
             const username = req.session.user.username;
 
             // let follow_animal_ids = user.follow_animal_ids;
@@ -42,7 +42,7 @@ router.route("/usercenter/:id")
             //         volunteer_posts.push(volunteer_post);
             //     }
             // }
-            let volunteer_posts = volunteerData.getVolunteerByU(username);
+            let volunteer_posts = volunteerData.getVolunteerPostsByU(username);
             
             return res.render('userCenter', {
                 title: "current user data",
