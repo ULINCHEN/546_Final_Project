@@ -74,12 +74,14 @@ router.route("/detail/:id")
     })
     .post(async (req, res) => {
         if (req.session.user){
-            let id = req.params.id;
+            let animal_id = req.params.id;
             let text = xss(req.body.newComment);
             let username = req.session.user.username;
-            console.log(id, text, username);
+            let userid = req.session.user.userid;
+            //console.log(animal_id, text, username);
             try {
-                const comment = await commentData.createComment(text, username, id);
+                const comment = await commentData.createComment(text, username, animal_id);
+                const follow = await animalData.putFollowInUser(animal_id, userid);
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
@@ -87,10 +89,10 @@ router.route("/detail/:id")
                 });
             }
             try {
-                let post = await animalData.getAnimalPostById(id);
-                let comments = await commentData.getCommentByPostId(id);
+                let post = await animalData.getAnimalPostById(animal_id);
+                let comments = await commentData.getCommentByPostId(animal_id);
                 res.render('postDetail', {
-                    animal_id: 'animal/detail/' + id,
+                    animal_id: 'animal/detail/' + animal_id,
                     post: post,
                     comments: comments
                 });
