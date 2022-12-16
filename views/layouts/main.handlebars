@@ -73,16 +73,19 @@
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/login"><span class="align-top material-symbols-outlined">
-                                login
-                            </span>LOGIN</a>
-                    </li>
+                    {{#if login}}
                     <li class="nav-item">
                         <a class="nav-link" href="/user/logout"><span class="align-top material-symbols-outlined">
                                 logout
                             </span>LOGOUT</a>
                     </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/login"><span class="align-top material-symbols-outlined">
+                                login
+                            </span>LOGIN</a>
+                    </li>
+                    {{/if}}
                 </ul>
 
             </div>
