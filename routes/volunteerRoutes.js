@@ -82,7 +82,7 @@ router.route("/new")
 
             try {
                 volunteer_name = publicMethods.checkName(volunteer_name, "volunteer name");
-                //contact = publicMethods.checkContact(contact);
+                contact = publicMethods.checkVolunteerInfo(contact);
                 //location = 
                 type = publicMethods.checkVolunteerPost(type);
                 description = publicMethods.checkArticle(description);
