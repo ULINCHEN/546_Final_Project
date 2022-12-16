@@ -111,6 +111,9 @@ router.route("/detail/:id")
                 errorMsg: 'Please login to comment.'
             }); 
         }
+    })
+    .delete(async (req, res) => {
+        
     });
 
 router.route("/edit/:id")
