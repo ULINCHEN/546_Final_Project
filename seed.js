@@ -9,7 +9,7 @@ const main = async () => {
   const Database = await dbcon.dbConnection();
   await Database.dropDatabase();
   try {
-    let user1 = await Data.userData.createUser(
+    var user1 = await Data.userData.createUser(
       "abcd@123.com",
       "abcd123",
       "Mary",
@@ -71,7 +71,30 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let getanimalbyuser1 = await Data.animalData.getAnimalbyuser(
+    var animal4 = await Data.animalData.createAnimalPost(
+      "doggggggggg",
+      "dog",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens",
+      user1.userid
+    );
+    // console.log(animal4);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow1 = await Data.animalData.putFollowInUser(
+      animal4.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let getanimalbyuser1 = await Data.animalData.getAnimalByUser(
       "abcde@123.com"
     );
     // console.log(getanimalbyuser1);
@@ -120,7 +143,7 @@ const main = async () => {
       "description",
       "abcde@123.com"
     );
-    console.log(addvolunteer);
+    // console.log(addvolunteer);
   } catch (error) {
     console.log(error);
   }

@@ -51,7 +51,7 @@ const main = async () => {
   //     "cute!!!!!",
   //     "as well as me :)",
   //     "Stevens",
-  //     "639662a87cd4bcda8af046cf"
+  //     "639bc792f33969f96d9f088d"
   //   );
   //   console.log(animal1);
   // } catch (error) {
@@ -90,8 +90,18 @@ const main = async () => {
   //   console.log(error);
   // }
 
+  // try {
+  //   let remove = await volunteerData.getVolunteerPostsByU("abcde@123.com"); //639b8a7f243dbaead1371918
+  //   // console.log(a.comm);
+  //   console.log(remove);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+
   try {
-    let remove = await volunteerData.getVolunteerPostsByU("abcde@123.com"); //639b8a7f243dbaead1371918
+    let remove = await Data.animalData.removeAnimalById(
+      "639cc1460f2fb6938053751e"
+    ); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);
   } catch (error) {

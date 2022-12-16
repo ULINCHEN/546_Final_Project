@@ -145,6 +145,29 @@ const removeAnimalFromU = async (animalid, userid) => {
     { _id: ObjectId(userid) },
     { $set: { animal_ids: animalidList } }
   );
+  if (!updateinfo) {
+    throw `could not remove ${animalid} from user`;
+  }
+  return true;
+};
+
+const removeFollowFromU = async (animalid, userid) => {
+  const userdb = await db.userCollection();
+  const User = await userdb.findOne({ _id: ObjectId(userid) });
+  let animalidList = User.follow_animal_ids;
+  for (let index = 0; index < animalidList.length; index++) {
+    const element = animalidList[index];
+    if (element === animalid) {
+      animalidList.splice(index, 1);
+    }
+  }
+  const updateinfo = await userdb.updateOne(
+    { _id: ObjectId(userid) },
+    { $set: { follow_animal_ids: animalidList } }
+  );
+  if (!updateinfo) {
+    throw `could not remove ${animalid} from user`;
+  }
   return true;
 };
 
@@ -244,4 +267,5 @@ module.exports = {
   removeAnimalFromU,
   removeVolunteerFromU,
   getFollowAnimalList,
+  removeFollowFromU,
 };

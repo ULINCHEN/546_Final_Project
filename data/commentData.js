@@ -89,10 +89,20 @@ const removeCommentById = async (commentid) => {
     return `The comment ${commnet._id} has been successfully deleted!`;
 };
 
+const removeCommentByA = async (animalid) => {
+  const animal = await animaldb.getAnimalPostById(animalid);
+  const commentidList = animal.comment_ids;
+  for (let index = 0; index < commentidList.length; index++) {
+    const element = commentidList[index];
+    removeCommentById(element);
+  }
+};
+
 module.exports = {
   createComment,
   getCommentByPostId,
   removeCommentById,
   getCommentById,
   getCommentByUserId,
+  removeCommentByA,
 };
