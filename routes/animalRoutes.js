@@ -1,7 +1,6 @@
 const express = require('express');
 const xss = require('xss');
 const data = require('../data');
-const publicMethods = require('../publicMethods');
 const userData = data.userData;
 const animalData = data.animalData;
 const commentData = data.commentData;
@@ -38,12 +37,12 @@ router.route("/")
             });
         }
     });
-
+    
 
 router.route("/location/:location")
     .get(async (req, res) => {
         const location = req.params.location;
-        const postData = await animalData.getAllAnimalPosts();
+        const postData = await getAllAnimalPosts();
         // 这里要做一个判断 如果数据库有这个地址，则可以访问，否则导向错误页面
         res.render('animalPosts', {
             location: location,
@@ -56,12 +55,12 @@ router.route("/detail/:id")
     .get(async (req, res) => {
         //code here for GET
         let id = req.params.id;
-        //console.log(id);
+        console.log(id);
         try {
             let post = await animalData.getAnimalPostById(id);
-            let comments = await commentData.getCommentByPostId(id);
+            let comments = await commentData.getCommentById(id);
             res.render('postDetail', {
-                animal_id: 'animal/detail/' + id,
+                id: id,
                 post: post,
                 comments: comments
             });
@@ -75,11 +74,10 @@ router.route("/detail/:id")
     .post(async (req, res) => {
         if (req.session.user){
             let id = req.params.id;
-            let text = xss(req.body.newComment);
+            let text = xss(req.body.comment);
             let username = req.session.user.username;
-            console.log(id, text, username);
             try {
-                const comment = await commentData.createComment(text, username, id);
+                const comment = await createComment(text, username, id);
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
@@ -88,9 +86,9 @@ router.route("/detail/:id")
             }
             try {
                 let post = await animalData.getAnimalPostById(id);
-                let comments = await commentData.getCommentByPostId(id);
+                let comments = await commentData.getCommentById(id);
                 res.render('postDetail', {
-                    animal_id: 'animal/detail/' + id,
+                    id: id,
                     post: post,
                     comments: comments
                 });
@@ -108,78 +106,6 @@ router.route("/detail/:id")
         }
     });
 
-router.route("/edit/:id")
-    .get(async (req, res) => {
-        let id = req.params.id;
-        const postData = animalData.getAnimalPostById(id);
-        const userId = postData.user_id;
-        if (req.session.user && req.session.user.userid == userId) {
-            return res.render('editPost', {
-                title: "Edit your animal post",
-                postData: postData
-            });
-        } else {
-            res.status(400);
-            return res.render('error', { 
-                errorMsg: 'Please login to edit your animal post.'
-            }); 
-        }
-    })
-    .put(async (req, res) => {
-        let id = req.params.id;
-        const animalPost = animalData.getAnimalPostById(id);
-        const userid = animalPost.user_id;
-        if (req.session.user && req.session.user.userid == userid){
-            let animalName = xss(req.body.animal_name);
-            let species = xss(req.body.species);
-            let description = xss(req.body.description);
-            let healthCondition = xss(req.body.condition);
-            let location = xss(req.body.location);
-            let userid = req.session.user.userid;
-            let animalPhoto = null;
-            //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
-                        
-            //console.log(location);
-
-            try{
-                animalName = publicMethods.checkName(animalName, "Animal Name");
-                [species, healthCondition] = publicMethods.checkAnimalPost(species, healthCondition);
-                description = publicMethods.checkArticle(description);
-                // animal photo can be empty
-                // location check
-            } catch(e) {
-                res.status(400);
-                return res.render('editPost',  {
-                    error: e
-                });
-            }
-            
-            try {
-                const new_animal_post = await animalData.updateAnimalPost(
-                    id,
-                    animalName,
-                    species,
-                    description,
-                    healthCondition,
-                    location,
-                    userid
-                );
-                res.status(200);
-                return res.redirect('/animal/edit/' + id);
-            } catch (e) {
-                res.status(500);
-                return res.render('editPost',  {
-                    error: e
-                });
-            }
-        } else {
-            res.status(400);
-            return res.render('error', { 
-                errorMsg: 'Please login to edit your post.'
-            }); 
-        }
-    });
-    
 router.route("/new")
     .get(async (req, res) => {
         //code here for GET
@@ -195,53 +121,37 @@ router.route("/new")
         }
     })
     .post(async (req, res) => {
-        if (req.session.user){
-            let animalName = xss(req.body.animal_name);
-            let species = xss(req.body.species);
-            let description = xss(req.body.description);
-            let healthCondition = xss(req.body.condition);
-            let location = xss(req.body.location);
-            let userid = req.session.user.userid;
-            let animalPhoto = null;
-            //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
-                        
-            //console.log(location);
+        let animalName = xss(req.body.animal_name);
+        let species = xss(req.body.species);
+        let description = xss(req.body.description);
+        let healthCondition = xss(req.body.condition);
+        let animalPhotos = [xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
+        let location = xss(req.body.location);
+        console.log(req.body);
 
-            try{
-                animalName = publicMethods.checkName(animalName, "Animal Name");
-                [species, healthCondition] = publicMethods.checkAnimalPost(species, healthCondition);
-                description = publicMethods.checkArticle(description);
-                // animal photo can be empty
-                // location check
-            } catch(e) {
-                res.status(400);
-                return res.render('addPost',  {
-                    error: e
-                });
-            }
-            
-            try {
-                const new_animal_post = await animalData.createAnimalPost(
-                    animalName,
-                    species,
-                    description,
-                    healthCondition,
-                    location,
-                    userid
-                );
-                res.status(200);
-                return res.redirect('/animal/detail/'+new_animal_post.animalid);
-            } catch (e) {
-                res.status(500);
-                return res.render('addPost',  {
-                    error: e
-                });
-            }
-        } else {
-            res.status(400);
-            return res.render('error', { 
-                errorMsg: 'Please login to add new post.'
-            }); 
+        if (!animalName) throw 'Animal name can not be empty';
+        if (!species) throw 'Species can not be empty';
+        if (!description) throw 'Description can not be empty';
+        if (!healthCondition) throw 'HealthCondition can not be empty';
+        // animal photo can be empty
+        if (!location) throw 'Location can not be empty';
+
+        try {
+            const new_animal_post = await animalData.createAnimalPost(
+                animalName,
+                species,
+                description,
+                healthCondition,
+                animalPhoto,
+                location
+            );
+            res.status(200);
+            return res.redirect('/animal/detail/'+new_animal_post.animalid);
+        } catch (e) {
+            res.status(500);
+            return res.render('error', {
+                errorMsg: e
+            });
         }
     });
 

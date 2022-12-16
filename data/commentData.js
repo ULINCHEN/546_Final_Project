@@ -64,6 +64,9 @@ const getCommentById = async (commentid) => {
   if (!comment) {
     throw `can not find comment with id of ${commentid}`;
   }
+  const user = await userdb.getUserById(comment.user_id);
+  comment.username = user.first_name + " " + user.last_name;
+  comment.user_account = user.user_account;
   comment._id = comment._id.toString();
   return comment;
 };
