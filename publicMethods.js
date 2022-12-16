@@ -1,6 +1,18 @@
-// 这里写公用方法 数据校验等
 
-// All vaild variables
+/*
+Description:
+
+1. "All global vaild variables" to change scopes.
+2. accountValidation(username); passwordValidation(password) in user's check.
+3. checkName(string, type) in common name check.
+4. checkArticle(string, type) in Animal_descript and Comment check.
+5. checkAnimalPost(species, health) to check views.layouts.addPost inputs.
+6. checkVolunteerPost(tpye) to check views.layouts.addVolunteerPost inputs.
+7. checkVolunteerInfo(input) to check Volunteer information, it vaild as email or phonenumber(just US number without country code '+1').
+*/ 
+
+
+// All global vaild variables
 var maxAccountLength = 50;
 var minAccountLength = 4;
 var maxPasswordLength = 50;
@@ -113,9 +125,18 @@ const checkVolunteerPost = (type) => {
     return type
 }
 
+// check if it's a vaild email or phone, using in volunteer.    
+// it vaild as email or phonenumber(just US number without country code '+1').
+const checkVolunteerInfo = (input) => {
+    input = input.trim();
+    var mail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    var phonenumber = /\d{10}/;
+    isok = (mail.test(input) || phonenumber.test(input));
+    if (!isok) throw `${input} is not an vaild Email or Phone number.`;
+    return input
+}
 
-
-//console.log(checkAnimalPost("Cat","Good1"))
+//console.log(checkVolunteerInfo("1234567990"))
 
 
 module.exports = { 
@@ -125,7 +146,8 @@ module.exports = {
     getDate,
     checkArticle,
     checkAnimalPost,
-    checkVolunteerPost
+    checkVolunteerPost,
+    checkVolunteerInfo
  };
 
 
