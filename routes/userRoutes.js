@@ -23,7 +23,7 @@ router.route("/usercenter/:id")
             //         follow_animal_posts.push(animal_post);
             //     }
             // }
-            let follow_animal_posts =  animalData.getFollowAnimalByUser(username);
+            let follow_animal_posts = await animalData.getFollowAnimalByUser(username);
             
             // let animal_ids = user.animal_ids;
             // let animal_posts = [];
@@ -33,7 +33,7 @@ router.route("/usercenter/:id")
             //         animal_posts.push(animal_post);
             //     }
             // }
-            let animal_posts = animalData.getAnimalByUser(username);
+            let animal_posts = await animalData.getAnimalByUser(username);
             
             // let volunteer_ids = user.volunteer_ids;
             // let volunteer_posts = [];
@@ -43,7 +43,7 @@ router.route("/usercenter/:id")
             //         volunteer_posts.push(volunteer_post);
             //     }
             // }
-            let volunteer_posts = volunteerData.getVolunteerPostsByU(username);
+            let volunteer_posts = await volunteerData.getVolunteerPostsByU(username);
             
             return res.render('userCenter', {
                 title: "current user data",
@@ -134,8 +134,8 @@ router.route("/signin")
             let password = xss(req.body.password);
             let password_again = xss(req.body.password_again);
             try{
-                firstname = publicMethods.checkName(firstname);
-                lastname = publicMethods.checkName(lastname);
+                firstname = publicMethods.checkName(firstname, "first name");
+                lastname = publicMethods.checkName(lastname, "last name");
                 username = publicMethods.accountValidation(username);
                 password = publicMethods.passwordValidation(password);
                 if (password != password_again) throw "The password entered the first and second time does not match";
