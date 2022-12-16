@@ -2,7 +2,7 @@
     <div class="container text-center">
         <h1>Upload a New Volunteer Infomation</h1>
     </div>
-    <form action="" method="POST" class="row container" id="volunteerForm">
+    <form action="/volunteer/new" method="POST" class="row container" id="volunteerForm">
 
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
@@ -66,7 +66,11 @@
         <div class="mb-3 row">
             <div class="col-4"></div>
             <div class="col-12 col-lg-4 container text-center">
-                <ul class="errorInfo"></ul>
+                <ul class="errorInfo">
+                    {{#if error}}
+                    <li>{{error}}</li>
+                    {{/if}}
+                </ul>
                 <button class="col-12 btn btn-primary mb-3" type="submit">Submit</button>
                 <a href="/user/usercenter/123">Back To User Center</a>
             </div>

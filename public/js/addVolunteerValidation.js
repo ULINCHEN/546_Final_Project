@@ -43,7 +43,7 @@ $(function () {
         const contactInput = $('#contact').val();
         const descInput = $('#description').val();
 
-        checkInputLenth(nameInput, "Name", 3, 10, errorMsg);
+        checkInputLenth(nameInput, "Name", 3, 25, errorMsg);
         checkInputLenth(contactInput, "Contect", 5, 25, errorMsg);
         checkInputLenth(descInput, "Description", 10, 250, errorMsg);
 
@@ -58,31 +58,32 @@ $(function () {
         }
         else {
 
+            $("#volunteerForm").trigger("submit");
             // if no error, post form data to server use ajax
-            const formData = new FormData(document.getElementById('volunteerForm'));
+            // const formData = new FormData(document.getElementById('volunteerForm'));
 
-            // ajax setting
-            const ajaxPostConfig = {
-                method: "POST",
-                url: "/volunteer/new",
-                data: formData,
-                processData: false,
-                contentType: false,
-                enctype: 'multipart/form-data',
-                timeout: 5000,
-                success: () => {
-                    alert("Upload Complete!");
-                },
-                error: () => {
-                    alert("Upload Fail, Please Try Again!");
-                },
-                complete: () => {
-                    formReset();
-                },
-            };
+            // // ajax setting
+            // const ajaxPostConfig = {
+            //     method: "POST",
+            //     url: "/volunteer/new",
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     enctype: 'multipart/form-data',
+            //     timeout: 5000,
+            //     success: () => {
+            //         alert("Upload Complete!");
+            //     },
+            //     error: () => {
+            //         alert("Upload Fail, Please Try Again!");
+            //     },
+            //     complete: () => {
+            //         formReset();
+            //     },
+            // };
 
-            // fire ajax
-            $.ajax(ajaxPostConfig);
+            // // fire ajax
+            // $.ajax(ajaxPostConfig);
         }
 
     })
