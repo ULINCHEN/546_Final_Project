@@ -80,8 +80,9 @@ router.route("/detail/:id")
             let userid = req.session.user.userid;
             //console.log(animal_id, text, username);
             //not users' own post
-            const follow = await animalData.putFollowInUser(animal_id, userid);
+            
             try {
+                const follow = await animalData.putFollowInUser(animal_id, userid);
                 const comment = await commentData.createComment(text, username, animal_id);
                 
             } catch (e) {
@@ -234,7 +235,7 @@ router.route("/new")
                     userid
                 );
                 res.status(200);
-                return res.redirect('/animal/detail/'+new_animal_post.animalid);
+                return res.redirect('/animal/detail/' + new_animal_post.animalid);
             } catch (e) {
                 res.status(500);
                 return res.render('addPost',  {
