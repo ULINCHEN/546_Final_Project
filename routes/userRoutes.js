@@ -115,7 +115,7 @@ router.route("/signin")
     .post(async (req, res) => {
         //code here for POST
         let firstname = xss(req.body.firstname);
-        let lastname = xss(req.body.last);
+        let lastname = xss(req.body.lastname);
         let username = xss(req.body.account);
         let password = xss(req.body.password);
         let password_again = xss(req.body.password_again);
