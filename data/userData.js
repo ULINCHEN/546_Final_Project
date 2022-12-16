@@ -65,7 +65,8 @@ const checkUser = async (username, password) => {
   );
   if (comparePassword == false)
     throw "Either the username or password is invalid";
-  else return { authenticatedUser: true };
+  else
+    return { authenticatedUser: true, userid: checkUserExist._id.toString() };
 };
 
 const updateUser = async (username, password, firstName, lastName) => {
