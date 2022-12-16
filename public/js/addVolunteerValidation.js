@@ -33,7 +33,7 @@ $(function () {
 
     //------------------------------------------------------------------------------------
 
-    $("#volunteerForm").on("submit", (event) => {
+    $('#submitBtn').on('click', (event) => {
         event.preventDefault();
         const errorMsg = [];
         $('.errorInfo').empty();
