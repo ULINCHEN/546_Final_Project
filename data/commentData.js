@@ -85,8 +85,20 @@ const removeCommentById = async (commentid) => {
   }
   const removeInfo = await userdb.removeCommentFromU(commentid, userid);
   const removeInfo2 = await animaldb.removeCommentFromA(commentid, animalid);
-  if (removeInfo && removeInfo2)
+  if (removeInfo && removeInfo2) {
     return `The comment ${commnet._id} has been successfully deleted!`;
+  } else {
+    throw `could not remove comment correctlly`;
+  }
+};
+
+const removeCommentByA = async (animalid) => {
+  const animal = await animaldb.getAnimalPostById(animalid);
+  const commentidList = animal.comment_ids;
+  for (let index = 0; index < commentidList.length; index++) {
+    const element = commentidList[index];
+    removeCommentById(element);
+  }
 };
 
 module.exports = {
@@ -95,4 +107,5 @@ module.exports = {
   removeCommentById,
   getCommentById,
   getCommentByUserId,
+  removeCommentByA,
 };
