@@ -31,18 +31,7 @@ const createVolunteerPost = async (
   return { volunteerid: insertInfo.insertedId.toString() };
 };
 
-const getAllVolunteerPost = async () => {
-  const volunteerdb = await db.volunteerCollection();
-  const postList = await volunteerdb.find({}).toArray();
-  if (postList.length == 0) throw "No Volunteer in database";
-  for (let index = 0; index < postList.length; index++) {
-    const element = postList[index];
-    element._id = element._id.toString();
-  }
-  return postList;
-};
-
-const getVolunteerPostsByU = async (username) => {
+const getAllVolunteerPosts = async (username) => {
   const user = await userdb.getUserData(username);
   let volunteeridList = user.volunteer_ids;
   let volunteerList = [];
@@ -85,8 +74,7 @@ const removeVolunteerById = async (id) => {
 
 module.exports = {
   createVolunteerPost,
-  getVolunteerPostsByU,
+  getAllVolunteerPosts,
   getVolunteerById,
   removeVolunteerById,
-  getAllVolunteerPost,
 };

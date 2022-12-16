@@ -65,8 +65,7 @@ const checkUser = async (username, password) => {
   );
   if (comparePassword == false)
     throw "Either the username or password is invalid";
-  else
-    return { authenticatedUser: true, userid: checkUserExist._id.toString() };
+  else return { authenticatedUser: true };
 };
 
 const updateUser = async (username, password, firstName, lastName) => {
@@ -81,9 +80,6 @@ const updateUser = async (username, password, firstName, lastName) => {
       },
     }
   );
-  if (!updatedInfo) {
-    throw ``;
-  }
 };
 
 const getAnimalList = async (username) => {
@@ -91,12 +87,6 @@ const getAnimalList = async (username) => {
   const User = await userdb.findOne({ user_account: username });
   if (!User) throw `${username} is not exist`;
   return User.animal_ids;
-};
-const getFollowAnimalList = async (username) => {
-  const userdb = await db.userCollection();
-  const User = await userdb.findOne({ user_account: username });
-  if (!User) throw `${username} is not exist`;
-  return User.follow_animal_ids;
 };
 
 const getUserData = async (username) => {
@@ -243,5 +233,4 @@ module.exports = {
   removeCommentFromU,
   removeAnimalFromU,
   removeVolunteerFromU,
-  getFollowAnimalList,
 };
