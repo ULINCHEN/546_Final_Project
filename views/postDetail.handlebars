@@ -55,12 +55,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-3"></div>
-                <form action="/comment/:id" method="POST" class="col-12 col-lg-6" id="commentForm">
+                <form action={{animal_id}} method="POST" class="col-12 col-lg-6" id="commentForm">
                     <div class="mb-3 container text-center">
                         <label for="newComment" class="form-label mb-3">Want to say something?</label>
                         <textarea class="form-control mb-3" id="newComment" name="newComment" rows="3"></textarea>
                         <ul class="errorInfo"></ul>
-                        <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
+                        <button type="submit" class="btn btn-primary mb-3" id="submitComment">Add Comment</button>
                     </div>
                 </form>
                 <div class="col-3"></div>
@@ -76,19 +76,13 @@
                     <div class="col-3"></div>
                     <div class="col-12 col-lg-6">
 
-                        {{#if post.comments}}
-                        {{#each post.comments}}
+                        {{#if comments}}
+                        {{#each comments}}
                         <div class="row">
                             <hr>
-                            <p>content: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam illo sed
-                                reiciendis
-                                esse
-                                voluptatum! Non itaque, consequuntur cupiditate a reprehenderit pariatur consectetur
-                                facilis
-                                tempore
-                                veniam sapiente. A consectetur nostrum dolor.</p>
-                            <p>Author</p>
-                            <p>Date</p>
+                            <p>{{username}}</p>
+                            <p>{{text}}</p>
+                            <p>{{time}}</p>
                         </div>
                         {{/each}}
                         {{else}}
