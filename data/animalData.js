@@ -31,7 +31,13 @@ const createAnimalPost = async (
   let time = new Date();
   time = time.toUTCString();
   // await createImg(file);
-  let filepath = file.path + "." + file.mimetype.split("/")[1];
+  let filepath = "";
+  if (!file) {
+    filepath = "";
+  } else {
+    filepath = file.path + "." + file.mimetype.split("/")[1];
+  }
+
   const postData = {
     animal_name: animalName,
     species: species,
@@ -101,24 +107,26 @@ const updateAnimalPost = async (
   species,
   description,
   healthCondition,
-  time,
   location,
-  userid,
-  animalPhoto
+  userid
 ) => {
   useridList.push(userid);
+  let time = new Date();
+  time = time.toUTCString();
+  const animaldb = await db.animalPostCollection();
+  const checkexist = await animaldb.findOne({ _id: ObjectId(animalid) });
   const updateData = {
     animal_name: animalName,
     species: species,
     description: description,
     health_condition: healthCondition,
     find_time: time,
-    animal_photo: animalPhoto,
+    animal_photo: checkexist.animal_photo,
     location_id: [],
     user_id: useridList,
     comment_ids: [],
   };
-  const animaldb = await db.animalPostCollection();
+
   const updatedInfo = await animaldb.updateOne(
     { _id: ObjectId(animalid) },
     { $set: updateData }
@@ -192,8 +200,19 @@ const removeCommentFromA = async (commentid, animalid) => {
   return true;
 };
 
-const getAnimalbyuser = async (username) => {
+const getAnimalByUser = async (username) => {
   let animalidList = await userdb.getAnimalList(username);
+  let animalList = [];
+  for (let index = 0; index < animalidList.length; index++) {
+    const element = animalidList[index];
+    let animal = await getAnimalPostById(element);
+    animalList.push(animal);
+  }
+  return animalList;
+};
+
+const getFollowAnimalByUser = async (username) => {
+  let animalidList = await userdb.getFollowAnimalList(username);
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
     const element = animalidList[index];
@@ -238,11 +257,12 @@ module.exports = {
   createAnimalPost,
   getAllAnimalPosts,
   getAnimalPostById,
-  getAnimalbyuser,
+  getAnimalByUser,
   updateAnimalPost,
   getAnimalByType,
   removeAnimalById,
   putCommentIn,
   removeCommentFromA,
   createImg,
+  getFollowAnimalByUser,
 };
