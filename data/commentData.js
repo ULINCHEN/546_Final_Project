@@ -85,8 +85,11 @@ const removeCommentById = async (commentid) => {
   }
   const removeInfo = await userdb.removeCommentFromU(commentid, userid);
   const removeInfo2 = await animaldb.removeCommentFromA(commentid, animalid);
-  if (removeInfo && removeInfo2)
+  if (removeInfo && removeInfo2) {
     return `The comment ${commnet._id} has been successfully deleted!`;
+  } else {
+    throw `could not remove comment correctlly`;
+  }
 };
 
 const removeCommentByA = async (animalid) => {

@@ -99,9 +99,7 @@ const main = async () => {
   // }
 
   try {
-    let remove = await Data.animalData.removeAnimalById(
-      "639cc1460f2fb6938053751e"
-    ); //639b8a7f243dbaead1371918
+    let remove = await Data.userData.checkUser("abcdef@123.com", "abcdef123"); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);
   } catch (error) {

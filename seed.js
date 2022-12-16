@@ -32,6 +32,17 @@ const main = async () => {
     console.log(error);
   }
   try {
+    var user3 = await Data.userData.createUser(
+      "abcdef@123.com",
+      "abcdefg123",
+      "April",
+      "May"
+    );
+    // console.log(user1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
     let animal1 = await Data.animalData.createAnimalPost(
       "miaomiao",
       "cat",

@@ -71,18 +71,19 @@ const checkUser = async (username, password) => {
 
 const updateUser = async (username, password, firstName, lastName) => {
   const userdb = await db.userCollection();
+  const passwordAfterHash = await bcrypt.hash(password, saltRounds);
   const updatedInfo = await userdb.updateOne(
     { user_account: username },
     {
       $set: {
-        user_password: password,
+        user_password: passwordAfterHash,
         first_name: firstName,
         last_name: lastName,
       },
     }
   );
   if (!updatedInfo) {
-    throw ``;
+    throw `could not update user ${username}`;
   }
 };
 

@@ -167,6 +167,7 @@ const getAnimalPostById = async (id) => {
   return animal;
 };
 
+// Before use this funtion, please use removeCommentByA(animalid) in commentData in routes first
 const removeAnimalById = async (animalid) => {
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
