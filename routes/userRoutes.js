@@ -86,7 +86,8 @@ router.route("/login")
             if (login.authenticatedUser) {
                 req.session.user = {username: username, userid: login.userid};
                 return res.render('loginAlert', {
-                    logMeg: "You have successfully logged in!"
+                    logMsg: "You have successfully logged in!",
+                    url: '/user/usercenter/' + login.userid
                 });
             } else {  
                 res.status(500);  
@@ -159,12 +160,13 @@ router.route("/logout")
         if (req.session.user){
             req.session.destroy();
             return res.render('logoutAlert', {
-                logMeg: "You have successfully logged out!"
+                logMsg: "You have successfully logged out!",
+                url: '/'
             });
         } else {
             res.status(400);
             return res.render('error', {
-                error: e
+                errorMsg: "Please log in to log out."
             });
         }
     })
