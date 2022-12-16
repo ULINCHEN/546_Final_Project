@@ -13,15 +13,16 @@ router.route("/usercenter/:id")
         if (req.session.user) {
             //const user = await userData.getUserData(req.session.user.username);
             const username = req.session.user.username;
-            
-            let follow_animal_ids = user.follow_animal_ids;
-            let follow_animal_posts = [];
-            if (follow_animal_ids.length > 0){
-                for (let i = 0, len = follow_animal_ids.length; i < len; i++){
-                    let animal_post = await animalData.getAnimalPostById(follow_animal_ids[i]);
-                    follow_animal_posts.push(animal_post);
-                }
-            }
+
+            // let follow_animal_ids = user.follow_animal_ids;
+            // let follow_animal_posts = [];
+            // if (follow_animal_ids.length > 0){
+            //     for (let i = 0, len = follow_animal_ids.length; i < len; i++){
+            //         let animal_post = await animalData.getAnimalPostById(follow_animal_ids[i]);
+            //         follow_animal_posts.push(animal_post);
+            //     }
+            // }
+            let follow_animal_posts =  animalData.getFollowAnimalByUser(username);
             
             // let animal_ids = user.animal_ids;
             // let animal_posts = [];
@@ -47,7 +48,7 @@ router.route("/usercenter/:id")
                 title: "current user data",
                 first_name: user.first_name,    //"jake", 
                 last_name: user.last_name,  //"ma"
-                myAnimalPostData: animal_posts,
+                follow_animal_posts: follow_animal_posts,
                 animal_posts: animal_posts,
                 volunteer_posts: volunteer_posts
             });
