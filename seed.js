@@ -22,7 +22,7 @@ const main = async () => {
     let healthCondition = 'bad';
     let time = getDate();
     let animalPhoto = 'https://plus.unsplash.com/premium_photo-1667099521841-8078e09b47f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-    let location = 'hoboken';
+    let location = '40.7447099, -74.0289506';
 
     // first add user, should be add to database
     try {
