@@ -13,6 +13,7 @@ router.route("/usercenter/:id")
         if (req.session.user) {
             const user = await userData.getUserData(req.session.user.username);
             const username = req.session.user.username;
+            console.log(user);
 
             // let follow_animal_ids = user.follow_animal_ids;
             // let follow_animal_posts = [];
@@ -84,7 +85,9 @@ router.route("/login")
             const login = await userData.checkUser(username, password);
             if (login.authenticatedUser) {
                 req.session.user = {username: username, userid: login.userid};
-                return res.redirect('/');
+                return res.render('loginAlert', {
+                    logMeg: "You have successfully logged in!"
+                });
             } else {  
                 res.status(500);  
                 return res.render('error', { 
@@ -121,7 +124,7 @@ router.route("/signin")
         let password_again = xss(req.body.password_again);
         try{
             firstname = publicMethods.checkName(firstname);
-            firstname = publicMethods.checkName(lastname);
+            lastname = publicMethods.checkName(lastname);
             username = publicMethods.accountValidation(username);
             password = publicMethods.passwordValidation(password);
             if (password != password_again) throw "The password entered the first and second time does not match";
@@ -133,7 +136,7 @@ router.route("/signin")
             });
         }   
         try{
-            const createUser = await userData.createUser(username, password);
+            const createUser = await userData.createUser(username, password, firstname, lastname);
             if (createUser.insertedUser) {
                 return res.redirect('/user/login');
             } else {
@@ -150,6 +153,21 @@ router.route("/signin")
             });
         }
     });
+
+router.route("/logout")
+    .get(async (req, res) => {
+        if (req.session.user){
+            req.session.destroy();
+            return res.render('logoutAlert', {
+                logMeg: "You have successfully logged out!"
+            });
+        } else {
+            res.status(400);
+            return res.render('error', {
+                error: e
+            });
+        }
+    })
 
 router.route("/followed")
     .get(async (req, res) => {
