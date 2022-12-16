@@ -2,7 +2,7 @@
     <div class="container text-center">
         <h1>Upload a New Stray Animal Post</h1>
     </div>
-    <form action="/animal/new" method="POST" class="row container" id="addAnimalForm">
+    <form action="/animal/new" method="POST" class="row container" id="addAnimalForm" enctype="multipart/form-data">
 
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
@@ -67,7 +67,15 @@
             </div>
             <div class="col-3"></div>
         </div>
-        <div class="row mb-3 input-group">
+        <div class="row">
+            <div class="col-3"></div>
+        <div class="col-6">
+            <input type="file" name="photo1" id="photo1" accept="image/*">
+        </div>
+        <div class="col-3"></div>
+        </div>
+        
+        {{!-- <div class="row mb-3 input-group">
             <div class="col-3"></div>
             <div class="col-12 col-lg-6">
                 <label for="description">Photo (Only three allow)</label>
@@ -82,7 +90,7 @@
                 </div>
             </div>
             <div class="col-3"></div>
-        </div>
+        </div> --}}
         <div class="mb-3 row">
             <div class="col-4"></div>
             <div class="col-12 col-lg-4 container text-center">

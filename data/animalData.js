@@ -12,32 +12,36 @@ const createAnimalPost = async (
   healthCondition,
   location,
   userid,
-  file
-  //animalPhoto
+  file,
+  animalPhoto
 ) => {
-  if (!animalName) throw "Animal name can not be empty";
-  if (!species) throw "Species can not be empty";
-  if (!description) throw "Description can not be empty";
-  if (!healthCondition) throw "HealthCondition can not be empty";
-  // if (!time) throw "Time can not be empty";
-  // animal photo can be empty
-  if (!location) throw "Location can not be empty";
-  if (!userid) throw "userid can not be empty";
-
+  // if (!animalName) throw "Animal name can not be empty";
+  // if (!species) throw "Species can not be empty";
+  // if (!description) throw "Description can not be empty";
+  // if (!healthCondition) throw "HealthCondition can not be empty";
+  // // if (!time) throw "Time can not be empty";
+  // // animal photo can be empty
+  // if (!location) throw "Location can not be empty";
+  // if (!userid) throw "userid can not be empty";
   // locationId = somefunction(location) 这里应该要把location 转化成 locationId
   // location 暂时没加入postData
+  // let animalName = body.animal_name;
+  // let species = body.species;
+  // let healthCondition = body.condition;
+  // let description = body.description;
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
-  // await createImg(file);
+  await createImg(file);
   let filepath = "";
   if (!file) {
     filepath = "";
   } else {
     filepath = file.path + "." + file.mimetype.split("/")[1];
+    console.log(filepath);
   }
-
+  console.log(filepath);
   const postData = {
     animal_name: animalName,
     species: species,
@@ -59,7 +63,7 @@ const createAnimalPost = async (
 };
 
 const createImg = async (file) => {
-  console.log(file);
+  // console.log(file, body);
   return new Promise((resolve, reject) => {
     fs.readFile(file.path, async (err, data) => {
       if (err) {
@@ -98,6 +102,9 @@ const createImg = async (file) => {
     });
   });
 };
+
+const putPhotoSrc = async () => {};
+
 /**
  * 传id进来
  *

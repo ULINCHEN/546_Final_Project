@@ -44,19 +44,19 @@ const main = async () => {
   //   console.log(error);
   // }
 
-  // try {
-  //   let animal1 = await Data.animalData.createAnimalPost(
-  //     "doggggggggg",
-  //     "dog",
-  //     "cute!!!!!",
-  //     "as well as me :)",
-  //     "Stevens",
-  //     "639bc792f33969f96d9f088d"
-  //   );
-  //   console.log(animal1);
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    let animal1 = await Data.animalData.createAnimalPost(
+      "dggg",
+      "dog",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens",
+      "639cfb05e89e5e61a7d98675"
+    );
+    console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
 
   // try {
   //   let user2 = await Data.userData.createUser(
