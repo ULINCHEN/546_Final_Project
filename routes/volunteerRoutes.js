@@ -1,4 +1,5 @@
 const express = require('express');
+const xss = require('xss');
 const router = express.Router();
 const publicMethods = require('../publicMethods');
 const data = require('../data');
@@ -60,7 +61,25 @@ router.route("/new")
         //code here for GET
         if (req.session.user) {
             //add volunteer post paras
-            
+            let volunteer_name = xss(req.body.volunteer_name);
+            let contact = xss(req.body.contact);
+            let location = xss(req.body.location);
+            let type = xss(req.body.type);
+            let description = xss(req.body.description);
+            let username = req.session.user.username;
+
+            try {
+                volunteer_name = publicMethods.checkName(volunteer_name);
+                //contact = publicMethods.checkContact(contact);
+                //location = 
+                type = publicMethods.checkVolunteerPost(type);
+                description = publicMethods.checkArticle(description);
+            } catch(e) {
+                res.status(400);
+                return res.render('addVolunteerPost',  {
+                    error: e
+                });
+            }
             try {
                 const new_volunteer_post = await volunteerData.createVolunteerPost(
                     contact,
@@ -71,9 +90,9 @@ router.route("/new")
                 );
                 return res.redirect('/volunteer/detail/' + new_volunteer_post.volunteerid);
             } catch (e) {
-                res.status(400);
-                return res.render('error', {
-                    errorMsg: e
+                res.status(500);
+                return res.render('addVolunteerPost',  {
+                    error: e
                 });
             }            
         } else {
