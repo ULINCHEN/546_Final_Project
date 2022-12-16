@@ -81,7 +81,7 @@ router.route("/new")
             let username = req.session.user.username;
 
             try {
-                volunteer_name = publicMethods.checkName(volunteer_name);
+                volunteer_name = publicMethods.checkName(volunteer_name, "volunteer name");
                 //contact = publicMethods.checkContact(contact);
                 //location = 
                 type = publicMethods.checkVolunteerPost(type);
@@ -95,6 +95,7 @@ router.route("/new")
             }
             try {
                 const new_volunteer_post = await volunteerData.createVolunteerPost(
+                    volunteer_name,
                     contact,
                     location,
                     type,
