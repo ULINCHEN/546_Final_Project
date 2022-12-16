@@ -10,31 +10,41 @@ const router = express.Router();
 
 router.route("/")
     .get(async (req, res) => {
-        //code here for GET       
+        //code here for GET  
+        let login = false;
+        if (req.session.user) 
+            login = true;    
         try {
             const postData = await animalData.getAllAnimalPosts();
             //console.log(postData);
             res.render('animalPosts', {
                 postData: postData,
+                login: login
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
-                errorMsg: e
+                errorMsg: e,
+                login: login
             });
         }
     })
     .post(async (req, res) => { //search by type
         let type = xss(req.body.type);
+        let login = false;
+        if (req.session.user) 
+            login = true; 
         try {
             const postData = await animalData.getAnimalByType(type);
             res.render('animalPosts', {
                 postData: postData,
+                login: login
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
-                errorMsg: e
+                errorMsg: e,
+                login: login
             });
         }
     });
@@ -42,12 +52,16 @@ router.route("/")
 
 router.route("/location/:location")
     .get(async (req, res) => {
+        let login = false;
+        if (req.session.user) 
+            login = true; 
         const location = req.params.location;
         const postData = await animalData.getAllAnimalPosts();
         // 这里要做一个判断 如果数据库有这个地址，则可以访问，否则导向错误页面
         res.render('animalPosts', {
             location: location,
             postData: postData,
+            login: login
         })
     })
 
@@ -56,19 +70,23 @@ router.route("/detail/:id")
     .get(async (req, res) => {
         //code here for GET
         let id = req.params.id;
-        //console.log(id);
+        let login = false;
+        if (req.session.user) 
+            login = true; 
         try {
             let post = await animalData.getAnimalPostById(id);
             let comments = await commentData.getCommentByPostId(id);
             res.render('postDetail', {
                 animal_id: 'animal/detail/' + id,
                 post: post,
-                comments: comments
+                comments: comments,
+                login: login
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
-                errorMsg: e
+                errorMsg: e,
+                login: login
             });
         }
     })
@@ -88,7 +106,8 @@ router.route("/detail/:id")
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
-                    errorMsg: e
+                    errorMsg: e,
+                    login: true
                 });
             }
             try {
@@ -97,41 +116,59 @@ router.route("/detail/:id")
                 res.render('postDetail', {
                     animal_id: 'animal/detail/' + animal_id,
                     post: post,
-                    comments: comments
+                    comments: comments,
+                    login: login
                 });
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
-                    errorMsg: e
+                    errorMsg: e,
+                    login: true
                 });
             }
         } else {
             res.status(400);
             return res.render('error', { 
-                errorMsg: 'Please login to comment.'
+                errorMsg: 'Please login to comment.',
+                login: false
             }); 
         }
     })
     .delete(async (req, res) => {
-        
+        if (req.session.user){
+            
+        } else {
+
+        }
     });
 
 router.route("/edit/:id")
     .get(async (req, res) => {
-        let id = req.params.id;
-        const postData = animalData.getAnimalPostById(id);
-        const userId = postData.user_id;
-        if (req.session.user && req.session.user.userid == userId) {
-            return res.render('editPost', {
-                title: "Edit your animal post",
-                postData: postData
-            });
+        if (req.session.user){
+            let id = req.params.id;
+            const postData = animalData.getAnimalPostById(id);
+            const userId = postData.user_id;
+            if (req.session.user && req.session.user.userid == userId) {
+                return res.render('editPost', {
+                    title: "Edit your animal post",
+                    postData: postData,
+                    login: true
+                });
+            } else {
+                res.status(400);
+                return res.render('error', { 
+                    errorMsg: 'Please login to edit your animal post.',
+                    login: true
+                }); 
+            }
         } else {
             res.status(400);
             return res.render('error', { 
-                errorMsg: 'Please login to edit your animal post.'
+                errorMsg: 'Please login to edit your post.',
+                login: false
             }); 
         }
+        
     })
     .put(async (req, res) => {
         let id = req.params.id;
@@ -158,7 +195,8 @@ router.route("/edit/:id")
             } catch(e) {
                 res.status(400);
                 return res.render('editPost',  {
-                    error: e
+                    error: e,
+                    login: true
                 });
             }
             
@@ -177,13 +215,15 @@ router.route("/edit/:id")
             } catch (e) {
                 res.status(500);
                 return res.render('editPost',  {
-                    error: e
+                    error: e,
+                    login: true
                 });
             }
         } else {
             res.status(400);
             return res.render('error', { 
-                errorMsg: 'Please login to edit your post.'
+                errorMsg: 'Please login to edit your post.',
+                login: false
             }); 
         }
     });
@@ -194,11 +234,13 @@ router.route("/new")
         if (req.session.user) {
             return res.render('addPost', {
                 title: "Add new animal post",
+                login: true
             });
         } else {
             res.status(400);
             return res.render('error', { 
-                errorMsg: 'Please login to add a new animal post.'
+                errorMsg: 'Please login to add a new animal post.',
+                login: false
             }); 
         }
     })
@@ -224,7 +266,8 @@ router.route("/new")
             } catch(e) {
                 res.status(400);
                 return res.render('addPost',  {
-                    error: e
+                    error: e,
+                    login: true
                 });
             }
             
@@ -242,13 +285,15 @@ router.route("/new")
             } catch (e) {
                 res.status(500);
                 return res.render('addPost',  {
-                    error: e
+                    error: e,
+                    login: true
                 });
             }
         } else {
             res.status(400);
             return res.render('error', { 
-                errorMsg: 'Please login to add new post.'
+                errorMsg: 'Please login to add new post.',
+                login: false
             }); 
         }
     });

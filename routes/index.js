@@ -15,7 +15,8 @@ const constructorMethod = (app) => {
 
     app.use('*', (req, res) => {
         res.render('error', {
-            errorMsg: "Page Not Found"
+            errorMsg: "Page Not Found",
+            login: false
         })
     });
 };
