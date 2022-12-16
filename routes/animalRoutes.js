@@ -52,4 +52,16 @@ router.route("/new")
         res.render('addPost');
     })
 
+
+
+// 测试用
+router.route("/test")
+    .get(async (req, res) => {
+        const postData = await getAllAnimalPosts();
+        res.render('test', {
+            postData: postData,
+        })
+    })
+// 测试用
+
 module.exports = router;
