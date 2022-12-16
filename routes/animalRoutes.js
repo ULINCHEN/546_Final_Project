@@ -117,7 +117,7 @@ router.route("/detail/:id")
                     animal_id: 'animal/detail/' + animal_id,
                     post: post,
                     comments: comments,
-                    login: login
+                    login: true
                 });
             } catch (e) {
                 res.status(400);
