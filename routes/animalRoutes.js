@@ -79,9 +79,11 @@ router.route("/detail/:id")
             let username = req.session.user.username;
             let userid = req.session.user.userid;
             //console.log(animal_id, text, username);
+            //not users' own post
+            const follow = await animalData.putFollowInUser(animal_id, userid);
             try {
                 const comment = await commentData.createComment(text, username, animal_id);
-                const follow = await animalData.putFollowInUser(animal_id, userid);
+                
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
