@@ -12,8 +12,7 @@ const createAnimalPost = async (
   healthCondition,
   location,
   userid,
-  file,
-  animalPhoto
+  file
 ) => {
   // if (!animalName) throw "Animal name can not be empty";
   // if (!species) throw "Species can not be empty";
@@ -33,7 +32,7 @@ const createAnimalPost = async (
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
-  await createImg(file);
+  // await createImg(file);
   let filepath = "";
   if (!file) {
     filepath = "";

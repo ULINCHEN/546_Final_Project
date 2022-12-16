@@ -4,6 +4,7 @@ const data = require("../data");
 const publicMethods = require("../publicMethods");
 const userData = data.userData;
 const animalData = data.animalData;
+const volunteerData = data.volunteerData;
 const commentData = data.commentData;
 const router = express.Router();
 const maxsize = 16777216;
@@ -24,7 +25,7 @@ router
     //code here for GET
     try {
       const postData = await animalData.getAllAnimalPosts();
-      //console.log(postData);
+      //   console.log(postData);
       res.render("animalPosts", {
         postData: postData,
       });

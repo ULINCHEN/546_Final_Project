@@ -3,6 +3,7 @@ const userdb = require("./userData");
 const { ObjectId } = require("mongodb");
 
 const createVolunteerPost = async (
+  volunteername,
   contact,
   location,
   type,
@@ -12,6 +13,7 @@ const createVolunteerPost = async (
   const User = await userdb.getUserData(username);
   const userid = User._id.toString();
   const VollunteerData = {
+    volunteer_name: volunteername,
     volunteer_contact: contact,
     volunteer_location: location,
     volunteer_type: type,
