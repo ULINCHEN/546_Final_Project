@@ -49,6 +49,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "hoboken nj",
+      "12/2/2022 12:22",
       user2.userid
     );
     // console.log(animal1);
@@ -62,6 +63,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "hoboken nj",
+      "12/2/2022 12:02",
       user2.userid
     );
     // console.log(animal1);
@@ -75,6 +77,7 @@ const main = async () => {
       "cute!!!!!",
       "Good",
       "Stevens institute of technology",
+      "12/12/2022 12:22",
       user2.userid
     );
     // console.log(animal3);
@@ -88,6 +91,7 @@ const main = async () => {
       "cute!!!!!",
       "Bad",
       "hoboken nj",
+      "12/12/2022 12:02",
       user1.userid
     );
     // console.log(animal4);
@@ -101,6 +105,7 @@ const main = async () => {
       "cute!!!!!",
       "Good",
       "706 Eastern Pkwy, Brooklyn, NY 11213",
+      "12/12/2022 12:2",
       user1.userid
     );
     // console.log(animal4);
@@ -114,6 +119,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "Stamford Town Center",
+      "11/2/2022 12:22",
       user3.userid
     );
     // console.log(animal1);
@@ -127,6 +133,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "Flatbush Ave",
+      "11/2/2022 10:22",
       user3.userid
     );
     // console.log(animal1);

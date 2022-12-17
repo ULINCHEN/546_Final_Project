@@ -119,7 +119,7 @@ const main = async () => {
   // }
 
   try {
-    let a = await validation.convertLocation("Flatbush Ave");
+    let a = await Data.animalData.getAllAnimalPosts();
     console.log(a);
     // console.log(a);
   } catch (error) {

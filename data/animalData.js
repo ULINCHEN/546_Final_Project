@@ -13,6 +13,7 @@ const createAnimalPost = async (
   description,
   healthCondition,
   location,
+  time,
   userid,
   file
 ) => {
@@ -23,8 +24,9 @@ const createAnimalPost = async (
   userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
-  let time = new Date();
-  time = time.toUTCString();
+  // let time = new Date();
+  // time = time.toUTCString();
+  //  let time = validation.getDate();
   let filepath = "";
   if (!file) {
     filepath = "public\\images\\default.png";
