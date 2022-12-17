@@ -95,6 +95,19 @@ const main = async () => {
     console.log(error);
   }
   try {
+    var animal5 = await Data.animalData.createAnimalPost(
+      "afaufiafaof",
+      "dog",
+      "cute!!!!!",
+      "as well as me :)",
+      "3 Hague ST",
+      user1.userid
+    );
+    // console.log(animal4);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
     let follow1 = await Data.animalData.putFollowInUser(
       animal4.animalid,
       user2.userid
