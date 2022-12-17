@@ -1,6 +1,30 @@
 // 这里写公用方法 数据校验等
 let nodeGeocoder = require("node-geocoder");
 
+/*
+Description:
+
+1. "All global vaild variables" to change scopes.
+
+Export functions:
+2. accountValidation(username); to user's account check.
+3. passwordValidation = (password); to check user's password.
+4. checkName(string, type) in common name check.
+5. checkArticle(string, type) using in Animal_description and Comment check.
+6. checkAnimalSpecies(species) to check addPost animal inputs.
+7. checkAnimalHealth(health) to check addPost animal inputs.
+8. checkVolunteerPost(tpye) to check views.layouts.addVolunteerPost inputs.
+9. checkVolunteerInfo(input) to check Volunteer information, it vaild as email or phonenumber(just US number without country code '+1').
+10. convertLocation => async (location); temporary using a const loaction now.
+11. checkDatabaseId(id, varName); to check if a id is a valid object, used in yetong's lab 6.
+
+*/ 
+
+
+
+
+
+
 // All vaild variables
 var maxAccountLength = 50;
 var minAccountLength = 4;
@@ -109,15 +133,21 @@ const checkArticle = (string, type) => {
   return string;
 };
 
-const checkAnimalPost = (species, health) => {
+const checkAnimalSpecies = (species) => {
+  if (typeof species !== "string") throw "species must be a string";
+  species = species.trim();
   if (!vaildAnimalSpecies.includes(species))
     throw `${species} is not an vaild animal species.`;
-  if (!vaildAnimalHealthCondition.includes(health))
-    throw `${health} is not an vaild animal Health Condition.`;
-  // No localtion check now.
-  // No photo check now
-  return [species, health];
+  return species;
 };
+
+const checkAnimalHealth = (health) => {
+    if (typeof health !== "string") throw "health must be a string";
+    health = health.trim();
+    if (!vaildAnimalHealthCondition.includes(health))
+      throw `${health} is not an vaild animal Health Condition.`;
+    return health;
+  };
 
 const checkVolunteerPost = (type) => {
   if (!vaildVolunteerType.includes(type))
@@ -152,8 +182,18 @@ const convertLocation = async (location) => {
 
   let result = await geoCoder.geocode("273 16th, nj");
   return result;
-  //
 };
+
+const checkDatabaseId = (id, varName) => {
+    if (!id) throw `Error: You must provide a ${varName}`;
+    if (typeof id !== 'string') throw `Error:${varName} must be a string`;
+    id = id.trim();
+    if (id.length === 0)
+      throw `Error: ${varName} cannot be an empty string or just spaces`;
+    if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
+    return id;
+}
+
 
 //console.log(checkAnimalPost("Cat","Good1"))
 
@@ -163,8 +203,10 @@ module.exports = {
   checkName,
   getDate,
   checkArticle,
-  checkAnimalPost,
+  checkAnimalSpecies,
+  checkAnimalHealth,
   checkVolunteerPost,
   checkVolunteerInfo,
   convertLocation,
+  checkDatabaseId,
 };
