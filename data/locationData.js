@@ -127,11 +127,14 @@ const updateTotalNum = async (addressInfo, city, num) => {
   return locationList;
 };
 
+const removeLocationByAId = async (animalid, locationid) => {};
+
 // LocationD("hoboken nj");
 
 module.exports = {
   LocationD,
   createLocation,
+  removeLocationByAId,
   // getLocationByCity,
   updateTotalNum,
 };
