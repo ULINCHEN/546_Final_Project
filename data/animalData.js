@@ -16,21 +16,11 @@ const createAnimalPost = async (
   userid,
   file
 ) => {
-  // if (!animalName) throw "Animal name can not be empty";
-  // if (!species) throw "Species can not be empty";
-  // if (!description) throw "Description can not be empty";
-  // if (!healthCondition) throw "HealthCondition can not be empty";
-  // // if (!time) throw "Time can not be empty";
-  // // animal photo can be empty
-  // if (!location) throw "Location can not be empty";
-  // if (!userid) throw "userid can not be empty";
-  // locationId = somefunction(location) 这里应该要把location 转化成 locationId
-  // location 暂时没加入postData
-  // let animalName = body.animal_name;
-  // let species = body.species;
-  // let healthCondition = body.condition;
-  // let description = body.description;
   animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
   let time = new Date();
@@ -137,6 +127,12 @@ const updateAnimalPost = async (
   location,
   userid
 ) => {
+  animalid = validation.checkDatabaseId(animalid);
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
   let time = new Date();
   time = time.toUTCString();
   const animaldb = await db.animalPostCollection();
@@ -196,6 +192,7 @@ const getAllAnimalPosts = async () => {
 };
 
 const getAnimalPostById = async (id) => {
+  id = validation.checkDatabaseId(id);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(id) });
   if (!animal) {
@@ -207,6 +204,7 @@ const getAnimalPostById = async (id) => {
 
 // Before use this funtion, please use removeCommentByA(animalid) in commentData in routes first
 const removeAnimalById = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   if (!animal) {
@@ -227,6 +225,7 @@ const removeAnimalById = async (animalid) => {
 };
 
 const getAnimalByType = async (type) => {
+  type = validation.checkAnimalSpecies(type);
   const animaldb = await db.animalPostCollection();
   const animalList = await animaldb.find({ species: type }).toArray();
   animalList.sort((a, b) => {
@@ -246,6 +245,7 @@ const getAnimalByType = async (type) => {
 };
 
 const getAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
   let animalidList = await userdb.getAnimalList(username);
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
@@ -257,6 +257,8 @@ const getAnimalByUser = async (username) => {
 };
 
 const putFollowInUser = async (animalid, userid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   const userdb = await db.userCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
@@ -296,6 +298,7 @@ const putFollowInUser = async (animalid, userid) => {
 };
 
 const getFollowAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
   let animalidList = await userdb.getFollowAnimalList(username);
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
@@ -307,6 +310,8 @@ const getFollowAnimalByUser = async (username) => {
 };
 
 const putCommentIn = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   let commenidtList = animal.comment_ids;
@@ -322,6 +327,8 @@ const putCommentIn = async (commentid, animalid) => {
 };
 
 const removeCommentFromA = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const Animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   let commenidtList = Animal.comment_ids;

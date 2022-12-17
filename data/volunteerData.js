@@ -1,6 +1,7 @@
 const db = require("../config/mongoCollection");
 const userdb = require("./userData");
 const { ObjectId } = require("mongodb");
+const validation = require("../publicMethods");
 
 const createVolunteerPost = async (
   volunteername,
@@ -10,6 +11,12 @@ const createVolunteerPost = async (
   description,
   username
 ) => {
+  volunteername = validation.checkName(volunteername);
+  contact = validation.checkVolunteerInfo(contact);
+  type = validation.checkVolunteerPost(type);
+  description = validation.checkArticle(description);
+  username = validation.accountValidation(username);
+
   const User = await userdb.getUserData(username);
   const userid = User._id.toString();
   const VollunteerData = {
@@ -45,6 +52,8 @@ const getAllVolunteerPost = async () => {
 };
 
 const getVolunteerPostsByU = async (username) => {
+  username = validation.accountValidation(username);
+
   const user = await userdb.getUserData(username);
   let volunteeridList = user.volunteer_ids;
   let volunteerList = [];
@@ -57,6 +66,8 @@ const getVolunteerPostsByU = async (username) => {
 };
 
 const getVolunteerById = async (volunteerid) => {
+  volunteerid = validation.checkDatabaseId(volunteerid);
+
   const volunteerdb = await db.volunteerCollection();
   const volunteer = await volunteerdb.findOne({ _id: ObjectId(volunteerid) });
   if (!volunteer) {
@@ -67,6 +78,7 @@ const getVolunteerById = async (volunteerid) => {
 };
 
 const removeVolunteerById = async (id) => {
+  id = validation.checkDatabaseId(id);
   //volunteer id
   const volunteerdb = await db.volunteerCollection();
   const volunteer = await volunteerdb.findOne({ _id: ObjectId(id) });

@@ -2,8 +2,13 @@ const db = require("../config/mongoCollection");
 const userdb = require("./userData");
 const animaldb = require("./animalData");
 const { ObjectId } = require("mongodb");
+const validation = require("../publicMethods");
 
 const createComment = async (comment, username, animalid) => {
+  comment = validation.checkArticle(comment);
+  username = validation.accountValidation(username);
+  animalid = validation.checkDatabaseId(animalid);
+
   let date = new Date();
   date = date.toUTCString();
   const commentdb = await db.commentCollection();
@@ -33,6 +38,8 @@ const createComment = async (comment, username, animalid) => {
 };
 
 const getCommentByPostId = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
+
   const animal = await animaldb.getAnimalPostById(animalid);
   const commentidList = animal.comment_ids;
   let commentList = [];
@@ -46,6 +53,8 @@ const getCommentByPostId = async (animalid) => {
 };
 
 const getCommentByUserId = async (userid) => {
+  userid = validation.checkDatabaseId(userid);
+
   const user = await userdb.getUserById(userid);
   const commentidList = user.comment_ids;
   let commentList = [];
@@ -59,6 +68,8 @@ const getCommentByUserId = async (userid) => {
 };
 
 const getCommentById = async (commentid) => {
+  commentid = validation.checkDatabaseId(commentid);
+
   const commentdb = await db.commentCollection();
   const comment = await commentdb.findOne({ _id: ObjectId(commentid) });
   if (!comment) {
@@ -72,6 +83,8 @@ const getCommentById = async (commentid) => {
 };
 
 const removeCommentById = async (commentid) => {
+  commentid = validation.checkDatabaseId(commentid);
+
   const commentdb = await db.commentCollection();
   const commnet = await commentdb.findOne({ _id: ObjectId(commentid) });
   let userid = commnet.user_id.toString();
@@ -93,6 +106,8 @@ const removeCommentById = async (commentid) => {
 };
 
 const removeCommentByA = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
+
   const animal = await animaldb.getAnimalPostById(animalid);
   const commentidList = animal.comment_ids;
   for (let index = 0; index < commentidList.length; index++) {
