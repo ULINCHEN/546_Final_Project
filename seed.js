@@ -43,7 +43,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal1 = await Data.animalData.createAnimalPost(
+    var animal1 = await Data.animalData.createAnimalPostForSeed(
       "miaomiao",
       "Cat",
       "cute!!!!!",
@@ -57,7 +57,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal2 = await Data.animalData.createAnimalPost(
+    var animal2 = await Data.animalData.createAnimalPostForSeed(
       "wangwang",
       "Dog",
       "cute!!!!!",
@@ -71,7 +71,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal3 = await Data.animalData.createAnimalPost(
+    var animal3 = await Data.animalData.createAnimalPostForSeed(
       "mimi",
       "Cat",
       "cute!!!!!",
@@ -85,13 +85,13 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal4 = await Data.animalData.createAnimalPost(
+    var animal4 = await Data.animalData.createAnimalPostForSeed(
       "doggggggggg",
       "Dog",
       "cute!!!!!",
       "Bad",
       "hoboken nj",
-      "12/12/2022 12:02",
+      "12/22/2022 12:02",
       user1.userid
     );
     // console.log(animal4);
@@ -99,7 +99,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal5 = await Data.animalData.createAnimalPost(
+    var animal5 = await Data.animalData.createAnimalPostForSeed(
       "afaufiafaof",
       "Dog",
       "cute!!!!!",
@@ -113,7 +113,7 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal6 = await Data.animalData.createAnimalPost(
+    var animal6 = await Data.animalData.createAnimalPostForSeed(
       "haha",
       "Others",
       "cute!!!!!",
@@ -127,13 +127,26 @@ const main = async () => {
     console.log(error);
   }
   try {
-    var animal7 = await Data.animalData.createAnimalPost(
+    var animal7 = await Data.animalData.createAnimalPostForSeed(
       "hahahaha",
       "Others",
       "cute!!!!!",
       "Normal",
       "Flatbush Ave",
       "11/2/2022 10:22",
+      user3.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal8 = await Data.animalData.createAnimalPost(
+      "abab",
+      "Others",
+      "cute!!!!!",
+      "Normal",
+      "Stamford Town Center",
       user3.userid
     );
     // console.log(animal1);
