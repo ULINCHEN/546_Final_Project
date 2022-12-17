@@ -6,7 +6,16 @@ const userData = data.userData;
 const animalData = data.animalData;
 const commentData = data.commentData;
 const router = express.Router();
-
+const maxsize = 16777216;
+const multer = require("multer");
+const upload = multer({
+    dest: "public/uploads/",
+    limits: { fileSize: maxsize },
+    onError: function (err, next) {
+        console.log("error", err);
+        next(err);
+    },
+});
 
 router.route("/")
     .get(async (req, res) => {
@@ -98,9 +107,8 @@ router.route("/detail/:id")
             let userid = req.session.user.userid;
             //console.log(animal_id, text, username);
             //not users' own post
-            
+            console.log(req.body);
             try {
-                const follow = await animalData.putFollowInUser(animal_id, userid);
                 const comment = await commentData.createComment(text, username, animal_id);
                 
             } catch (e) {
@@ -137,24 +145,32 @@ router.route("/detail/:id")
     .delete(async (req, res) => {
         if (req.session.user){
             //code here for DELETE
-            let userid = req.session.user.userid;
+            let post_id = req.params.id;
             try {
-                const postData = await animalData.getAnimalPostById(userid);
+                const postData = await animalData.getAnimalPostById(post_id);
             } catch (e) {
                 return res.render('error', { 
                     errorMsg: e,
                     login: true
                 }); 
             }
-        
+
             try {
-                await animalData.removeAnimalById(userid);
-                res.status(200).json({movieId: req.params.movieId, deleted: true});
+                await animalData.removeAnimalById(post_id);
+                res.status(200)
+                return res.redirect('/user/userCenter/' + post_id);
             } catch (e) {
-                res.status(500).json({error: e});
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                }); 
             }
         } else {
-
+            res.status(400);
+            return res.render('error', { 
+                errorMsg: 'Please login to delete your animal post.',
+                login: true
+            }); 
         }
     });
 
@@ -260,7 +276,7 @@ router.route("/new")
             }); 
         }
     })
-    .post(async (req, res) => {
+    .post(upload.single("photo1"),async (req, res) => {
         if (req.session.user){
             let animalName = xss(req.body.animal_name);
             let species = xss(req.body.species);
@@ -268,7 +284,7 @@ router.route("/new")
             let healthCondition = xss(req.body.condition);
             let location = xss(req.body.location);
             let userid = req.session.user.userid;
-            let animalPhoto = null;
+            console.log(req.body);
             //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
                         
             //console.log(location);
@@ -294,7 +310,8 @@ router.route("/new")
                     description,
                     healthCondition,
                     location,
-                    userid
+                    userid,
+                    req.file
                 );
                 res.status(200);
                 return res.redirect('/animal/detail/' + new_animal_post.animalid);
@@ -314,4 +331,43 @@ router.route("/new")
         }
     });
 
+router.route("/follow/:id")
+    .post(async (req, res) => {
+        let animal_id = req.params.id;
+        let userid = req.body.user.userid;
+        if (req.session.user){
+            try {
+                const follow = await putFollowInUser(animal_id, userid) 
+            } catch (e) {
+                res.status(400);
+                return res.render('error', {
+                    errorMsg: e,
+                    login: true
+                });
+            }
+            try {
+                let post = await animalData.getAnimalPostById(animal_id);
+                let comments = await commentData.getCommentByPostId(animal_id);
+                res.render('postDetail', {
+                    animal_id: 'animal/detail/' + animal_id,
+                    post: post,
+                    comments: comments,
+                    follow: true,
+                    login: true
+                });
+            } catch (e) {
+                res.status(400);
+                return res.render('error', {
+                    errorMsg: e,
+                    login: true
+                });
+            }
+        } else {
+            res.status(400);
+            return res.render('error', { 
+                errorMsg: 'Please login to follow.',
+                login: false
+            }); 
+        }
+    });
 module.exports = router;
