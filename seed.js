@@ -74,7 +74,7 @@ const main = async () => {
       "cat",
       "cute!!!!!",
       "as well as me :)",
-      "hoboken nj",
+      "Stevens institute of technology",
       user2.userid
     );
     // console.log(animal3);

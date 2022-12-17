@@ -52,6 +52,7 @@ const createLocation = async (location, addressInfo, animalid) => {
     animalids: animalidList,
     total_animal_num: num,
   };
+  console.log(postData);
   const info = await locationdb.insertOne(postData);
   if (!info) {
     throw "could not insert location";
