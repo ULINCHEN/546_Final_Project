@@ -3,6 +3,7 @@ const { volunteerCollection } = require("./config/mongoCollection");
 const dbcon = require("./config/mongoConnection");
 const { animalData, volunteerData } = require("./data");
 const Data = require("./data");
+const validation = require("./publicMethods");
 
 const main = async () => {
   const Database = await dbcon.dbConnection();
@@ -98,21 +99,31 @@ const main = async () => {
   //   console.log(error);
   // }
 
+  // try {
+  //   // let removec = await Data.commentData.removeCommentByA(
+  //   //   "639e1a112e7e7135c71d913c"
+  //   // );
+  //   let remove = await Data.animalData.updateAnimalPost(
+  //     "639e1c70798ba9cd6ae88955",
+  //     "mafaiuhfga9ghfaimi",
+  //     "cat",
+  //     "cute!!!!!",
+  //     "as well as me :)",
+  //     "Stevens institute of technology",
+  //     "639e1c6e798ba9cd6ae8894d"
+  //   ); //639b8a7f243dbaead1371918
+  //   // console.log(a.comm);
+  //   console.log(remove);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+
   try {
-    // let removec = await Data.commentData.removeCommentByA(
-    //   "639e1a112e7e7135c71d913c"
-    // );
-    let remove = await Data.animalData.updateAnimalPost(
-      "639e1c70798ba9cd6ae88955",
-      "mafaiuhfga9ghfaimi",
-      "cat",
-      "cute!!!!!",
-      "as well as me :)",
-      "Stevens institute of technology",
-      "639e1c6e798ba9cd6ae8894d"
-    ); //639b8a7f243dbaead1371918
-    // console.log(a.comm);
-    console.log(remove);
+    let a = await validation.convertLocation("#3ihfaoi");
+    // console.log(a);
+    if (!a) {
+      throw "invalid location";
+    }
   } catch (error) {
     console.log(error);
   }

@@ -14,14 +14,11 @@ const { ObjectId } = require("mongodb");
  * @returns - return {insertedUser: true}
  */
 const createUser = async (username, password, firstName, lastName) => {
-  // // check first name
-  // firstName = validation.checkName(firstName, "firstName");
-  // // check last name
-  // lastName = validation.checkName(lastName, "lastName");
-  // // check username
-  // username = validation.usernameValidation(username);
-  // // check password
-  // password = validation.passwordValidation(password);
+  //check input parm
+  username = validation.accountValidation(username);
+  password = validation.passwordValidation(password);
+  firstName = validation.checkName(firstName);
+  lastName = validation.checkName(lastName);
 
   const userdb = await db.userCollection();
   const checkUserExist = await userdb.findOne({ username: username });
@@ -54,8 +51,8 @@ const createUser = async (username, password, firstName, lastName) => {
  */
 
 const checkUser = async (username, password) => {
-  // username = validation.usernameValidation(username);
-  // password = validation.passwordValidation(password);
+  username = validation.accountValidation(username);
+  password = validation.passwordValidation(password);
   const userdb = await db.userCollection();
   const checkUserExist = await userdb.findOne({ user_account: username });
   if (!checkUserExist) throw "Either the username or password is invalid";
@@ -70,6 +67,10 @@ const checkUser = async (username, password) => {
 };
 
 const updateUser = async (username, password, firstName, lastName) => {
+  username = validation.accountValidation(username);
+  password = validation.passwordValidation(password);
+  firstName = validation.checkName(firstName);
+  lastName = validation.checkName(lastName);
   const userdb = await db.userCollection();
   const checkUserExist = await userdb.findOne({ user_account: username });
   if (!checkUserExist) throw "Either the username or password is invalid";
@@ -97,12 +98,14 @@ const updateUser = async (username, password, firstName, lastName) => {
 };
 
 const getAnimalList = async (username) => {
+  username = validation.accountValidation(username);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ user_account: username });
   if (!User) throw `${username} is not exist`;
   return User.animal_ids;
 };
 const getFollowAnimalList = async (username) => {
+  username = validation.accountValidation(username);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ user_account: username });
   if (!User) throw `${username} is not exist`;
@@ -110,6 +113,7 @@ const getFollowAnimalList = async (username) => {
 };
 
 const getUserData = async (username) => {
+  username = validation.accountValidation(username);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ user_account: username });
   if (!User) throw `${username} is not exist`;
@@ -118,6 +122,7 @@ const getUserData = async (username) => {
   return User;
 };
 const getUserById = async (userid) => {
+  userid = validation.checkDatabaseId(userid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   if (!User) throw `can not find user with id of ${userid}`;
@@ -127,6 +132,8 @@ const getUserById = async (userid) => {
 };
 
 const putAnimalIn = async (animalid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  animalid = validation.checkDatabaseId(animalid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let animalidList = User.animal_ids;
@@ -142,6 +149,8 @@ const putAnimalIn = async (animalid, userid) => {
 };
 
 const removeAnimalFromU = async (animalid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  animalid = validation.checkDatabaseId(animalid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let animalidList = User.animal_ids;
@@ -162,6 +171,8 @@ const removeAnimalFromU = async (animalid, userid) => {
 };
 
 const removeFollowFromU = async (animalid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  animalid = validation.checkDatabaseId(animalid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let animalidList = User.follow_animal_ids;
@@ -182,6 +193,8 @@ const removeFollowFromU = async (animalid, userid) => {
 };
 
 const putCommentIn = async (commentid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  commentid = validation.checkDatabaseId(commentid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let commenidtList = User.comment_ids;
@@ -197,6 +210,8 @@ const putCommentIn = async (commentid, userid) => {
 };
 
 const removeCommentFromU = async (commentid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  commentid = validation.checkDatabaseId(commentid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let commenidtList = User.comment_ids;
@@ -216,6 +231,8 @@ const removeCommentFromU = async (commentid, userid) => {
   return true;
 };
 const removeVolunteerFromU = async (volunteerid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  volunteerid = validation.checkDatabaseId(volunteerid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let volunteeridtList = User.volunteer_ids;
@@ -234,14 +251,16 @@ const removeVolunteerFromU = async (volunteerid, userid) => {
   }
   return true;
 };
-const putVolunteerIn = async (Vollunteerid, userid) => {
+const putVolunteerIn = async (volunteerid, userid) => {
+  userid = validation.checkDatabaseId(userid);
+  volunteerid = validation.checkDatabaseId(volunteerid);
   const userdb = await db.userCollection();
   const User = await userdb.findOne({ _id: ObjectId(userid) });
-  let VollunteeridtList = User.volunteer_ids;
-  VollunteeridtList.push(Vollunteerid);
+  let VolunteeridtList = User.volunteer_ids;
+  VolunteeridtList.push(volunteerid);
   const updateinfo = await userdb.updateOne(
     { _id: ObjectId(userid) },
-    { $set: { volunteer_ids: VollunteeridtList } }
+    { $set: { volunteer_ids: VolunteeridtList } }
   );
   if (!updateinfo) {
     throw "can not put volunteer in user";
@@ -250,6 +269,7 @@ const putVolunteerIn = async (Vollunteerid, userid) => {
 };
 
 const removeUserById = async (userid) => {
+  userid = validation.checkDatabaseId(userid);
   const userdb = await db.userCollection();
   const user = await userdb.findOne({ _id: ObjectId(userid) });
   if (!user) {

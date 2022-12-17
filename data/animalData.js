@@ -4,6 +4,7 @@ const userdb = require("./userData");
 const locationdb = require("./locationData");
 const fs = require("fs");
 const path = require("path");
+const validation = require("../publicMethods");
 
 //create,update,search,delete
 const createAnimalPost = async (
@@ -29,6 +30,7 @@ const createAnimalPost = async (
   // let species = body.species;
   // let healthCondition = body.condition;
   // let description = body.description;
+  animalName = validation.checkName(animalName);
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
   let time = new Date();

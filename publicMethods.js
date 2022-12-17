@@ -18,12 +18,7 @@ Export functions:
 10. convertLocation => async (location); temporary using a const loaction now.
 11. checkDatabaseId(id, varName); to check if a id is a valid object, used in yetong's lab 6.
 
-*/ 
-
-
-
-
-
+*/
 
 // All vaild variables
 var maxAccountLength = 50;
@@ -142,12 +137,12 @@ const checkAnimalSpecies = (species) => {
 };
 
 const checkAnimalHealth = (health) => {
-    if (typeof health !== "string") throw "health must be a string";
-    health = health.trim();
-    if (!vaildAnimalHealthCondition.includes(health))
-      throw `${health} is not an vaild animal Health Condition.`;
-    return health;
-  };
+  if (typeof health !== "string") throw "health must be a string";
+  health = health.trim();
+  if (!vaildAnimalHealthCondition.includes(health))
+    throw `${health} is not an vaild animal Health Condition.`;
+  return health;
+};
 
 const checkVolunteerPost = (type) => {
   if (!vaildVolunteerType.includes(type))
@@ -157,43 +152,64 @@ const checkVolunteerPost = (type) => {
   return type;
 };
 
-// check if it's a vaild email or phone, using in volunteer.    
+// check if it's a vaild email or phone, using in volunteer.
 // it vaild as email or phonenumber(just US number without country code '+1').
 const checkVolunteerInfo = (input) => {
-    input = input.trim();
-    var mail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-    var phonenumber = /\d{10}/;
-    isok = (mail.test(input) || phonenumber.test(input));
-    if (!isok) throw `${input} is not an vaild Email or Phone number.`;
-    return input
-}
+  input = input.trim();
+  var mail =
+    /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+  var phonenumber = /\d{10}/;
+  isok = mail.test(input) || phonenumber.test(input);
+  if (!isok) throw `${input} is not an vaild Email or Phone number.`;
+  return input;
+};
 
 const convertLocation = async (location) => {
   if (!location) throw "Please provide a location";
   if (typeof location != "string") throw "location should be a string";
   location = location.trim();
   if (location.length == 0) throw "location should not contains only spaces";
-
+  reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\#)*(\*)*(\_)*))*$/;
+  if (!reg.test(location)) {
+    throw "This is an invalid location";
+  }
   let options = {
     provider: "openstreetmap",
   };
 
   let geoCoder = nodeGeocoder(options);
 
-  let result = await geoCoder.geocode("273 16th, nj");
+  let result = await geoCoder.geocode(location);
+  // console.log(result);
+  if (result === undefined) {
+    throw "This is an invalid location";
+  }
+  if (result.length < 1) {
+    throw "This is an invalid location";
+  }
+
+  // console.log(reg.test("afaf # 123 af*a_f"));
+  if (!reg.test(result.state)) {
+    throw "This is an invalid location";
+  }
+  if (!reg.test(result.city)) {
+    throw "This is an invalid location";
+  }
+  if (result.state === undefined) {
+    throw "This is an invalid location";
+  }
   return result;
 };
 
 const checkDatabaseId = (id, varName) => {
-    if (!id) throw `Error: You must provide a ${varName}`;
-    if (typeof id !== 'string') throw `Error:${varName} must be a string`;
-    id = id.trim();
-    if (id.length === 0)
-      throw `Error: ${varName} cannot be an empty string or just spaces`;
-    if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
-    return id;
-}
-
+  if (!id) throw `Error: You must provide a ${varName}`;
+  if (typeof id !== "string") throw `Error:${varName} must be a string`;
+  id = id.trim();
+  if (id.length === 0)
+    throw `Error: ${varName} cannot be an empty string or just spaces`;
+  if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
+  return id;
+};
 
 //console.log(checkAnimalPost("Cat","Good1"))
 
