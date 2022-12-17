@@ -1,6 +1,7 @@
 const { ObjectId } = require("mongodb");
 const db = require("../config/mongoCollection");
 const userdb = require("./userData");
+const locationdb = require("./locationData");
 const fs = require("fs");
 const path = require("path");
 
@@ -56,6 +57,15 @@ const createAnimalPost = async (
     comment_ids: [],
   };
   const info = await animaldb.insertOne(postData);
+  let addressInfo = await locationdb.LocationD(location);
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    info.insertedId.toString()
+  );
+  if (!createInfo) {
+    throw "could not create location information";
+  }
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
   if (userid) {
     await userdb.putAnimalIn(info.insertedId.toString(), userid);
