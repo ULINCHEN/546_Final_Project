@@ -5,6 +5,7 @@ const static = express.static(__dirname + "/public");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
 const methodOverride = require('method-override');
+var bodyParser = require('body-parser')
 
 app.use("/public", static);
 app.use(express.json());

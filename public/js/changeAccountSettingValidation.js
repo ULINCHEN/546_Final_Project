@@ -88,7 +88,7 @@ $(function () {
 
         const firstname = $("#firstname").val();
         const lastname = $("#lastname").val();
-        const account = $("#account").val();
+        // const account = $("#account").val();
         const old_password = $("#old_password").val();
         const password = $("#password").val();
         const password_again = $("#password_again").val();
