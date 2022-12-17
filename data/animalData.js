@@ -32,15 +32,17 @@ const createAnimalPost = async (
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
-  // await createImg(file);
+
   let filepath = "";
   if (!file) {
-    filepath = "";
+    filepath = "public\\images\\default.png";
   } else {
+    await createImg(file);
     filepath = file.path + "." + file.mimetype.split("/")[1];
-    console.log(filepath);
+    // console.log(filepath);
   }
-  console.log(filepath);
+
+  // console.log(filepath);
   const postData = {
     animal_name: animalName,
     species: species,
