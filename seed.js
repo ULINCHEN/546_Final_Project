@@ -43,11 +43,11 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let animal1 = await Data.animalData.createAnimalPost(
+    var animal1 = await Data.animalData.createAnimalPost(
       "miaomiao",
-      "cat",
+      "Cat",
       "cute!!!!!",
-      "as well as me :)",
+      "Normal",
       "hoboken nj",
       user2.userid
     );
@@ -56,11 +56,11 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let animal2 = await Data.animalData.createAnimalPost(
+    var animal2 = await Data.animalData.createAnimalPost(
       "wangwang",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
+      "Normal",
       "hoboken nj",
       user2.userid
     );
@@ -71,9 +71,9 @@ const main = async () => {
   try {
     var animal3 = await Data.animalData.createAnimalPost(
       "mimi",
-      "cat",
+      "Cat",
       "cute!!!!!",
-      "as well as me :)",
+      "Good",
       "Stevens institute of technology",
       user2.userid
     );
@@ -84,9 +84,9 @@ const main = async () => {
   try {
     var animal4 = await Data.animalData.createAnimalPost(
       "doggggggggg",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
+      "Bad",
       "hoboken nj",
       user1.userid
     );
@@ -97,13 +97,39 @@ const main = async () => {
   try {
     var animal5 = await Data.animalData.createAnimalPost(
       "afaufiafaof",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
-      "3 Hague ST",
+      "Good",
+      "706 Eastern Pkwy, Brooklyn, NY 11213",
       user1.userid
     );
     // console.log(animal4);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal6 = await Data.animalData.createAnimalPost(
+      "haha",
+      "Others",
+      "cute!!!!!",
+      "Normal",
+      "Stamford Town Center",
+      user3.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal7 = await Data.animalData.createAnimalPost(
+      "hahahaha",
+      "Others",
+      "cute!!!!!",
+      "Normal",
+      "Flatbush Ave",
+      user3.userid
+    );
+    // console.log(animal1);
   } catch (error) {
     console.log(error);
   }
@@ -126,12 +152,12 @@ const main = async () => {
     console.log(error);
   }
   try {
-    let addcomment1 = await Data.commentData.createComment(
+    var addcomment1 = await Data.commentData.createComment(
       "ababababaaaaa",
       "test@123.com",
       animal3.animalid
     );
-    // console.log(addcomment);
+    // console.log(addcomment1);
   } catch (error) {
     console.log(error);
   }
@@ -149,10 +175,10 @@ const main = async () => {
 
   try {
     let addvolunteer1 = await Data.volunteerData.createVolunteerPost(
-      "nice house",
-      "1234",
+      "nicehouse",
+      "1231234444",
       "6th ST",
-      "organazation",
+      "Organization",
       "An organazation that orders free treatment for stray animals.",
       "test@123.com"
     );
@@ -163,9 +189,9 @@ const main = async () => {
   try {
     let addvolunteer2 = await volunteerData.createVolunteerPost(
       "ggiuviu",
-      "contact",
+      "1234567890",
       "location",
-      "type",
+      "Individual",
       "description",
       "test@123.com"
     );
@@ -191,65 +217,3 @@ const main = async () => {
 };
 
 main();
-/*
-{
-    _id: new ObjectId("639662a87cd4bcda8af046d0"),
-    animal_name: 'miaomiao',
-    species: 'cat',
-    description: 'cute!!!!!',
-    health_condition: 'as well as me :)',
-    find_time: 'Sun, 11 Dec 2022 13:10:20 GMT',
-    animal_photo: null,
-    location_id: [],
-    user_id: '639662a87cd4bcda8af046cf',
-    comment_id: []
-  },
-  {
-    _id: new ObjectId("639662a87cd4bcda8af046d2"),
-    animal_name: 'mimi',
-    species: 'cat',
-    description: 'cute!!!!!',
-    health_condition: 'as well as me :)',
-    find_time: 'Sun, 11 Dec 2022 23:07:20 GMT',
-    animal_photo: null,
-    location_id: [],
-    user_id: '639662a87cd4bcda8af046cf',
-    comment_id: []
-  },
-  {
-    _id: new ObjectId("639662a87cd4bcda8af046d1"),
-    animal_name: 'wangwang',
-    species: 'dog',
-    description: 'cute!!!!!',
-    health_condition: 'as well as me :)',
-    find_time: 'Sun, 11 Dec 2022 23:10:20 GMT',
-    animal_photo: null,
-    location_id: [],
-    user_id: '639662a87cd4bcda8af046cf',
-    comment_id: []
-  },
-  {
-    _id: new ObjectId("63969ae39c974af00e52f46c"),
-    animal_name: 'miaomiaoaaaaa',
-    species: 'cat',
-    description: 'cute!!!!!',
-    health_condition: 'as well as me :)',
-    find_time: 'Mon, 12 Dec 2022 03:07:15 GMT',
-    animal_photo: null,
-    location_id: [],
-    user_id: '639662a87cd4bcda8af046ce',
-    comment_id: []
-  },
-  {
-    _id: new ObjectId("63969cf37941d2b0acb4ee12"),
-    animal_name: 'masbdad',
-    species: 'dog',
-    description: 'cute!!!!!',
-    health_condition: 'as well as me :)',
-    find_time: 'Mon, 12 Dec 2022 03:10:15 GMT',
-    animal_photo: null,
-    location_id: [],
-    user_id: '639662a87cd4bcda8af046ce',
-    comment_id: []
-  }
-*/

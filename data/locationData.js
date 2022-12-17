@@ -1,12 +1,13 @@
+const { ObjectId } = require("mongodb");
 const db = require("../config/mongoCollection");
-const { convertLocation } = require("../publicMethods");
+const validation = require("../publicMethods");
 
 const getLocation = async (location) => {
   if (!location) throw "Please provide a location";
   if (typeof location != "string") throw "location should be a string";
   location = location.trim();
   if (location.length == 0) throw "location should not contains only spaces";
-  location = await convertLocation(location);
+  location = await validation.convertLocation(location);
   // console.log(location);
   return location;
 };
@@ -36,7 +37,7 @@ const createLocation = async (location, addressInfo, animalid) => {
   addressinfo.longitude = addressInfo.longitude;
   const locationdb = await db.locationCollection();
   const locationexist = await locationdb
-    .find({ addressInfo: addressinfo, city: addressInfo.city })
+    .find({ state: addressInfo.state, city: addressInfo.city })
     .toArray();
   let animalidList = [];
   let num = 0;
@@ -72,7 +73,7 @@ const createLocation = async (location, addressInfo, animalid) => {
       if (!updateinfo) {
         throw "could not update location";
       }
-      await updateTotalNum(addressinfo, addressInfo.city, num);
+      await updateTotalNum(addressInfo.state, addressInfo.city, num);
       return { locationid: element._id.toString() };
     }
   }
@@ -88,7 +89,7 @@ const createLocation = async (location, addressInfo, animalid) => {
     animalids: animalidList,
     total_animal_num: num,
   };
-  await updateTotalNum(addressinfo, addressInfo.city, num);
+  await updateTotalNum(addressInfo.state, addressInfo.city, num);
   // console.log(postData);
   const info = await locationdb.insertOne(postData);
   if (!info) {
@@ -108,12 +109,11 @@ const createLocation = async (location, addressInfo, animalid) => {
 //   }
 // };
 
-const updateTotalNum = async (addressInfo, city, num) => {
+const updateTotalNum = async (state, city, num) => {
   const locationdb = await db.locationCollection();
-
   let updateinfo = await locationdb.updateMany(
     {
-      addressInfo: addressInfo,
+      state: state,
       city: city,
     },
     { $set: { total_animal_num: num } }
@@ -121,10 +121,35 @@ const updateTotalNum = async (addressInfo, city, num) => {
   if (!updateinfo) {
     throw "could not update total num";
   }
-  const locationList = await locationdb
-    .find({ addressInfo: addressInfo, city: city })
-    .toArray();
-  return locationList;
+  // const locationList = await locationdb
+  //   .find({ addressInfo: addressInfo, city: city })
+  //   .toArray();
+  // return locationList;
+};
+
+const removeLocationByAId = async (animalid, locationid) => {
+  const locationdb = await db.locationCollection();
+  const locationinfo = await locationdb.findOne({ _id: ObjectId(locationid) });
+  // console.log(locationinfo);
+  let animalidsList = locationinfo.animalids;
+  for (let index = 0; index < animalidsList.length; index++) {
+    const element = animalidsList[index];
+    if (element === animalid) {
+      animalidsList.splice(index, 1);
+    }
+  }
+  await updateTotalNum(
+    locationinfo.addressInfo,
+    locationinfo.city,
+    locationinfo.total_animal_num - 1
+  );
+  const removeinfo = await locationdb.updateOne(
+    { _id: ObjectId(locationid) },
+    { $set: { animalids: animalidsList } }
+  );
+  if (!removeinfo) {
+    throw "Could not remove this animal's location";
+  }
 };
 
 // LocationD("hoboken nj");
@@ -132,6 +157,7 @@ const updateTotalNum = async (addressInfo, city, num) => {
 module.exports = {
   LocationD,
   createLocation,
+  removeLocationByAId,
   // getLocationByCity,
   updateTotalNum,
 };
