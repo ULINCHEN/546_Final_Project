@@ -156,6 +156,7 @@ router.route("/detail/:id")
                 });
             }
             try {
+                await commentData.removeCommentByA(post_id);
                 await animalData.removeAnimalById(post_id);
                 res.status(200)
                 return res.redirect('/user/userCenter/' + post_id);
@@ -184,6 +185,7 @@ router.route("/edit/:id")
             return res.render('editAnimalPost', {
                 title: "Edit your animal post",
                 postData: postData,
+                url: "/animal/edit/" + post_id + "?_method=PUT",
                 login: true
             });
         } else {
@@ -196,17 +198,11 @@ router.route("/edit/:id")
     })
     .put(async (req, res) => {
         if (req.session.user) {
-            let post_id = req.params.id;
-            const animalPost = animalData.getAnimalPostById(post_id);
-            const user_id = animalPost.user_id;
-            if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
-            let animalName = xss(req.body.animal_name);
-            let species = xss(req.body.species);
-            let description = xss(req.body.description);
-            let healthCondition = xss(req.body.condition);
-            let location = xss(req.body.location);
-            //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
-
+            let animalName = null;
+            let species = null;
+            let description = null;
+            let healthCondition = null;
+            let location = null;
             //console.log(location);
 
             try {

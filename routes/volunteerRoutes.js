@@ -104,16 +104,20 @@ router.route("/new")
         if (req.session.user) {
             console.log(req.body);
             //add volunteer post paras
-            let volunteer_name = xss(req.body.volunteer_name);
-            let contact = xss(req.body.contact);
-            let location = xss(req.body.location);
-            let type = xss(req.body.type);
-            let description = xss(req.body.description);
+            let volunteer_name = null;
+            let contact = null;
+            let location = null;
+            let type = null;
+            let description = null;
             let username = req.session.user.username;
-
             try {
+                volunteer_name = xss(req.body.volunteer_name);
+                contact = xss(req.body.contact);
+                location = xss(req.body.location);
+                type = xss(req.body.type);
+                description = xss(req.body.description);
                 volunteer_name = publicMethods.checkName(volunteer_name, "volunteer name");
-                contact = publicMethods.checkVolunteerInfo(contact);
+                //contact = publicMethods.checkVolunteerInfo(contact);
                 //location = 
                 type = publicMethods.checkVolunteerPost(type);
                 description = publicMethods.checkArticle(description);

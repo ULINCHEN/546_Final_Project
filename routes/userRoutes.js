@@ -87,9 +87,11 @@ router.route("/login")
         if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         }
+        let username = null;
+        let password = null;
         try{
-            let username = xss(req.body.account);
-            let password = xss(req.body.password);
+            username = xss(req.body.account);
+            password = xss(req.body.password);
             username = publicMethods.accountValidation(username);
             password = publicMethods.passwordValidation(password);
         } catch (e) {
@@ -144,12 +146,17 @@ router.route("/signin")
         if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         }
+        let firstname = null;
+        let lastname = null;
+        let username = null;
+        let password = null;
+        let password_again = null;
         try{
-            let firstname = xss(req.body.firstname);
-            let lastname = xss(req.body.lastname);
-            let username = xss(req.body.account);
-            let password = xss(req.body.password);
-            let password_again = xss(req.body.password_again);
+            firstname = xss(req.body.firstname);
+            lastname = xss(req.body.lastname);
+            username = xss(req.body.account);
+            password = xss(req.body.password);
+            password_again = xss(req.body.password_again);
             firstname = publicMethods.checkName(firstname, "first name");
             lastname = publicMethods.checkName(lastname, "last name");
             username = publicMethods.accountValidation(username);
@@ -248,15 +255,75 @@ router.route("/logout")
 
 router.route("/edit/:id")
     .get(async (req, res) => {
-        //code here for GET
-        //这里需要将对应ID的用户资料传到页面
-        res.render('editUserInfo', {
-            
-        })
+        if (req.session.user) {
+            try{
+                const user_id = req.params.id;
+                if (req.session.user.userid !== user_id) throw "Please login to set your account.";
+                res.render('editUserInfo', {
+                    url: "/edit/:id" + user_id + "?_method=PUT",
+                    login: true
+                });
+            } catch(e) {
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                });
+            }
+        } else {
+            return res.render('error', { 
+                errorMsg: 'Please login to set your account.',
+                login: false
+            });
+        }
     })
     .post(async (req, res) => {
         console.log(req.body);
-        res.redirect('/user/login');
-    })
+        if (req.session.user) {
+            let firstname = null;
+            let lastname = null;
+            let old_password = null;
+            let new_password = null;
+            let new_password_again = null;
+
+            try{
+                const user_id = req.params.id;
+                if (req.session.user.userid !== user_id) throw "Please login to set your account.";
+                firstname = publicMethods.checkName(xss(req.body.firstname), "first name");
+                lastname = publicMethods.checkName(xss(req.body.lastname), "last name");
+                old_password = publicMethods.passwordValidation(xss(req.body.old_password));
+                new_password = publicMethods.passwordValidation(xss(req.body.new_password));
+                new_password_again = publicMethods.passwordValidation(xss(req.body.new_password_again));
+                if (old_password === new_password) throw "The new password cannot be the same as the old one.";
+                if (new_password !== new_password_again) throw "The two new passwords are different.";
+            } catch(e) {
+                return res.render('editUserInfo', { 
+                    error: e,
+                    login: true
+                });
+            }
+
+            try {
+                const password_change = await userData.updateUser(
+                    req.session.user.username, 
+                    password, 
+                    firstname, 
+                    lastname
+                );
+                req.session.destroy();
+                res.status(200);
+                return res.redirect('/user/login');
+            } catch(e) {
+                return res.render('editUserInfo', { 
+                    error: e,
+                    login: true
+                });
+            }
+        } else {
+            return res.render('error', { 
+                errorMsg: 'Please login to set your account.',
+                login: false
+            });
+        }
+    });
 
 module.exports = router;
