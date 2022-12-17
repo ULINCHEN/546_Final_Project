@@ -48,7 +48,7 @@ const main = async () => {
       "cat",
       "cute!!!!!",
       "as well as me :)",
-      "Stevens",
+      "hoboken nj",
       user2.userid
     );
     // console.log(animal1);
@@ -61,7 +61,7 @@ const main = async () => {
       "dog",
       "cute!!!!!",
       "as well as me :)",
-      "Street",
+      "hoboken nj",
       user2.userid
     );
     // console.log(animal1);
@@ -74,7 +74,7 @@ const main = async () => {
       "cat",
       "cute!!!!!",
       "as well as me :)",
-      "Stevens",
+      "hoboken nj",
       user2.userid
     );
     // console.log(animal3);
@@ -87,7 +87,7 @@ const main = async () => {
       "dog",
       "cute!!!!!",
       "as well as me :)",
-      "Stevens",
+      "hoboken nj",
       user1.userid
     );
     // console.log(animal4);

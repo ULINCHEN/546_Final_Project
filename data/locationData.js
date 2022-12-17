@@ -24,7 +24,7 @@ const LocationD = async (address) => {
   addressInfo.longitude = locationList[0].longitude.toString();
   addressInfo.state = locationList[0].state.toString();
   addressInfo.city = locationList[0].city.toString();
-  console.log(addressInfo);
+  // console.log(addressInfo);
   // console.log(typeof addressInfo.latitude);
   return addressInfo;
   //   getLocation(address);

@@ -56,15 +56,16 @@ const createAnimalPost = async (
     comment_ids: [],
   };
   const info = await animaldb.insertOne(postData);
-  // let addressInfo = await locationdb.LocationD(location);
-  // let createInfo = await locationdb.createLocation(
-  //   location,
-  //   addressInfo,
-  //   info.insertedId.toString()
-  // );
-  // if (!createInfo) {
-  //   throw "could not create location information";
-  // }
+  let addressInfo = await locationdb.LocationD(location);
+  let animalid = info.insertedId.toString();
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    animalid
+  );
+  if (!createInfo) {
+    throw "could not create location information";
+  }
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
   if (userid) {
     await userdb.putAnimalIn(info.insertedId.toString(), userid);
