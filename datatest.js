@@ -99,10 +99,17 @@ const main = async () => {
   // }
 
   try {
-    let remove = await Data.locationData.updateTotalNum(
-      { latitude: "40.737066", longitude: "-74.20843740000001" },
-      "Newark",
-      4
+    // let removec = await Data.commentData.removeCommentByA(
+    //   "639e1a112e7e7135c71d913c"
+    // );
+    let remove = await Data.animalData.updateAnimalPost(
+      "639e1c70798ba9cd6ae88955",
+      "mafaiuhfga9ghfaimi",
+      "cat",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens institute of technology",
+      "639e1c6e798ba9cd6ae8894d"
     ); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);

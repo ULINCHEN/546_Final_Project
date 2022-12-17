@@ -137,11 +137,13 @@ const updateAnimalPost = async (
   location,
   userid
 ) => {
-  useridList.push(userid);
   let time = new Date();
   time = time.toUTCString();
   const animaldb = await db.animalPostCollection();
   const checkexist = await animaldb.findOne({ _id: ObjectId(animalid) });
+  if (userid !== checkexist.user_id.toString()) {
+    throw "This post is not your post";
+  }
   await locationdb.removeLocationByAId(
     checkexist._id.toString(),
     checkexist.location_id.toString()
@@ -150,7 +152,7 @@ const updateAnimalPost = async (
   let createInfo = await locationdb.createLocation(
     location,
     addressInfo,
-    info.insertedId.toString()
+    animalid
   );
   const updateData = {
     animal_name: animalName,
@@ -160,7 +162,7 @@ const updateAnimalPost = async (
     find_time: time,
     animal_photo: checkexist.animal_photo,
     location_id: createInfo.locationid,
-    user_id: useridList,
+    user_id: userid,
     followers_id: [],
     comment_ids: [],
   };
@@ -169,8 +171,8 @@ const updateAnimalPost = async (
     { _id: ObjectId(animalid) },
     { $set: updateData }
   );
-  if (!updatedInfo.acknowledged || !updatedInfo.insertedId)
-    throw "Could not add this user";
+  if (!updatedInfo) throw "Could not add this user";
+  return true;
 };
 
 const getAllAnimalPosts = async () => {
@@ -216,6 +218,7 @@ const removeAnimalById = async (animalid) => {
     await userdb.removeFollowFromU(animalid, element);
   }
   await userdb.removeAnimalFromU(animalid, animal.user_id);
+  await locationdb.removeLocationByAId(animalid, animal.location_id);
   const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete animal post with id of ${animalid}`;
@@ -328,6 +331,7 @@ const removeCommentFromA = async (commentid, animalid) => {
       commenidtList.splice(index, 1);
     }
   }
+  const userdb = await db.userCollection();
   const updateinfo = await userdb.updateOne(
     { _id: ObjectId(animalid) },
     { $set: { comment_ids: commenidtList } }

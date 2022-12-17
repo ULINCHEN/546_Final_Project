@@ -83,8 +83,8 @@ const removeCommentById = async (commentid) => {
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete comment with id of ${commentid}`;
   }
-  const removeInfo = await userdb.removeCommentFromU(commentid, userid);
   const removeInfo2 = await animaldb.removeCommentFromA(commentid, animalid);
+  const removeInfo = await userdb.removeCommentFromU(commentid, userid);
   if (removeInfo && removeInfo2) {
     return `The comment ${commnet._id} has been successfully deleted!`;
   } else {
@@ -97,7 +97,7 @@ const removeCommentByA = async (animalid) => {
   const commentidList = animal.comment_ids;
   for (let index = 0; index < commentidList.length; index++) {
     const element = commentidList[index];
-    removeCommentById(element);
+    await removeCommentById(element);
   }
 };
 

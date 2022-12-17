@@ -77,7 +77,7 @@ const updateUser = async (username, password, firstName, lastName) => {
     password,
     checkUserExist.user_password
   );
-  if (comparePassword == false) {
+  if (comparePassword == true) {
     throw "The new and old passwords cannot be the same";
   }
   const passwordAfterHash = await bcrypt.hash(password, saltRounds);

@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const db = require("../config/mongoCollection");
 const { convertLocation } = require("../publicMethods");
 
@@ -110,7 +111,6 @@ const createLocation = async (location, addressInfo, animalid) => {
 
 const updateTotalNum = async (addressInfo, city, num) => {
   const locationdb = await db.locationCollection();
-
   let updateinfo = await locationdb.updateMany(
     {
       addressInfo: addressInfo,
@@ -121,13 +121,36 @@ const updateTotalNum = async (addressInfo, city, num) => {
   if (!updateinfo) {
     throw "could not update total num";
   }
-  const locationList = await locationdb
-    .find({ addressInfo: addressInfo, city: city })
-    .toArray();
-  return locationList;
+  // const locationList = await locationdb
+  //   .find({ addressInfo: addressInfo, city: city })
+  //   .toArray();
+  // return locationList;
 };
 
-const removeLocationByAId = async (animalid, locationid) => {};
+const removeLocationByAId = async (animalid, locationid) => {
+  const locationdb = await db.locationCollection();
+  const locationinfo = await locationdb.findOne({ _id: ObjectId(locationid) });
+  // console.log(locationinfo);
+  let animalidsList = locationinfo.animalids;
+  for (let index = 0; index < animalidsList.length; index++) {
+    const element = animalidsList[index];
+    if (element === animalid) {
+      animalidsList.splice(index, 1);
+    }
+  }
+  await updateTotalNum(
+    locationinfo.addressInfo,
+    locationinfo.city,
+    locationinfo.total_animal_num - 1
+  );
+  const removeinfo = await locationdb.updateOne(
+    { _id: ObjectId(locationid) },
+    { $set: { animalids: animalidsList } }
+  );
+  if (!removeinfo) {
+    throw "Could not remove this animal's location";
+  }
+};
 
 // LocationD("hoboken nj");
 
