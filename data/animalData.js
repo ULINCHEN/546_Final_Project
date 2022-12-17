@@ -61,7 +61,7 @@ const createAnimalPost = async (
   let createInfo = await locationdb.createLocation(
     location,
     addressInfo,
-    animalid
+    info.insertedId.toString()
   );
   if (!createInfo) {
     throw "could not create location information";
