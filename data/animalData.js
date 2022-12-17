@@ -33,7 +33,6 @@ const createAnimalPost = async (
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
-
   let filepath = "";
   if (!file) {
     filepath = "public\\images\\default.png";
@@ -57,15 +56,15 @@ const createAnimalPost = async (
     comment_ids: [],
   };
   const info = await animaldb.insertOne(postData);
-  let addressInfo = await locationdb.LocationD(location);
-  let createInfo = await locationdb.createLocation(
-    location,
-    addressInfo,
-    info.insertedId.toString()
-  );
-  if (!createInfo) {
-    throw "could not create location information";
-  }
+  // let addressInfo = await locationdb.LocationD(location);
+  // let createInfo = await locationdb.createLocation(
+  //   location,
+  //   addressInfo,
+  //   info.insertedId.toString()
+  // );
+  // if (!createInfo) {
+  //   throw "could not create location information";
+  // }
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
   if (userid) {
     await userdb.putAnimalIn(info.insertedId.toString(), userid);

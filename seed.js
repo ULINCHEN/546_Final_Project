@@ -21,8 +21,8 @@ const main = async () => {
   }
   try {
     var user2 = await Data.userData.createUser(
-      "abcde@123.com",
-      "abcde123",
+      "test@123.com",
+      "test123",
       "Maryyyy",
       "May"
     );
@@ -106,7 +106,7 @@ const main = async () => {
   }
   try {
     let getanimalbyuser1 = await Data.animalData.getAnimalByUser(
-      "abcde@123.com"
+      "test@123.com"
     );
     // console.log(getanimalbyuser1);
   } catch (error) {
@@ -115,7 +115,7 @@ const main = async () => {
   try {
     let addcomment1 = await Data.commentData.createComment(
       "ababababaaaaa",
-      "abcde@123.com",
+      "test@123.com",
       animal3.animalid
     );
     // console.log(addcomment);
@@ -126,7 +126,7 @@ const main = async () => {
   try {
     let addcomment2 = await Data.commentData.createComment(
       "cuttttteeeeeee",
-      "abcd@123.com",
+      "test@123.com",
       animal3.animalid
     );
     // console.log(addcomment);
@@ -141,7 +141,7 @@ const main = async () => {
       "6th ST",
       "organazation",
       "An organazation that orders free treatment for stray animals.",
-      "abcde@123.com"
+      "test@123.com"
     );
     // console.log(addcomment);
   } catch (error) {
@@ -154,7 +154,7 @@ const main = async () => {
       "location",
       "type",
       "description",
-      "abcde@123.com"
+      "test@123.com"
     );
     // console.log(addvolunteer);
   } catch (error) {

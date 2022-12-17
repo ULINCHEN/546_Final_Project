@@ -31,8 +31,11 @@ const LocationD = async (address) => {
 };
 
 const createLocation = async (location, addressInfo, animalid) => {
+  let addressinfo = {};
+  addressinfo.latitude = addressInfo.latitude;
+  addressinfo.longitude = addressInfo.longitude;
   const locationdb = await db.locationCollection();
-  const locationexist = await locationdb.findOne({ addressInfo: addressInfo });
+  const locationexist = await locationdb.findOne({ addressInfo: addressinfo });
   let animalidList = [];
   if (locationexist) {
     animalidList = locationexist.animalids;
@@ -40,13 +43,12 @@ const createLocation = async (location, addressInfo, animalid) => {
   } else {
     animalidList.push(animalid);
   }
-  let addressinfo = {};
-  addressinfo.latitude = addressInfo.latitude;
-  addressinfo.longitude = addressInfo.longitude;
   let num = animalidList.length;
   const postData = {
     location: location,
     addressInfo: addressinfo,
+    state: addressInfo.state,
+    city: addressInfo.city,
     animalids: animalidList,
     total_animal_num: num,
   };
@@ -71,4 +73,4 @@ const getLocationByCity = async (City, State) => {
 
 // LocationD("hoboken nj");
 
-module.exports = { LocationD, createLocation };
+module.exports = { LocationD, createLocation, getLocationByCity };
