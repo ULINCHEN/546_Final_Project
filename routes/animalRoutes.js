@@ -156,6 +156,7 @@ router.route("/detail/:id")
                 }); 
             }
             try {
+                await commentData.removeCommentByA(post_id);
                 await animalData.removeAnimalById(post_id);
                 res.status(200)
                 return res.redirect('/user/userCenter/' + post_id);
@@ -184,6 +185,7 @@ router.route("/edit/:id")
             return res.render('editPost', {
                 title: "Edit your animal post",
                 postData: postData,
+                url: "/animal/edit/" + post_id,
                 login: true
             });
         } else {
@@ -196,23 +198,23 @@ router.route("/edit/:id")
     })
     .put(async (req, res) => { 
         if (req.session.user){
-            let post_id = req.params.id;
-            const animalPost = animalData.getAnimalPostById(post_id);
-            const user_id = animalPost.user_id;
-            if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
-            let animalName = xss(req.body.animal_name);
-            let species = xss(req.body.species);
-            let description = xss(req.body.description);
-            let healthCondition = xss(req.body.condition);
-            let location = xss(req.body.location);
-            //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
-                        
+            let animalName =null;
+            let species = null;
+            let description = null;
+            let healthCondition = null;
+            let location = null;
             //console.log(location);
 
             try{
-                animalName = publicMethods.checkName(animalName, "Animal Name");
-                [species, healthCondition] = publicMethods.checkAnimalPost(species, healthCondition);
-                description = publicMethods.checkArticle(description);
+                let post_id = req.params.id;
+                const animalPost = animalData.getAnimalPostById(post_id);
+                const user_id = animalPost.user_id;
+                if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
+                animalName = publicMethods.checkName(xss(req.body.animal_name), "Animal Name");
+                species = xss(req.body.species);
+                description = publicMethods.checkArticle(xss(req.body.description), "description");
+                healthCondition = xss(req.body.condition);
+                location = xss(req.body.location);
                 // animal photo can be empty
                 // location check
             } catch(e) {
