@@ -142,6 +142,16 @@ const updateAnimalPost = async (
   time = time.toUTCString();
   const animaldb = await db.animalPostCollection();
   const checkexist = await animaldb.findOne({ _id: ObjectId(animalid) });
+  await locationdb.removeLocationByAId(
+    checkexist._id.toString(),
+    checkexist.location_id.toString()
+  );
+  let addressInfo = await locationdb.LocationD(location);
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    info.insertedId.toString()
+  );
   const updateData = {
     animal_name: animalName,
     species: species,
@@ -149,7 +159,7 @@ const updateAnimalPost = async (
     health_condition: healthCondition,
     find_time: time,
     animal_photo: checkexist.animal_photo,
-    location_id: [],
+    location_id: createInfo.locationid,
     user_id: useridList,
     followers_id: [],
     comment_ids: [],
