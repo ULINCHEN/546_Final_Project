@@ -181,11 +181,10 @@ router.route("/edit/:id")
         if (req.session.user){
             try{
                 const post_id = req.params.id;
-                const postData = animalData.getAnimalPostById(post_id);
+                const postData = await animalData.getAnimalPostById(post_id);
                 const user_id = postData.user_id;
-                console.log(user_id, req.session.user.userid);
-                if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
-                return res.render('editPost', {
+                if (req.session.user.userid !== user_id) throw 'Please login to edit your animal post.';
+                return res.render('editAnimalPost', {
                     title: "Edit your animal post",
                     postData: postData,
                     url: "/animal/edit/" + post_id + "?_method=PUT",
@@ -228,7 +227,7 @@ router.route("/edit/:id")
                 // location check
             } catch(e) {
                 res.status(400);
-                return res.render('editPost',  {
+                return res.render('editAnimalPost',  {
                     error: e,
                     login: true
                 });
@@ -248,7 +247,7 @@ router.route("/edit/:id")
                 return res.redirect('/animal/edit/' + id);
             } catch (e) {
                 res.status(500);
-                return res.render('editPost',  {
+                return res.render('editAnimalPos',  {
                     error: e,
                     login: true
                 });
