@@ -236,6 +236,7 @@ router.route("/edit/:id")
         //code here for GET
         //这里需要将对应ID的用户资料传到页面
         res.render('editUserInfo', {
+            
         })
     })
     .post(async (req, res) => {

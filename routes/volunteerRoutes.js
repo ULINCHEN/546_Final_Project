@@ -50,6 +50,37 @@ router.route("/detail/:id")
                 login
             });
         }
+    })
+    .delete(async (req, res) => {
+        if (req.session.user){
+            //code here for DELETE
+            let post_id = req.params.id;
+            try {
+                const postData = await volunteerData.getVolunteerById(post_id);
+            } catch (e) {
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                }); 
+            }
+
+            try {
+                await volunteerData.removeVolunteerById(post_id);
+                res.status(200)
+                return res.redirect('/user/userCenter/' + post_id);
+            } catch (e) {
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                }); 
+            }
+        } else {
+            res.status(400);
+            return res.render('error', { 
+                errorMsg: 'Please login to delete your volunteer post.',
+                login: true
+            }); 
+        }
     });
 
 router.route("/new")
@@ -103,7 +134,7 @@ router.route("/new")
                     username
                 );
                 res.status(200);
-                return res.redirect('/volunteer/detail/' + new_volunteer_post.volunteerid);
+                return res.redirect('/volunteer');
             } catch (e) {
                 res.status(500);
                 return res.render('addVolunteerPost',  {
