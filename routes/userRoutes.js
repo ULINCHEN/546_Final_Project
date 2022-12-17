@@ -33,8 +33,8 @@ router.route("/usercenter/:id")
             //         animal_posts.push(animal_post);
             //     }
             // }
-            let animal_posts = await animalData.getAnimalByUser(username);
-            console.log("getAnimalByUser", animalData);
+            let animal_posts = animalData.getAnimalByUser(username);
+
             // let volunteer_ids = user.volunteer_ids;
             // let volunteer_posts = [];
             // if (volunteer_ids.length > 0){
@@ -43,8 +43,8 @@ router.route("/usercenter/:id")
             //         volunteer_posts.push(volunteer_post);
             //     }
             // }
-            let volunteer_posts = await volunteerData.getVolunteerPostsByU(username);
-            console.log("getVolunteerPostsByU", animalData);
+            let volunteer_posts = volunteerData.getVolunteerPostsByU(username);
+
             return res.render('userCenter', {
                 title: "current user data",
                 first_name: user.first_name,    //"jake", 
@@ -236,6 +236,7 @@ router.route("/edit/:id")
         //code here for GET
         //这里需要将对应ID的用户资料传到页面
         res.render('editUserInfo', {
+
         })
     })
     .post(async (req, res) => {

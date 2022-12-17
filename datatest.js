@@ -44,19 +44,19 @@ const main = async () => {
   //   console.log(error);
   // }
 
-  // try {
-  //   let animal1 = await Data.animalData.createAnimalPost(
-  //     "doggggggggg",
-  //     "dog",
-  //     "cute!!!!!",
-  //     "as well as me :)",
-  //     "Stevens",
-  //     "639662a87cd4bcda8af046cf"
-  //   );
-  //   console.log(animal1);
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    let animal1 = await Data.animalData.createAnimalPost(
+      "dggg",
+      "dog",
+      "cute!!!!!",
+      "as well as me :)",
+      "Stevens",
+      "639cfb05e89e5e61a7d98675"
+    );
+    console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
 
   // try {
   //   let user2 = await Data.userData.createUser(
@@ -90,8 +90,16 @@ const main = async () => {
   //   console.log(error);
   // }
 
+  // try {
+  //   let remove = await volunteerData.getVolunteerPostsByU("abcde@123.com"); //639b8a7f243dbaead1371918
+  //   // console.log(a.comm);
+  //   console.log(remove);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+
   try {
-    let remove = await volunteerData.getVolunteerPostsByU("abcde@123.com"); //639b8a7f243dbaead1371918
+    let remove = await Data.userData.checkUser("abcdef@123.com", "abcdef123"); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);
   } catch (error) {
