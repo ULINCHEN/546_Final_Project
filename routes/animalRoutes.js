@@ -185,7 +185,7 @@ router.route("/edit/:id")
             return res.render('editPost', {
                 title: "Edit your animal post",
                 postData: postData,
-                url: "/animal/edit/" + post_id,
+                url: "/animal/edit/" + post_id + "?_method=PUT",
                 login: true
             });
         } else {
