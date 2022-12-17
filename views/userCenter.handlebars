@@ -36,6 +36,12 @@
                 newlink.className = "list-link";
                 newlink.textContent = 'Get Detail';
                 card.appendChild(newlink);
+                var editAddress = "/animal/edit/" + id;
+                var editLink = document.createElement("a");
+                editLink.href = editAddress;
+                editLink.className = "editLink";
+                editLink.textContent = "Edit";
+                card.appendChild(editLink);
             </script>
             {{/each}}
             {{else}}
