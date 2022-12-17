@@ -247,10 +247,10 @@ router.route("/edit/:id")
                     user_id
                 );
                 res.status(200);
-                return res.redirect('/animal/edit/' + id);
+                return res.redirect('/animal/detail/' + id);
             } catch (e) {
                 res.status(500);
-                return res.render('editAnimalPos', {
+                return res.render('editAnimalPost', {
                     error: e,
                     login: true
                 });
