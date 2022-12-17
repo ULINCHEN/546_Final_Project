@@ -4,6 +4,7 @@ const userdb = require("./userData");
 const locationdb = require("./locationData");
 const fs = require("fs");
 const path = require("path");
+const validation = require("../publicMethods");
 
 //create,update,search,delete
 const createAnimalPost = async (
@@ -15,20 +16,11 @@ const createAnimalPost = async (
   userid,
   file
 ) => {
-  // if (!animalName) throw "Animal name can not be empty";
-  // if (!species) throw "Species can not be empty";
-  // if (!description) throw "Description can not be empty";
-  // if (!healthCondition) throw "HealthCondition can not be empty";
-  // // if (!time) throw "Time can not be empty";
-  // // animal photo can be empty
-  // if (!location) throw "Location can not be empty";
-  // if (!userid) throw "userid can not be empty";
-  // locationId = somefunction(location) 这里应该要把location 转化成 locationId
-  // location 暂时没加入postData
-  // let animalName = body.animal_name;
-  // let species = body.species;
-  // let healthCondition = body.condition;
-  // let description = body.description;
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
   let time = new Date();
@@ -88,13 +80,11 @@ const createImg = async (file) => {
       if (err) {
         reject(err);
       }
-      // 拓展名
+      // get the extname
       let extName = file.mimetype.split("/")[1];
-      // 拼接成图片名
-      // 这里可以自行修改
+      // concatenate picture path
       let imgName = `${file.filename}.${extName}`;
-      // 写入图片
-      // 写入自己想要存入的地址
+      // write file in uploads
       await fs.writeFile(
         path.join(`public\\uploads\\${imgName}`),
         data,
@@ -137,11 +127,29 @@ const updateAnimalPost = async (
   location,
   userid
 ) => {
-  useridList.push(userid);
+  animalid = validation.checkDatabaseId(animalid);
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
   let time = new Date();
   time = time.toUTCString();
   const animaldb = await db.animalPostCollection();
   const checkexist = await animaldb.findOne({ _id: ObjectId(animalid) });
+  if (userid !== checkexist.user_id.toString()) {
+    throw "This post is not your post";
+  }
+  await locationdb.removeLocationByAId(
+    checkexist._id.toString(),
+    checkexist.location_id.toString()
+  );
+  let addressInfo = await locationdb.LocationD(location);
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    animalid
+  );
   const updateData = {
     animal_name: animalName,
     species: species,
@@ -149,8 +157,8 @@ const updateAnimalPost = async (
     health_condition: healthCondition,
     find_time: time,
     animal_photo: checkexist.animal_photo,
-    location_id: [],
-    user_id: useridList,
+    location_id: createInfo.locationid,
+    user_id: userid,
     followers_id: [],
     comment_ids: [],
   };
@@ -159,8 +167,8 @@ const updateAnimalPost = async (
     { _id: ObjectId(animalid) },
     { $set: updateData }
   );
-  if (!updatedInfo.acknowledged || !updatedInfo.insertedId)
-    throw "Could not add this user";
+  if (!updatedInfo) throw "Could not add this user";
+  return true;
 };
 
 const getAllAnimalPosts = async () => {
@@ -184,6 +192,7 @@ const getAllAnimalPosts = async () => {
 };
 
 const getAnimalPostById = async (id) => {
+  id = validation.checkDatabaseId(id);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(id) });
   if (!animal) {
@@ -195,6 +204,7 @@ const getAnimalPostById = async (id) => {
 
 // Before use this funtion, please use removeCommentByA(animalid) in commentData in routes first
 const removeAnimalById = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   if (!animal) {
@@ -206,6 +216,7 @@ const removeAnimalById = async (animalid) => {
     await userdb.removeFollowFromU(animalid, element);
   }
   await userdb.removeAnimalFromU(animalid, animal.user_id);
+  await locationdb.removeLocationByAId(animalid, animal.location_id);
   const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete animal post with id of ${animalid}`;
@@ -214,6 +225,7 @@ const removeAnimalById = async (animalid) => {
 };
 
 const getAnimalByType = async (type) => {
+  type = validation.checkAnimalSpecies(type);
   const animaldb = await db.animalPostCollection();
   const animalList = await animaldb.find({ species: type }).toArray();
   animalList.sort((a, b) => {
@@ -233,6 +245,7 @@ const getAnimalByType = async (type) => {
 };
 
 const getAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
   let animalidList = await userdb.getAnimalList(username);
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
@@ -244,6 +257,8 @@ const getAnimalByUser = async (username) => {
 };
 
 const putFollowInUser = async (animalid, userid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   const userdb = await db.userCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
@@ -283,6 +298,7 @@ const putFollowInUser = async (animalid, userid) => {
 };
 
 const getFollowAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
   let animalidList = await userdb.getFollowAnimalList(username);
   let animalList = [];
   for (let index = 0; index < animalidList.length; index++) {
@@ -294,6 +310,8 @@ const getFollowAnimalByUser = async (username) => {
 };
 
 const putCommentIn = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   let commenidtList = animal.comment_ids;
@@ -309,6 +327,8 @@ const putCommentIn = async (commentid, animalid) => {
 };
 
 const removeCommentFromA = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
   const animaldb = await db.animalPostCollection();
   const Animal = await animaldb.findOne({ _id: ObjectId(animalid) });
   let commenidtList = Animal.comment_ids;
@@ -318,6 +338,7 @@ const removeCommentFromA = async (commentid, animalid) => {
       commenidtList.splice(index, 1);
     }
   }
+  const userdb = await db.userCollection();
   const updateinfo = await userdb.updateOne(
     { _id: ObjectId(animalid) },
     { $set: { comment_ids: commenidtList } }
