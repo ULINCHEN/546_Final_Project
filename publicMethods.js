@@ -127,6 +127,17 @@ const checkVolunteerPost = (type) => {
   return type;
 };
 
+// check if it's a vaild email or phone, using in volunteer.    
+// it vaild as email or phonenumber(just US number without country code '+1').
+const checkVolunteerInfo = (input) => {
+    input = input.trim();
+    var mail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    var phonenumber = /\d{10}/;
+    isok = (mail.test(input) || phonenumber.test(input));
+    if (!isok) throw `${input} is not an vaild Email or Phone number.`;
+    return input
+}
+
 const convertLocation = async (location) => {
   if (!location) throw "Please provide a location";
   if (typeof location != "string") throw "location should be a string";
@@ -154,5 +165,6 @@ module.exports = {
   checkArticle,
   checkAnimalPost,
   checkVolunteerPost,
+  checkVolunteerInfo,
   convertLocation,
 };
