@@ -13,6 +13,11 @@ const constructorMethod = (app) => {
     app.use('/volunteer', volunteerRoutes);
     app.use('/user', userRoutes);
 
+    app.get('/user/usercenter', (req, res) => {
+        if (req.session.user)
+            res.redirect('/user/usercenter/' + req.session.user.userid);
+    })
+
     app.use('*', (req, res) => {
         res.render('error', {
             errorMsg: "Page Not Found",
