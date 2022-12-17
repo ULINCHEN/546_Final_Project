@@ -144,8 +144,9 @@ router.route("/detail/:id")
     .delete(async (req, res) => {
         if (req.session.user){
             //code here for DELETE
+            let post_id = null;
             try {
-                let post_id = req.params.id;
+                post_id = req.params.id;
                 const postData = await animalData.getAnimalPostById(post_id);
                 const user_id = postData.user_id;
                 if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
@@ -178,16 +179,24 @@ router.route("/detail/:id")
 router.route("/edit/:id")
     .get(async (req, res) => {
         if (req.session.user){
-            let post_id = req.params.id;
-            const postData = animalData.getAnimalPostById(post_id);
-            const user_id = postData.user_id;
-            if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
-            return res.render('editPost', {
-                title: "Edit your animal post",
-                postData: postData,
-                url: "/animal/edit/" + post_id + "?_method=PUT",
-                login: true
-            });
+            try{
+                const post_id = req.params.id;
+                const postData = animalData.getAnimalPostById(post_id);
+                const user_id = postData.user_id;
+                console.log(user_id, req.session.user.userid);
+                if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
+                return res.render('editPost', {
+                    title: "Edit your animal post",
+                    postData: postData,
+                    url: "/animal/edit/" + post_id + "?_method=PUT",
+                    login: true
+                });
+            } catch(e) {
+                return res.render('error', { 
+                    errorMsg: e,
+                    login: true
+                });
+            }  
         } else {
             res.status(400);
             return res.render('error', { 

@@ -259,7 +259,7 @@ router.route("/edit/:id")
             try{
                 const user_id = req.params.id;
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
-                res.render('editUserInfo', {
+                return res.render('editUserInfo', {
                     url: "/edit/:id" + user_id + "?_method=PUT",
                     login: true
                 });
