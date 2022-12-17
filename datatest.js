@@ -44,19 +44,19 @@ const main = async () => {
   //   console.log(error);
   // }
 
-  try {
-    let animal1 = await Data.animalData.createAnimalPost(
-      "dggg",
-      "dog",
-      "cute!!!!!",
-      "as well as me :)",
-      "Stevens",
-      "639cfb05e89e5e61a7d98675"
-    );
-    console.log(animal1);
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   let animal1 = await Data.animalData.createAnimalPost(
+  //     "dggg",
+  //     "dog",
+  //     "cute!!!!!",
+  //     "as well as me :)",
+  //     "Stevens",
+  //     "639cfb05e89e5e61a7d98675"
+  //   );
+  //   console.log(animal1);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   // try {
   //   let user2 = await Data.userData.createUser(
@@ -99,7 +99,11 @@ const main = async () => {
   // }
 
   try {
-    let remove = await Data.userData.checkUser("abcdef@123.com", "abcdef123"); //639b8a7f243dbaead1371918
+    let remove = await Data.locationData.updateTotalNum(
+      { latitude: "40.737066", longitude: "-74.20843740000001" },
+      "Newark",
+      4
+    ); //639b8a7f243dbaead1371918
     // console.log(a.comm);
     console.log(remove);
   } catch (error) {

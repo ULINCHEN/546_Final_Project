@@ -71,6 +71,15 @@ const checkUser = async (username, password) => {
 
 const updateUser = async (username, password, firstName, lastName) => {
   const userdb = await db.userCollection();
+  const checkUserExist = await userdb.findOne({ user_account: username });
+  if (!checkUserExist) throw "Either the username or password is invalid";
+  const comparePassword = await bcrypt.compare(
+    password,
+    checkUserExist.user_password
+  );
+  if (comparePassword == false) {
+    throw "The new and old passwords cannot be the same";
+  }
   const passwordAfterHash = await bcrypt.hash(password, saltRounds);
   const updatedInfo = await userdb.updateOne(
     { user_account: username },

@@ -1,6 +1,7 @@
 const { ObjectId } = require("mongodb");
 const db = require("../config/mongoCollection");
 const userdb = require("./userData");
+const locationdb = require("./locationData");
 const fs = require("fs");
 const path = require("path");
 
@@ -32,7 +33,6 @@ const createAnimalPost = async (
   // use current date as animal post time
   let time = new Date();
   time = time.toUTCString();
-
   let filepath = "";
   if (!file) {
     filepath = "public\\images\\default.png";
@@ -50,13 +50,31 @@ const createAnimalPost = async (
     health_condition: healthCondition,
     find_time: time,
     animal_photo: filepath,
-    location_id: [],
+    location_id: null,
     user_id: userid,
     followers_id: [],
     comment_ids: [],
   };
   const info = await animaldb.insertOne(postData);
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
+  let addressInfo = await locationdb.LocationD(location);
+  // let animalid = info.insertedId.toString();
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    info.insertedId.toString()
+  );
+  const updatedInfo = await animaldb.updateOne(
+    { _id: info.insertedId },
+    { $set: { location_id: createInfo.locationid } }
+  );
+  if (!updatedInfo) {
+    throw "location_id update failed";
+  }
+  // if (!createInfo) {
+  //   throw "could not create location information";
+  // }
+
   if (userid) {
     await userdb.putAnimalIn(info.insertedId.toString(), userid);
   }
@@ -236,7 +254,7 @@ const putFollowInUser = async (animalid, userid) => {
   for (let index = 0; index < animalidList.length; index++) {
     const element = animalidList[index];
     if (animalid === element) {
-      throw "you can not follow the animal you have poste";
+      throw "you can not follow the animal you have posted";
     }
   }
   for (let index = 0; index < FollowuseridList.length; index++) {

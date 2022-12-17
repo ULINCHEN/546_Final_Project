@@ -26,6 +26,9 @@
     "jquery": "^3.6.1",
     "mongodb": "^4.12.1",
     "multer": "^1.4.5-lts.1",
-    "xss": "^1.0.14"
+    "xss": "^1.0.14",
+    "leaflet-geosearch": "^3.7.0",
+    "leaflet.markercluster.layersupport": "^2.0.1",
+    "node-geocoder": "^3.29.0"
   }
 }
