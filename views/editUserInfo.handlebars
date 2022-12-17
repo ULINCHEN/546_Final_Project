@@ -1,15 +1,13 @@
 <main class="container px-4 text-center">
     <h1>Change Account Settings</h1>
     <div class="container">
-        <form class="container needs-validation" action="/user/edit/currentid" method="POST" id="infoEditForm">
+        <form class="container needs-validation" action={{url}} method="POST" id="infoEditForm">
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-12 col-lg-6">
                     <label for="firstname" class="row form-label">First name</label>
-                    <input type="text" class="col-4 form-control" id="firstname" name="firstname">
-                    <div class="row valid-feedback">
-                        Looks good!
-                    </div>
+                    <input type="text" class="col-4 form-control" id="firstname" name="firstname" value={{first_name}}>
+
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -17,7 +15,7 @@
                 <div class="col-3"></div>
                 <div class="col-12 col-lg-6">
                     <label for="lastname" class="row form-label">Last name</label>
-                    <input type="text" class="col-4 form-control" id="lastname" name="lastname">
+                    <input type="text" class="col-4 form-control" id="lastname" name="lastname" value={{last_name}}>
                     <div class="row valid-feedback">
                         Looks good!
                     </div>
@@ -32,9 +30,7 @@
 
                     <input type="password" class="col-4 form-control" id="old_password" name="old_password"
                         aria-describedby="inputGroupPrepend">
-                    <div class="row invalid-feedback">
-                        Please choose a username.
-                    </div>
+
                 </div>
                 <div class="col-3"></div>
             </div>
@@ -75,7 +71,8 @@
             </div>
 
         </form>
-        <script src="../public/js/changeAccountSettingValidation.js"> </script>
+        {{!--
+        <script src="../public/js/changeAccountSettingValidation.js"> </script> --}}
     </div>
 
 </main>
