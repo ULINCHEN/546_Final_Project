@@ -88,13 +88,11 @@ const createImg = async (file) => {
       if (err) {
         reject(err);
       }
-      // 拓展名
+      // get the extname
       let extName = file.mimetype.split("/")[1];
-      // 拼接成图片名
-      // 这里可以自行修改
+      // concatenate picture path
       let imgName = `${file.filename}.${extName}`;
-      // 写入图片
-      // 写入自己想要存入的地址
+      // write file in uploads
       await fs.writeFile(
         path.join(`public\\uploads\\${imgName}`),
         data,
