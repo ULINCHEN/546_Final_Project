@@ -169,7 +169,7 @@ const convertLocation = async (location) => {
   if (typeof location != "string") throw "location should be a string";
   location = location.trim();
   if (location.length == 0) throw "location should not contains only spaces";
-  reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\#)*(\*)*(\_)*))*$/;
+  reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\,)*(\#)*(\*)*(\_)*))*$/;
   if (!reg.test(location)) {
     console.log("1");
     throw "This is an invalid location";
@@ -187,6 +187,7 @@ const convertLocation = async (location) => {
     throw "This is an invalid location";
   }
   if (result.length < 1) {
+    console.log(result);
     console.log("3");
     throw "This is an invalid location";
   }

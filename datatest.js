@@ -119,11 +119,9 @@ const main = async () => {
   // }
 
   try {
-    let a = await validation.convertLocation("#3ihfaoi");
+    let a = await validation.convertLocation("Flatbush Ave");
+    console.log(a);
     // console.log(a);
-    if (!a) {
-      throw "invalid location";
-    }
   } catch (error) {
     console.log(error);
   }
@@ -132,6 +130,3 @@ const main = async () => {
 };
 
 main();
-
-reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\#)*(\*)*(\_)*))*$/;
-console.log(reg.test("New Jersey"));

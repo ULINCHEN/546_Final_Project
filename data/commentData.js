@@ -34,7 +34,7 @@ const createComment = async (comment, username, animalid) => {
   if (!insertanimal) {
     throw "comment_id insert in animal error";
   }
-  return commentData;
+  return { commentid: commentInfo.insertedId.toString() };
 };
 
 const getCommentByPostId = async (animalid) => {

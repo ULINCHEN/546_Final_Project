@@ -37,7 +37,7 @@ const createLocation = async (location, addressInfo, animalid) => {
   addressinfo.longitude = addressInfo.longitude;
   const locationdb = await db.locationCollection();
   const locationexist = await locationdb
-    .find({ addressInfo: addressinfo, city: addressInfo.city })
+    .find({ state: addressInfo.state, city: addressInfo.city })
     .toArray();
   let animalidList = [];
   let num = 0;
@@ -73,7 +73,7 @@ const createLocation = async (location, addressInfo, animalid) => {
       if (!updateinfo) {
         throw "could not update location";
       }
-      await updateTotalNum(addressinfo, addressInfo.city, num);
+      await updateTotalNum(addressInfo.state, addressInfo.city, num);
       return { locationid: element._id.toString() };
     }
   }
@@ -89,7 +89,7 @@ const createLocation = async (location, addressInfo, animalid) => {
     animalids: animalidList,
     total_animal_num: num,
   };
-  await updateTotalNum(addressinfo, addressInfo.city, num);
+  await updateTotalNum(addressInfo.state, addressInfo.city, num);
   // console.log(postData);
   const info = await locationdb.insertOne(postData);
   if (!info) {
@@ -109,11 +109,11 @@ const createLocation = async (location, addressInfo, animalid) => {
 //   }
 // };
 
-const updateTotalNum = async (addressInfo, city, num) => {
+const updateTotalNum = async (state, city, num) => {
   const locationdb = await db.locationCollection();
   let updateinfo = await locationdb.updateMany(
     {
-      addressInfo: addressInfo,
+      state: state,
       city: city,
     },
     { $set: { total_animal_num: num } }
