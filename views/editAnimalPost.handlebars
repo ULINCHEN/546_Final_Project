@@ -3,12 +3,13 @@
     <div class="container text-center">
         <h1>Edit Your Stray Animal Post</h1>
     </div>
-    <form action={{postData.url}} method="POST" class="row container" id="addAnimalForm" enctype="multipart/form-data">
+    <form action={{url}} method="POST" class="row container" id="editAnimalForm">
         <div class="row mb-3 input-group">
             <div class="col-3"></div>
             <div class="col-12 col-lg-6">
                 <label for="animal_name">Name</label>
-                <input class="form-control" type="text" name="animal_name" id="animal_name">
+                <input class="form-control" type="text" name="animal_name" id="animal_name"
+                    value={{postData.animal_name}}>
             </div>
             <div class="col-3"></div>
         </div>
@@ -55,7 +56,7 @@
             <div class="col-12 col-lg-6 mb-3">
                 <label for="location">Location</label>
                 <input class="text form-control" name="location" id="location" cols="30" rows="5"
-                    placeholder="40 Ravine Ave, Jersey City, New Jersey"></input>
+                    value={{postData.location_id}}></input>
             </div>
             <div class="col-3"></div>
         </div>
@@ -63,17 +64,18 @@
             <div class="col-3"></div>
             <div class="col-12 col-lg-6 mb-3">
                 <label for="description">Description</label>
-                <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                <textarea class="form-control" name="description" id="description" cols="30"
+                    rows="5">{{postData.description}}</textarea>
             </div>
             <div class="col-3"></div>
         </div>
-        <div class="row">
+        {{!-- <div class="row">
             <div class="col-3"></div>
             <div class="col-6">
                 <input type="file" name="photo1" id="photo1" accept="image/*">
             </div>
             <div class="col-3"></div>
-        </div>
+        </div> --}}
 
         {{!-- <div class="row mb-3 input-group">
             <div class="col-3"></div>
@@ -104,8 +106,8 @@
             </div>
             <div class="col-4"></div>
         </div>
-
-        <script src="../public/js/addPostValidation.js"></script>
+        {{!--
+        <script src="../public/js/addPostValidation.js"></script> --}}
     </form>
     {{/if}}
 </main>
