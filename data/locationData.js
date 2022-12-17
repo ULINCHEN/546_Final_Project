@@ -73,7 +73,7 @@ const createLocation = async (location, addressInfo, animalid) => {
         throw "could not update location";
       }
       await updateTotalNum(addressinfo, addressInfo.city, num);
-      return { locationid: element._id };
+      return { locationid: element._id.toString() };
     }
   }
   // console.log(locationexist);
