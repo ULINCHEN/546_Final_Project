@@ -198,7 +198,7 @@ router.route("/logout")
             return res.render('logoutAlert', {
                 logMsg: "You have successfully logged out!",
                 url: '/',
-                login: true
+                login: false
             });
         } else {
             res.status(400);
@@ -276,7 +276,7 @@ router.route("/edit/:id")
             });
         }
     })
-    .post(async (req, res) => {
+    .put(async (req, res) => {
         console.log(req.body);
         if (req.session.user) {
             let firstname = null;
