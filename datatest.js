@@ -132,3 +132,6 @@ const main = async () => {
 };
 
 main();
+
+reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\#)*(\*)*(\_)*))*$/;
+console.log(reg.test("New Jersey"));

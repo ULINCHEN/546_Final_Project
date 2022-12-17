@@ -45,9 +45,9 @@ const main = async () => {
   try {
     let animal1 = await Data.animalData.createAnimalPost(
       "miaomiao",
-      "cat",
+      "Cat",
       "cute!!!!!",
-      "as well as me :)",
+      "Normal",
       "hoboken nj",
       user2.userid
     );
@@ -58,9 +58,9 @@ const main = async () => {
   try {
     let animal2 = await Data.animalData.createAnimalPost(
       "wangwang",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
+      "Normal",
       "hoboken nj",
       user2.userid
     );
@@ -71,9 +71,9 @@ const main = async () => {
   try {
     var animal3 = await Data.animalData.createAnimalPost(
       "mimi",
-      "cat",
+      "Cat",
       "cute!!!!!",
-      "as well as me :)",
+      "Good",
       "Stevens institute of technology",
       user2.userid
     );
@@ -84,9 +84,9 @@ const main = async () => {
   try {
     var animal4 = await Data.animalData.createAnimalPost(
       "doggggggggg",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
+      "Bad",
       "hoboken nj",
       user1.userid
     );
@@ -97,9 +97,9 @@ const main = async () => {
   try {
     var animal5 = await Data.animalData.createAnimalPost(
       "afaufiafaof",
-      "dog",
+      "Dog",
       "cute!!!!!",
-      "as well as me :)",
+      "Good",
       "3 Hague ST",
       user1.userid
     );

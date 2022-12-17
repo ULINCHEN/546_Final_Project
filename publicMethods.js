@@ -1,6 +1,6 @@
 // 这里写公用方法 数据校验等
 let nodeGeocoder = require("node-geocoder");
-
+const { ObjectId } = require("mongodb");
 /*
 Description:
 
@@ -171,6 +171,7 @@ const convertLocation = async (location) => {
   if (location.length == 0) throw "location should not contains only spaces";
   reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\#)*(\*)*(\_)*))*$/;
   if (!reg.test(location)) {
+    console.log("1");
     throw "This is an invalid location";
   }
   let options = {
@@ -180,22 +181,28 @@ const convertLocation = async (location) => {
   let geoCoder = nodeGeocoder(options);
 
   let result = await geoCoder.geocode(location);
-  // console.log(result);
+  // console.log(result[0]);
   if (result === undefined) {
+    console.log("2");
     throw "This is an invalid location";
   }
   if (result.length < 1) {
+    console.log("3");
     throw "This is an invalid location";
   }
 
   // console.log(reg.test("afaf # 123 af*a_f"));
   if (!reg.test(result.state)) {
+    console.log("4");
     throw "This is an invalid location";
   }
   if (!reg.test(result.city)) {
+    console.log("5");
     throw "This is an invalid location";
   }
-  if (result.state === undefined) {
+  if (result[0].state === undefined) {
+    console.log("6");
+    console.log(result.state);
     throw "This is an invalid location";
   }
   return result;
