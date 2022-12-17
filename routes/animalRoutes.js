@@ -209,7 +209,7 @@ router.route("/edit/:id")
                 let post_id = req.params.id;
                 const animalPost = animalData.getAnimalPostById(post_id);
                 const user_id = animalPost.user_id;
-                if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
+                if (req.session.user.userid !== user_id) throw 'Please login to edit your animal post.';
                 animalName = publicMethods.checkName(xss(req.body.animal_name), "Animal Name");
                 species = xss(req.body.species);
                 description = publicMethods.checkArticle(xss(req.body.description), "description");
