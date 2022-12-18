@@ -384,7 +384,7 @@ router.route("/follow/:id")
 // 测试用
 router.route("/test")
     .get(async (req, res) => {
-        const postData = await getAllAnimalPosts();
+        const postData = await animalData.getAllAnimalPosts();
         res.render('test', {
             postData: postData,
         })
