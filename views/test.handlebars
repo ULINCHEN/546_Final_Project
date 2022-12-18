@@ -10,11 +10,15 @@
     </div>
     <hr>
     <div class="row" id="infoArea">
-        <div class="col-lg-8" style="border: 1px solid rgb(200, 200, 200);height:500px">123</div>
+        <div id="map-main" class="col-lg-8" style="border: 1px solid rgb(200, 200, 200);height:500px">123</div>
+        <script>
+            const infoArray = new Array();
+        </script>
         <div class="col-lg-4 container"
             style="border: 1px solid rgb(200, 200, 200);border-radius:5px;height:500px;overflow:scroll;">
             {{#if postData}}
             {{#each postData}}
+
             <div class="card row mt-3" style="height:250px;" id={{_id}}>
                 <div class="row g-0">
                     <div class="col-4">
@@ -32,6 +36,8 @@
             </div>
             <script>
                 var id = "{{_id}}";
+                var species = "{{species}}";
+                document.getElementById(id).classList.add('display-' + species);
                 var address = '/animal/detail/' + id;
                 var card = document.getElementById(id).querySelector('.card-body');
                 var newlink = document.createElement('a');
@@ -39,6 +45,17 @@
                 newlink.className = "list-link";
                 newlink.textContent = 'Get Detail';
                 card.appendChild(newlink);
+                infoArray.push({
+                    id: id,
+                    name : "{{animal_name}}",
+                    date: "{{find_time}}",
+                    health: "{{health_condition}}",
+                    species: species,
+                    description: "{{description}}",
+                    address: address,
+                    lat: "{{lat}}",
+                    lng: "{{lng}}"
+                });
             </script>
             {{/each}}
             {{/if}}
@@ -51,4 +68,18 @@
         <p id="catFact"></p>
     </div>
     <script src="../public/js/getRandomFact.js"></script>
+    <script src="../public/js/map/together.js">
+    </script>
+    <script>
+        let lat = 40.7447099
+        let lng = -74.0289506
+        for (let i = 0; i < infoArray.length; i++) {
+            lat = lat;
+            lng = lng;
+            infoArray[i].lat = (lat).toString();
+            infoArray[i].lng = (lng).toString();
+        }
+        addTogether(infoArray);
+    </script>
+    <script src="../public/js/map/display.js"></script>
 </main>
