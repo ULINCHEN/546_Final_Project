@@ -8,6 +8,7 @@ const commentData = data.commentData;
 const router = express.Router();
 const maxsize = 16777216;
 const multer = require("multer");
+const { uniqueSort } = require('jquery');
 const upload = multer({
     dest: "public/uploads/",
     limits: { fileSize: maxsize },
@@ -154,10 +155,11 @@ router.route("/detail/:id")
         if (req.session.user) {
             //code here for DELETE
             let post_id = null;
+            let user_id = undefined;
             try {
                 post_id = req.params.id;
                 const postData = await animalData.getAnimalPostById(post_id);
-                const user_id = postData.user_id;
+                user_id = postData.user_id;
                 if (req.session.user.userid !== user_id) throw 'Please login to delete your animal post.';
             } catch (e) {
                 return res.render('error', {
@@ -169,7 +171,11 @@ router.route("/detail/:id")
                 await commentData.removeCommentByA(post_id);
                 await animalData.removeAnimalById(post_id);
                 res.status(200)
-                return res.redirect('/user/userCenter/' + post_id);
+                // return res.redirect('/user/userCenter/' + post_id);
+                return res.render('deleteAlert', {
+                    id: user_id,
+                });
+
             } catch (e) {
                 return res.render('error', {
                     errorMsg: e,
@@ -191,12 +197,16 @@ router.route("/edit/:id")
             try {
                 const post_id = req.params.id;
                 const postData = await animalData.getAnimalPostById(post_id);
+                const locationObj = await animalData.getLocationByA(post_id.toString());
+                // console.log(locationObj.location);
+                // const locationData = locationObj.location
                 const user_id = postData.user_id;
                 const putUrl = "animal/edit/" + post_id + "?_method=PUT";
                 if (req.session.user.userid !== user_id) throw 'Please login to edit your animal post.';
                 return res.render('editAnimalPost', {
                     title: "Edit your animal post",
                     postData: postData,
+                    locationData: locationObj,
                     url: putUrl,
                     login: true
                 });
