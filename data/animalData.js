@@ -112,12 +112,16 @@ const createImg = async (file) => {
   });
 };
 
-const putPhotoSrc = async () => {};
+const getLocationByA = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  const animaldb = await db.animalPostCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  const locationInfo = await locationdb.getLocationById(
+    animal.location_id.toString()
+  );
+  return locationInfo;
+};
 
-/**
- * 传id进来
- *
- */
 const updateAnimalPost = async (
   animalid,
   animalName,
@@ -431,4 +435,5 @@ module.exports = {
   putFollowInUser,
   getFollowAnimalByUser,
   createAnimalPostForSeed,
+  getLocationByA,
 };

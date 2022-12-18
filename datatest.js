@@ -104,13 +104,13 @@ const main = async () => {
   //   //   "639e1a112e7e7135c71d913c"
   //   // );
   //   let remove = await Data.animalData.updateAnimalPost(
-  //     "639e1c70798ba9cd6ae88955",
-  //     "mafaiuhfga9ghfaimi",
-  //     "cat",
+  //     "639e48b9e3e9c4619c71b0a6",
+  //     "mafaiuh",
+  //     "Cat",
   //     "cute!!!!!",
-  //     "as well as me :)",
-  //     "Stevens institute of technology",
-  //     "639e1c6e798ba9cd6ae8894d"
+  //     "Good",
+  //     "3 hague St",
+  //     "639e48b7e3e9c4619c71b09e"
   //   ); //639b8a7f243dbaead1371918
   //   // console.log(a.comm);
   //   console.log(remove);
@@ -119,7 +119,7 @@ const main = async () => {
   // }
 
   try {
-    let a = await Data.animalData.getAllAnimalPosts();
+    let a = await Data.animalData.getLocationByA("639e48b7e3e9c4619c71b0a1");
     console.log(a);
     // console.log(a);
   } catch (error) {
