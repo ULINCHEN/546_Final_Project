@@ -23,8 +23,8 @@ const createAnimalPost = async (
   userid = validation.checkDatabaseId(userid);
   const animaldb = await db.animalPostCollection();
   // use current date as animal post time
-  let time = new Date();
-  time = time.toUTCString();
+  // let time = new Date();
+  let time = validation.getDate();
   let filepath = "";
   if (!file) {
     filepath = "public\\images\\default.png";
@@ -112,12 +112,16 @@ const createImg = async (file) => {
   });
 };
 
-const putPhotoSrc = async () => {};
+const getLocationByA = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  const animaldb = await db.animalPostCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  const locationInfo = await locationdb.getLocationById(
+    animal.location_id.toString()
+  );
+  return locationInfo;
+};
 
-/**
- * 传id进来
- *
- */
 const updateAnimalPost = async (
   animalid,
   animalName,
@@ -349,6 +353,74 @@ const removeCommentFromA = async (commentid, animalid) => {
   return true;
 };
 
+const createAnimalPostForSeed = async (
+  animalName,
+  species,
+  description,
+  healthCondition,
+  location,
+  time,
+  userid,
+  file
+) => {
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
+  const animaldb = await db.animalPostCollection();
+  // use current date as animal post time
+  // let time = new Date();
+  // time = time.toUTCString();
+  //  let time = validation.getDate();
+  let filepath = "";
+  if (!file) {
+    filepath = "public\\images\\default.png";
+  } else {
+    await createImg(file);
+    filepath = file.path + "." + file.mimetype.split("/")[1];
+    // console.log(filepath);
+  }
+
+  // console.log(filepath);
+  const postData = {
+    animal_name: animalName,
+    species: species,
+    description: description,
+    health_condition: healthCondition,
+    find_time: time,
+    animal_photo: filepath,
+    location_id: null,
+    user_id: userid,
+    followers_id: [],
+    comment_ids: [],
+  };
+  const info = await animaldb.insertOne(postData);
+  if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
+  let addressInfo = await locationdb.LocationD(location);
+  // let animalid = info.insertedId.toString();
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    info.insertedId.toString()
+  );
+  const updatedInfo = await animaldb.updateOne(
+    { _id: info.insertedId },
+    { $set: { location_id: createInfo.locationid } }
+  );
+  if (!updatedInfo) {
+    throw "location_id update failed";
+  }
+  // if (!createInfo) {
+  //   throw "could not create location information";
+  // }
+
+  if (userid) {
+    await userdb.putAnimalIn(info.insertedId.toString(), userid);
+  }
+  return { insertedAnimalPost: true, animalid: info.insertedId.toString() };
+};
+
 module.exports = {
   createAnimalPost,
   getAllAnimalPosts,
@@ -362,4 +434,6 @@ module.exports = {
   createImg,
   putFollowInUser,
   getFollowAnimalByUser,
+  createAnimalPostForSeed,
+  getLocationByA,
 };
