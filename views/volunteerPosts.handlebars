@@ -1,11 +1,6 @@
 <main class="container px-4 text-center">
-    <hr>
-    <div class="row container text-center">
-        <h5>Fun Fact</h5>
-        <p id="catFact"></p>
-    </div>
-    <hr>
-    <div class="dropdown text-center">
+
+    {{!-- <div class="dropdown text-center">
         <span>Choose your location: </span>
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{#if location}}
@@ -20,25 +15,32 @@
             <li><a class="dropdown-item" href="/volunteer/location/newyork">NewYork City</a></li>
             <li><a class="dropdown-item" href="/volunteer/location/newport">New Port</a></li>
         </ul>
-    </div>
+    </div> --}}
     <div class="container row row-cols-auto">
         {{#if postData}}
         {{#each postData}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
-                <div class="card-body">
+                <div class="card-body" style="height:19rem">
                     <h5 class="card-title">{{volunteer_name}}</h5>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">location: {{volunteer_location}}</li>
+                        <li class="list-group-item">Contact: {{volunteer_contact}}</li>
+                        <li class="list-group-item">Type: {{volunteer_type}}</li>
+                        <li class="list-group-item">{{volunteer_decription}}</li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">location: {{volunteer_location}}</li>
-                    <li class="list-group-item">Contact: {{volunteer_contact}}</li>
-                    <li class="list-group-item">Type: {{volunteer_type}}</li>
-                    <li class="list-group-item">{{volunteer_decription}}</li>
-                </ul>
             </div>
         </div>
         {{/each}}
         {{/if}}
     </div>
+    <hr>
+    <div class="row container text-center">
+        <h5>Fun Fact</h5>
+        <p id="catFact"></p>
+    </div>
+    <hr>
     <script src="../public/js/getRandomFact.js"></script>
 </main>

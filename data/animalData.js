@@ -31,7 +31,7 @@ const createAnimalPost = async (
   } else {
     await createImg(file);
     filepath = file.path + "." + file.mimetype.split("/")[1];
-    console.log(filepath);
+    // console.log(filepath);
   }
 
   // console.log(filepath);
@@ -86,7 +86,7 @@ const createImg = async (file) => {
       let imgName = `${file.filename}.${extName}`;
       // write file in uploads
       await fs.writeFile(
-        path.join(`public\\uploads\\${imgName}`),
+        path.resolve(`./public/uploads/${imgName}`),
         data,
         (err) => {
           if (err) {
@@ -101,7 +101,7 @@ const createImg = async (file) => {
         }
       });
       // 验证是否存入
-      await fs.stat(path.join(`public\\uploads\\${imgName}`), (err) => {
+      await fs.stat(path.join(`./public/uploads/${imgName}`), (err) => {
         if (err) {
           reject(err);
         }
