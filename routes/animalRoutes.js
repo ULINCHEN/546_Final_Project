@@ -25,9 +25,11 @@ router.route("/")
             login = true;
         try {
             let postData = await animalData.getAllAnimalPosts();
-            for (let i = 0, len = postData.length; i < len; i++){
-                let locationData = await animalData.getLocationByA(postData[i]._id.toString());
-                postData[i].location = locationData.location; 
+            for (let i = 0, len = postData.length; i < len; i++) {
+
+                let locationData = await animalData.getLocationByA(postData[i]._id);
+
+                postData[i].location = locationData.location;
             }
             //console.log(postData);
             res.render('animalPosts', {
@@ -90,7 +92,7 @@ router.route("/detail/:id")
             let post = await animalData.getAnimalPostById(id);
             let comments = await commentData.getCommentByPostId(id);
             let locationData = await animalData.getLocationByA(post._id.toString());
-            post.location = locationData.location;  
+            post.location = locationData.location;
             res.render('postDetail', {
                 animal_id: 'animal/detail/' + id,
                 follow_url: 'animal/follow/' + id,
