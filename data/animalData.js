@@ -30,10 +30,10 @@ const createAnimalPost = async (
     filepath = "public/images/default.png";
   } else {
     await createImg(file);
-    console.log(file);
+    // console.log(file);
     filepath =
       file.destination + file.filename + "." + file.mimetype.split("/")[1];
-    console.log(filepath);
+    // console.log(filepath);
   }
 
   // console.log(filepath);
@@ -112,7 +112,7 @@ const createImg = async (file) => {
           reject(err);
         }
         // success and return
-        console.log(imgName);
+        // console.log(imgName);
         resolve(`./public/uploads/${imgName}`);
       });
     });
@@ -331,7 +331,7 @@ const putFollowInUser = async (animalid, userid) => {
 };
 
 /**
- * 
+ *
  * @param {*} animalid - ID of posts that need to delete
  * @param {*} userid - ID of current user
  * @returns - boolean
