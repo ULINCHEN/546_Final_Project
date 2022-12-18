@@ -243,7 +243,7 @@ router.route("/edit/:id")
             let healthCondition = null;
             let location = null;
             let post_id = publicMethods.checkDatabaseId(req.params.id);
-            console.log(post_id);
+            //console.log(post_id);
             let user_id = null;
             //console.log(location);
             try {
@@ -275,12 +275,12 @@ router.route("/edit/:id")
                     location,
                     user_id
                 );
-                console.log(new_animal_post);
+                //console.log(new_animal_post);
                 res.status(200);
                 return res.redirect('/animal/detail/' + post_id);
             } catch (e) {
                 res.status(500);
-                console.log(e);
+                //console.log(e);
                 return res.render('editAnimalPost', {
                     error: e,
                     login: true
