@@ -9,14 +9,14 @@
                     <div class="carousel-item active">
                         <img src={{post.animal_photo}} class="d-block w-100" alt="...">
                     </div>
-                    <div class="carousel-item">
+                    {{!-- <div class="carousel-item">
                         <img src={{post.animal_photo}} class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                    </div>
+                    </div> --}}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                {{!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -25,7 +25,7 @@
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
-                </button>
+                </button> --}}
             </div>
         </div>
         <div class="row">
@@ -45,7 +45,7 @@
                 <hr>
                 <p>{{post.description}}</p>
                 <hr>
-                <p>Location:{{post.Location}} </p>
+                <p>Location:{{post.location}} </p>
                 <hr>
 
                 <button type="button" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
