@@ -287,17 +287,15 @@ router
       let healthCondition = xss(req.body.condition);
       let location = xss(req.body.location);
       let userid = req.session.user.userid;
-      console.log(req.body);
+      //   console.log(req.body);
       //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
 
       //console.log(location);
 
       try {
         animalName = publicMethods.checkName(animalName, "Animal Name");
-        [species, healthCondition] = publicMethods.checkAnimalPost(
-          species,
-          healthCondition
-        );
+        species = publicMethods.checkAnimalSpecies(species);
+        healthCondition = publicMethods.checkAnimalHealth(healthCondition);
         description = publicMethods.checkArticle(description);
         // animal photo can be empty
         // location check
