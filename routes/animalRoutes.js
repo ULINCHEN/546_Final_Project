@@ -482,7 +482,7 @@ router.route("/unfollow/:id").post(async (req, res) => {
 router.route("/map")
   .get(async (req, res) => {
     let login = false;
-    if (user.session.user)
+    if (req.session.user)
       login = true;
     try {
       const postData = await animalData.getAllAnimalPosts();
@@ -504,45 +504,29 @@ router.route("/map")
     res.render('test', {
       postData: postData,
     })
-        // try {
-        //     let postData = await animalData.getAllAnimalPosts();
-        //     console.log(postData);
-        //     if (postData === null) throw "No animal post found.";
-        //     for (let i = 0, len = postData.length; i < len; i++) {
+    // try {
+    //     let postData = await animalData.getAllAnimalPosts();
+    //     console.log(postData);
+    //     if (postData === null) throw "No animal post found.";
+    //     for (let i = 0, len = postData.length; i < len; i++) {
 
-  //         let locationData = await animalData.getLocationByA(postData[i]._id);
+    //         let locationData = await animalData.getLocationByA(postData[i]._id);
 
-        //         postData[i].location = locationData.location;
-        //     }
-        //     //console.log(postData);
-        //     res.render('animalPosts', {
-        //         postData: postData,
-        //         login: login
-        //     });
-        // } catch (e) {
-        //     res.status(400);
-        //     return res.render('error', {
-        //         errorMsg: e,
-        //         login: login
-        //     });
-        // }
-=========
-        try{
-            const postData = await animalData.getAllAnimalPosts();
-            res.render('test', {
-                postData: postData,
-                login: true
-            })
-        } catch(e) {
-            res.status(400);
-                return res.render('error', {
-                    errorMsg: e,
-                    login: true
-                });
-        }
-
->>>>>>>>> Temporary merge branch 2
-    })
+    //         postData[i].location = locationData.location;
+    //     }
+    //     //console.log(postData);
+    //     res.render('animalPosts', {
+    //         postData: postData,
+    //         login: login
+    //     });
+    // } catch (e) {
+    //     res.status(400);
+    //     return res.render('error', {
+    //         errorMsg: e,
+    //         login: login
+    //     });
+    // }
+  })
 // 测试用
 
 module.exports = router;
