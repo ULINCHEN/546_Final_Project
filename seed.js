@@ -50,7 +50,8 @@ const main = async () => {
       "Normal",
       "hoboken nj",
       "12/2/2022 12:22",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -64,7 +65,8 @@ const main = async () => {
       "Normal",
       "hoboken nj",
       "12/2/2022 12:02",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1561948955-570b270e7c36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=602&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -78,7 +80,8 @@ const main = async () => {
       "Good",
       "Stevens institute of technology",
       "12/12/2022 12:22",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1618826411640-d6df44dd3f7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal3);
   } catch (error) {
@@ -92,7 +95,8 @@ const main = async () => {
       "Bad",
       "hoboken nj",
       "12/22/2022 12:02",
-      user1.userid
+      user1.userid,
+      "https://plus.unsplash.com/premium_photo-1667667846213-fd039c318066?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     );
     // console.log(animal4);
   } catch (error) {
@@ -106,7 +110,8 @@ const main = async () => {
       "Good",
       "706 Eastern Pkwy, Brooklyn, NY 11213",
       "12/12/2022 12:2",
-      user1.userid
+      user1.userid,
+      "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80"
     );
     // console.log(animal4);
   } catch (error) {
@@ -120,7 +125,9 @@ const main = async () => {
       "Normal",
       "Stamford Town Center",
       "11/2/2022 12:22",
-      user3.userid
+      user3.userid,
+      "https://plus.unsplash.com/premium_photo-1661508614319-b5e40d1143bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+
     );
     // console.log(animal1);
   } catch (error) {
@@ -134,7 +141,8 @@ const main = async () => {
       "Normal",
       "Flatbush Ave",
       "11/2/2022 10:22",
-      user3.userid
+      user3.userid,
+      "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -147,7 +155,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "Stamford Town Center",
-      user3.userid
+      user3.userid,
     );
     // console.log(animal1);
   } catch (error) {
