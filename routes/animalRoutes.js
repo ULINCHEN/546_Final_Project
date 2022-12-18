@@ -190,6 +190,8 @@ router.route("/edit/:id")
                 const post_id = req.params.id;
                 const postData = await animalData.getAnimalPostById(post_id);
                 const user_id = postData.user_id;
+                let locationData = await animalData.getLocationByA(post_id);
+                postData.location = locationData.location;
                 const putUrl = "animal/edit/" + post_id + "?_method=PUT";
                 if (req.session.user.userid !== user_id) throw 'Please login to edit your animal post.';
                 return res.render('editAnimalPost', {
