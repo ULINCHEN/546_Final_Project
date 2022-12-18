@@ -1,11 +1,5 @@
 <main class="container px-4">
-    <hr>
-    <div class="row container text-center">
-        <h5>Fun Fact</h5>
-        <p id="catFact"></p>
-    </div>
-    <hr>
-    <div class="dropdown text-center">
+    {{!-- <div class="dropdown text-center">
         <span>Choose your location: </span>
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{#if location}}
@@ -20,15 +14,15 @@
             <li><a class="dropdown-item" href="/animal/location/newyork">NewYork City</a></li>
             <li><a class="dropdown-item" href="/animal/location/newport">New Port</a></li>
         </ul>
-    </div>
-    
+    </div> --}}
+
     <div class="container row row-cols-auto">
         {{#if postData}}
         {{#each postData}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
-                <img src={{animal_photo}} class="card-img-top" alt="Picture">
-                <div class="card-body">
+                <img src={{animal_photo}} class="card-img-top" alt="Picture" style="object-fit: cover;height:18rem">
+                <div class=" card-body">
                     <h1 class="card-title">{{animal_name}}</h1>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -51,7 +45,14 @@
         </script>
         {{/each}}
         {{/if}}
+
     </div>
+    <hr>
+    <div class="row container text-center">
+        <h5>Fun Fact</h5>
+        <p id="catFact"></p>
+    </div>
+    <hr>
     <script src="../public/js/getRandomFact.js"></script>
 </main>
 

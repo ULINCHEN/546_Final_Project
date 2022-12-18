@@ -2,15 +2,15 @@
     <hr>
     <div class="row" id="searchBar">
         <div class="col-3"></div>
-        <form class="d-flex col-12 col-lg-6" role="search">
+        <form class="d-flex col-12 col-lg-6" role="search" id="mapSearch">
             <input class="form-control me-2" type="search" placeholder="Search Location" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div class="col-3"></div>
     </div>
     <hr>
-    <div class="row" id="infoArea">
-        <div id="map-main" class="col-lg-8" style="border: 1px solid rgb(200, 200, 200);height:500px">123</div>
+    <div class="row" id="infoArea" style="margin-left: 5%;">
+        <div id="map-main" class="col-lg-8" style="border: 1px solid rgb(200, 200, 200);height:500px"></div>
         <script>
             const infoArray = new Array();
         </script>
@@ -47,7 +47,7 @@
                 card.appendChild(newlink);
                 infoArray.push({
                     id: id,
-                    name : "{{animal_name}}",
+                    name: "{{animal_name}}",
                     date: "{{find_time}}",
                     health: "{{health_condition}}",
                     species: species,
@@ -81,5 +81,6 @@
         }
         addTogether(infoArray);
     </script>
+    <script src="../public/js/mapSearch.js"></script>
     <script src="../public/js/map/display.js"></script>
 </main>
