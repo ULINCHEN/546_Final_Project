@@ -4,8 +4,6 @@ const configRoutes = require("./routes");
 const static = express.static(__dirname + "/public");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const methodOverride = require('method-override');
-var bodyParser = require('body-parser')
 
 app.use("/public", static);
 app.use(express.json());
@@ -43,8 +41,6 @@ app.use(async (req, res, next) => {
 
   next();
 });
-
-app.use(methodOverride('_method'));
 
 //暂时禁用授权判定
 // app.get('/protected', async (req, res, next) => {

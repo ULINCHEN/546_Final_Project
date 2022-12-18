@@ -45,57 +45,71 @@
                 <hr>
                 <p>{{post.description}}</p>
                 <hr>
-                <p>Location:{{post.location}} </p>
+                <p>Location:{{post.Location}} </p>
                 <hr>
 
-                
-                <form action={{follow_url}} method="POST" id="followForm">
-                    {{#if follow}}
-                    {{!-- <button type="submit" class="col-12 mb-3 btn btn-primary">Followed</button> --}}
-                    <p>followed</p>
-                    {{else}}
-                    <button type="submit" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
-                    {{/if}}
-                </form>
+                <button type="button" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
             </div>
             <div class="col-3"></div>
         </div>
+
         <div class="container">
-            <div class="row">
-                <div class="col-3"></div>
-                <form action={{animal_id}} method="POST" class="col-12 col-lg-6" id="commentForm">
-                    <div class="mb-3 container text-center">
-                        <label for="newComment" class="form-label mb-3">Want to say something?</label>
-                        <textarea class="form-control mb-3" id="newComment" name="newComment" rows="3"></textarea>
-                        <ul class="errorInfo"></ul>
-                        <button type="submit" class="btn btn-primary mb-3" id="submitComment">Add Comment</button>
-                    </div>
-                </form>
-                <div class="col-3"></div>
-            </div>
+
+            <hr>
             <div class="container">
-                <div class="row">
+                <div class="row text-center">
                     <div class="col-3"></div>
-                    <p class="ccol-12 col-lg-6">Comments: </p>
+                    <p class="ccol-12 col-lg-6">Comments</p>
                     <div class="col-3"></div>
                 </div>
                 <div class="row">
 
                     <div class="col-3"></div>
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-6 container">
 
                         {{#if comments}}
                         {{#each comments}}
+                        <hr>
                         <div class="row">
-                            <hr>
-                            <p>{{username}}</p>
-                            <p>{{text}}</p>
-                            <p>{{time}}</p>
+
+                            <p class="row comment-text"><span class="col">{{text}}</span></p>
+                            <p class="row comment-info">
+                                <span class="col">Author: {{username}}</span> <span class="col">Posted At:
+                                    {{time}}</span>
+                            </p>
                         </div>
+                        <hr>
                         {{/each}}
                         {{else}}
                         <p class="row">No Comment Yet</p>
                         {{/if}}
+
+
+                        {{#if login}}
+                        <div class="row">
+
+                            <form action={{animal_id}} method="POST" class="col-12" id="commentForm">
+                                <div class="mb-3 container text-center">
+                                    <label for="newComment" class="form-label mb-3">Want to say something?</label>
+                                    <textarea class="form-control mb-3" id="newComment" name="newComment"
+                                        rows="3"></textarea>
+                                    <ul class="errorInfo"></ul>
+
+                                    <button type="submit" class="btn btn-primary mb-3" id="submitComment">Add
+                                        Comment</button>
+
+                                </div>
+                            </form>
+
+                        </div>
+                        {{else}}
+                        <div class="row text-center mb-3">
+                            <div class="col-3"></div>
+                            <p class="col-6">Please Login To Comment</p>
+                            <div class="col-3"></div>
+                        </div>
+                        {{/if}}
+
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -111,6 +125,8 @@
     <p>No Detail Infomation</p>
 
     {{/if}}
-    <a href="/animal" class="col-4">Go Back</a>
+    <div class="container text-center">
+        <a href="/animal" class="row"> <span class="col-12">Go Back</span> </a>
+    </div>
     <script src="../public/js/addCommentValidation.js"></script>
 </main>

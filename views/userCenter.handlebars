@@ -6,7 +6,7 @@
     <div class="row mb-3">
         <a href="/animal/new" class="col">Upload New Stray Animal</a>
         <a href="/volunteer/new" class="col">Upload New Volunteer Info</a>
-        <a href="/user/edit/{{user_id}}" class="col">Account Setting</a>
+        <a href="/user/edit/currentid" class="col">Account Setting</a>
     </div>
     <hr>
 
@@ -17,15 +17,14 @@
             {{#each animal_posts}}
             <div class="card col-3" style="width: 280px; margin-left: 20px" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top" alt="Picture">
-                <div class="card-body row text-center">
-                    <h1 class="card-title row"> <span class="col"> {{animal_name}} </span></h1>
-                    <hr>
+                <div class="card-body row">
+                    <h5 class="card-title row">Find Time: {{find_time}}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Find Time: {{find_time}}</li>
+                    <li class="list-group-item">Name: {{animal_name}}</li>
                     <li class="list-group-item">Species: {{species}}</li>
                     <li class="list-group-item">Health Condition: {{health_condition}}</li>
-                    {{!-- <li class="list-group-item">Location: {{location_id}}</li> --}}
+                    <li class="list-group-item">Location: {{location_id}}</li>
                 </ul>
             </div>
             <script>
@@ -35,16 +34,8 @@
                 var newlink = document.createElement('a');
                 newlink.href = address;
                 newlink.className = "list-link";
-                newlink.classList.add("col");
                 newlink.textContent = 'Get Detail';
                 card.appendChild(newlink);
-                var editAddress = "/animal/edit/" + id;
-                var editLink = document.createElement("a");
-                editLink.href = editAddress;
-                editLink.className = "editLink";
-                editLink.classList.add("col");
-                editLink.textContent = "Edit";
-                card.appendChild(editLink);
             </script>
             {{/each}}
             {{else}}

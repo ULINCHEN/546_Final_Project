@@ -3,7 +3,6 @@ const xss = require('xss');
 const router = express.Router();
 const publicMethods = require('../publicMethods');
 const data = require('../data');
-const { getUserById } = require('../data/userData');
 const userData = data.userData;
 const animalData = data.animalData;
 const volunteerData = data.volunteerData;
@@ -12,7 +11,7 @@ router.route("/usercenter/:id")
     .get(async (req, res) => {
         //code here for GET
         if (req.session.user) {
-            try {
+            try{
                 const user = await userData.getUserData(req.session.user.username);
                 const username = req.session.user.username;
                 const user_id = req.params.id;
@@ -28,11 +27,7 @@ router.route("/usercenter/:id")
                 //     }
                 // }
                 let follow_animal_posts = await animalData.getFollowAnimalByUser(username);
-                for (let i = 0, len = follow_animal_posts.length; i < len; i++){
-                    let locationData = await animalData.getLocationByA(follow_animal_posts[i]._id.toString());
-                    follow_animal_posts[i].location = locationData.location;  
-                }
-
+                
                 // let animal_ids = user.animal_ids;
                 // let animal_posts = [];
                 // if (animal_ids.length > 0){
@@ -42,11 +37,7 @@ router.route("/usercenter/:id")
                 //     }
                 // }
                 let animal_posts = await animalData.getAnimalByUser(username);
-                for (let i = 0, len = animal_posts.length; i < len; i++){
-                    let locationData = await animalData.getLocationByA(animal_posts[i]._id.toString()); 
-                    animal_posts[i].location = locationData.location;
-                }
-
+                
                 // let volunteer_ids = user.volunteer_ids;
                 // let volunteer_posts = [];
                 // if (volunteer_ids.length > 0){
@@ -56,10 +47,9 @@ router.route("/usercenter/:id")
                 //     }
                 // }
                 let volunteer_posts = await volunteerData.getVolunteerPostsByU(username);
-
+                
                 return res.render('userCenter', {
                     title: "current user data",
-                    user_id: user_id,
                     first_name: user.first_name,    //"jake", 
                     last_name: user.last_name,  //"ma"
                     follow_animal_posts: follow_animal_posts,
@@ -67,14 +57,14 @@ router.route("/usercenter/:id")
                     volunteer_posts: volunteer_posts,
                     login: true
                 });
-            } catch (e) {
-                return res.render('error', {
+            } catch(e) {
+                return res.render('error', { 
                     errorMsg: e,
                     login: true
                 });
             }
         } else {
-            return res.render('error', {
+            return res.render('error', { 
                 errorMsg: 'Please login to view User Center.',
                 login: false
             });
@@ -84,22 +74,22 @@ router.route("/usercenter/:id")
 router.route("/login")
     .get(async (req, res) => {
         //code here for GET
-        if (req.session.user) {
+        if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         } else {
             res.render('logIn', {
                 title: "login page",
                 login: false
             });
-        }
+        }  
     })
     .post(async (req, res) => {
-        if (req.session.user) {
+        if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         }
         let username = null;
         let password = null;
-        try {
+        try{
             username = xss(req.body.account);
             password = xss(req.body.password);
             username = publicMethods.accountValidation(username);
@@ -115,15 +105,15 @@ router.route("/login")
         try {
             const login = await userData.checkUser(username, password);
             if (login.authenticatedUser) {
-                req.session.user = { username: username, userid: login.userid };
+                req.session.user = {username: username, userid: login.userid};
                 return res.render('loginAlert', {
                     logMsg: "You have successfully logged in!",
                     url: '/user/usercenter/' + login.userid,
                     login: true
                 });
-            } else {
-                res.status(500);
-                return res.render('error', {
+            } else {  
+                res.status(500);  
+                return res.render('error', { 
                     errorMsg: 'Internal Server Error',
                     login: false
                 });
@@ -142,7 +132,7 @@ router.route("/login")
 router.route("/signin")
     .get(async (req, res) => {
         //code here for GET
-        if (req.session.user) {
+        if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         } else {
             res.render('signIn', {
@@ -153,7 +143,7 @@ router.route("/signin")
     })
     .post(async (req, res) => {
         //code here for POST
-        if (req.session.user) {
+        if (req.session.user){
             return res.redirect('/user/usercenter/' + req.session.user.userid);
         }
         let firstname = null;
@@ -161,7 +151,7 @@ router.route("/signin")
         let username = null;
         let password = null;
         let password_again = null;
-        try {
+        try{
             firstname = xss(req.body.firstname);
             lastname = xss(req.body.lastname);
             username = xss(req.body.account);
@@ -179,14 +169,14 @@ router.route("/signin")
                 error: e,
                 login: false
             });
-        }
-        try {
+        }   
+        try{
             const createUser = await userData.createUser(username, password, firstname, lastname);
             if (createUser.insertedUser) {
                 return res.redirect('/user/login');
             } else {
                 res.status(500);
-                return res.render('error', {
+                return res.render('error', { 
                     errorMsg: 'Internal Server Error',
                     login: false
                 });
@@ -203,12 +193,12 @@ router.route("/signin")
 
 router.route("/logout")
     .get(async (req, res) => {
-        if (req.session.user) {
+        if (req.session.user){
             req.session.destroy();
             return res.render('logoutAlert', {
                 logMsg: "You have successfully logged out!",
                 url: '/',
-                login: false
+                login: true
             });
         } else {
             res.status(400);
@@ -266,31 +256,24 @@ router.route("/logout")
 router.route("/edit/:id")
     .get(async (req, res) => {
         if (req.session.user) {
-            try {
+            try{
                 const user_id = req.params.id;
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
-                const user = await userData.getUserById(user_id);
-                const url = "/user/edit/" + user_id + "?_method=PUT";
-                return res.render('editUserInfo', {
-                    url: url,
-                    login: true,
-                    first_name: user.first_name,
-                    last_name: user.last_name,
-                });
-            } catch (e) {
-                return res.render('error', {
+                res.render('editUserInfo', {});
+            } catch(e) {
+                return res.render('error', { 
                     errorMsg: e,
                     login: true
                 });
             }
         } else {
-            return res.render('error', {
+            return res.render('error', { 
                 errorMsg: 'Please login to set your account.',
                 login: false
             });
         }
     })
-    .put(async (req, res) => {
+    .post(async (req, res) => {
         console.log(req.body);
         if (req.session.user) {
             let firstname = null;
@@ -299,7 +282,7 @@ router.route("/edit/:id")
             let new_password = null;
             let new_password_again = null;
 
-            try {
+            try{
                 const user_id = req.params.id;
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
                 firstname = publicMethods.checkName(xss(req.body.firstname), "first name");
@@ -309,8 +292,8 @@ router.route("/edit/:id")
                 new_password_again = publicMethods.passwordValidation(xss(req.body.new_password_again));
                 if (old_password === new_password) throw "The new password cannot be the same as the old one.";
                 if (new_password !== new_password_again) throw "The two new passwords are different.";
-            } catch (e) {
-                return res.render('editUserInfo', {
+            } catch(e) {
+                return res.render('editUserInfo', { 
                     error: e,
                     login: true
                 });
@@ -318,23 +301,22 @@ router.route("/edit/:id")
 
             try {
                 const password_change = await userData.updateUser(
-                    req.session.user.username,
-                    new_password,
-                    firstname,
+                    req.session.user.username, 
+                    password, 
+                    firstname, 
                     lastname
                 );
                 req.session.destroy();
-                console.log("password_change:", password_change)
                 res.status(200);
                 return res.redirect('/user/login');
-            } catch (e) {
-                return res.render('editUserInfo', {
+            } catch(e) {
+                return res.render('editUserInfo', { 
                     error: e,
                     login: true
                 });
             }
         } else {
-            return res.render('error', {
+            return res.render('error', { 
                 errorMsg: 'Please login to set your account.',
                 login: false
             });
