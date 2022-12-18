@@ -27,11 +27,13 @@ const createAnimalPost = async (
   let time = validation.getDate();
   let filepath = "";
   if (!file) {
-    filepath = "public\\images\\default.png";
+    filepath = "public/images/default.png";
   } else {
     await createImg(file);
-    filepath = file.path + "." + file.mimetype.split("/")[1];
-    // console.log(filepath);
+    console.log(file);
+    filepath =
+      file.destination + file.filename + "." + file.mimetype.split("/")[1];
+    console.log(filepath);
   }
 
   // console.log(filepath);
@@ -86,7 +88,7 @@ const createImg = async (file) => {
       let imgName = `${file.filename}.${extName}`;
       // write file in uploads
       await fs.writeFile(
-        path.join(`public\\uploads\\${imgName}`),
+        path.resolve(`./public/uploads/${imgName}`),
         data,
         (err) => {
           if (err) {
@@ -94,19 +96,36 @@ const createImg = async (file) => {
           }
         }
       );
-      // 删除二进制文件
+      // delete binary file
       await fs.unlink(file.path, (err) => {
         if (err) {
           reject(err);
         }
       });
-      // 验证是否存入
-      await fs.stat(path.join(`public\\uploads\\${imgName}`), (err) => {
+      // verify storage
+      await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
         if (err) {
           reject(err);
         }
-        // 成功就返回图片相对地址
-        resolve(`xxx\\${imgName}`);
+        // success and return
+        resolve(`./public/uploads/${imgName}`);
+      });
+    });
+  });
+};
+
+const removeImg = async (filepath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, async (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      // delete img
+      await fs.unlink(filepath, (err) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(`${filepath}`);
       });
     });
   });
@@ -221,6 +240,9 @@ const removeAnimalById = async (animalid) => {
   }
   await userdb.removeAnimalFromU(animalid, animal.user_id);
   await locationdb.removeLocationByAId(animalid, animal.location_id);
+  if (animal.animal_photo !== "public/images/default.png") {
+    await removeImg(animal.animal_photo);
+  }
   const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete animal post with id of ${animalid}`;
@@ -301,6 +323,51 @@ const putFollowInUser = async (animalid, userid) => {
   return true;
 };
 
+/**
+ * 
+ * @param {*} animalid - ID of posts that need to delete
+ * @param {*} userid - ID of current user
+ * @returns - boolean
+ */
+const removeFollow = async (animalid, userid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  userid = validation.checkDatabaseId(userid);
+  const animaldb = await db.animalPostCollection();
+  const userdb = await db.userCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  const User = await userdb.findOne({ _id: ObjectId(userid) });
+  let FollowanimalidList = User.follow_animal_ids;
+  let FollowuseridList = animal.followers_id;
+  let animalidList = User.animal_ids;
+  for (let index = 0; index < FollowanimalidList.length; index++) {
+    const element = FollowanimalidList[index];
+    if (element === animalid) {
+      FollowanimalidList.splice(index, 1);
+    }
+  }
+  for (let index = 0; index < FollowuseridList.length; index++) {
+    const element = FollowuseridList[index];
+    if (userid === element) {
+      FollowuseridList.splice(index, 1);
+    }
+  }
+  const updateinfo1 = await userdb.updateOne(
+    { _id: ObjectId(userid) },
+    { $set: { follow_animal_ids: FollowanimalidList } }
+  );
+  if (!updateinfo1) {
+    throw "can not put animal in user";
+  }
+  const updateinfo2 = await animaldb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: { followers_id: FollowuseridList } }
+  );
+  if (!updateinfo2) {
+    throw "can not put animal in user";
+  }
+  return true;
+};
+
 const getFollowAnimalByUser = async (username) => {
   username = validation.accountValidation(username);
   let animalidList = await userdb.getFollowAnimalList(username);
@@ -361,7 +428,7 @@ const createAnimalPostForSeed = async (
   location,
   time,
   userid,
-  file
+  filepath
 ) => {
   animalName = validation.checkName(animalName);
   species = validation.checkAnimalSpecies(species);
@@ -373,14 +440,14 @@ const createAnimalPostForSeed = async (
   // let time = new Date();
   // time = time.toUTCString();
   //  let time = validation.getDate();
-  let filepath = "";
-  if (!file) {
-    filepath = "public\\images\\default.png";
-  } else {
-    await createImg(file);
-    filepath = file.path + "." + file.mimetype.split("/")[1];
-    // console.log(filepath);
-  }
+  // let filepath = "";
+  // if (!file) {
+  //   filepath = "public\\images\\default.png";
+  // } else {
+  //   await createImg(file);
+  //   filepath = file.path + "." + file.mimetype.split("/")[1];
+  //   // console.log(filepath);
+  // }
 
   // console.log(filepath);
   const postData = {
@@ -433,7 +500,9 @@ module.exports = {
   removeCommentFromA,
   createImg,
   putFollowInUser,
+  removeFollow,
   getFollowAnimalByUser,
   createAnimalPostForSeed,
   getLocationByA,
+  removeImg,
 };

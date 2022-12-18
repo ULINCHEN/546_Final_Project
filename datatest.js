@@ -119,7 +119,11 @@ const main = async () => {
   // }
 
   try {
-    let a = await Data.animalData.getLocationByA("639e48b7e3e9c4619c71b0a1");
+    //merge again
+    let a = await Data.animalData.removeFollow(
+      "639f66ec6ce9539048eaaf66",
+      "639f66e86ce9539048eaaf58"
+    );
     console.log(a);
     // console.log(a);
   } catch (error) {

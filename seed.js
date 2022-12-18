@@ -50,7 +50,8 @@ const main = async () => {
       "Normal",
       "hoboken nj",
       "12/2/2022 12:22",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -64,7 +65,8 @@ const main = async () => {
       "Normal",
       "hoboken nj",
       "12/2/2022 12:02",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1561948955-570b270e7c36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=602&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -78,7 +80,8 @@ const main = async () => {
       "Good",
       "Stevens institute of technology",
       "12/12/2022 12:22",
-      user2.userid
+      user2.userid,
+      "https://images.unsplash.com/photo-1618826411640-d6df44dd3f7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal3);
   } catch (error) {
@@ -92,7 +95,8 @@ const main = async () => {
       "Bad",
       "hoboken nj",
       "12/22/2022 12:02",
-      user1.userid
+      user1.userid,
+      "https://plus.unsplash.com/premium_photo-1667667846213-fd039c318066?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     );
     // console.log(animal4);
   } catch (error) {
@@ -106,7 +110,8 @@ const main = async () => {
       "Good",
       "706 Eastern Pkwy, Brooklyn, NY 11213",
       "12/12/2022 12:2",
-      user1.userid
+      user1.userid,
+      "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80"
     );
     // console.log(animal4);
   } catch (error) {
@@ -120,7 +125,9 @@ const main = async () => {
       "Normal",
       "Stamford Town Center",
       "11/2/2022 12:22",
-      user3.userid
+      user3.userid,
+      "https://plus.unsplash.com/premium_photo-1661508614319-b5e40d1143bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+
     );
     // console.log(animal1);
   } catch (error) {
@@ -134,7 +141,8 @@ const main = async () => {
       "Normal",
       "Flatbush Ave",
       "11/2/2022 10:22",
-      user3.userid
+      user3.userid,
+      "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     );
     // console.log(animal1);
   } catch (error) {
@@ -147,7 +155,7 @@ const main = async () => {
       "cute!!!!!",
       "Normal",
       "Stamford Town Center",
-      user3.userid
+      user3.userid,
     );
     // console.log(animal1);
   } catch (error) {
@@ -169,6 +177,56 @@ const main = async () => {
   try {
     let follow1 = await Data.animalData.putFollowInUser(
       animal4.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow2 = await Data.animalData.putFollowInUser(
+      animal6.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow3 = await Data.animalData.putFollowInUser(
+      animal9.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow4 = await Data.animalData.putFollowInUser(
+      animal5.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow5 = await Data.animalData.putFollowInUser(
+      animal7.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow6 = await Data.animalData.putFollowInUser(
+      animal8.animalid,
       user2.userid
     ); //639b8a7f243dbaead1371918
     // console.log(a.comm);
@@ -205,7 +263,127 @@ const main = async () => {
   } catch (error) {
     console.log(error);
   }
+  try {
+    let addcomment3 = await Data.commentData.createComment(
+      "niceaaa",
+      "test@123.com",
+      animal2.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment4 = await Data.commentData.createComment(
+      "I like he",
+      "test@123.com",
+      animal5.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment5 = await Data.commentData.createComment(
+      "cuttttteeeeeee!!!!!!!!!",
+      "abcd@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment6 = await Data.commentData.createComment(
+      "poor child",
+      "test@123.com",
+      animal6.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment7 = await Data.commentData.createComment(
+      "lovely",
+      "test@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment8 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal9.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment9 = await Data.commentData.createComment(
+      "good boy",
+      "abcd@123.com",
+      animal1.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment10 = await Data.commentData.createComment(
+      "good boy",
+      "abcdef@123.com",
+      animal9.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment11 = await Data.commentData.createComment(
+      "good boy",
+      "abcdef@123.com",
+      animal2.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment12 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal8.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
 
+  try {
+    let addcomment13 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal4.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment14 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal7.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
   try {
     let addvolunteer1 = await Data.volunteerData.createVolunteerPost(
       "nicehouse",
@@ -221,9 +399,9 @@ const main = async () => {
   }
   try {
     let addvolunteer2 = await volunteerData.createVolunteerPost(
-      "ggiuviu",
+      "Bob",
       "1234567890",
-      "location",
+      "Stevens institute of technology",
       "Individual",
       "description",
       "test@123.com"
@@ -233,10 +411,54 @@ const main = async () => {
     console.log(error);
   }
   try {
+    let addvolunteer3 = await volunteerData.createVolunteerPost(
+      "Alice",
+      "1234567890",
+      "536 Washington St, Hoboken",
+      "Individual",
+      "nice person",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
   } catch (error) {
     console.log(error);
   }
   try {
+    let addvolunteer4 = await volunteerData.createVolunteerPost(
+      "Lee",
+      "1234567890",
+      "300 Garden Laundry",
+      "Individual",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer5 = await volunteerData.createVolunteerPost(
+      "Lee",
+      "1234567890",
+      "300 Garden Laundry",
+      "Individual",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer6 = await volunteerData.createVolunteerPost(
+      "peter",
+      "1231764939",
+      "100 Park Ave",
+      "Organization",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
   } catch (error) {
     console.log(error);
   }
