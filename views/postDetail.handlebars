@@ -113,5 +113,13 @@
     {{/if}}
     <a href="/animal" class="col-4">Go Back</a>
     <script src="../public/js/addCommentValidation.js"></script>
-    <script src="/public/js/map/singlelocation.js"></script>
+
+    {{!-- map single location --}}
+    <script>
+        const singlelocation = "{{post.Location}}";
+    </script>
+    <script src="../public/js/map/singlelocation.js"></script>
+    <script>
+        singleLocation(singlelocation);
+    </script>
 </main>
