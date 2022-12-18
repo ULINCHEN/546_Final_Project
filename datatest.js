@@ -120,11 +120,8 @@ const main = async () => {
 
   try {
     //merge again
-    let a = await Data.animalData.removeFollow(
-      "639f66ec6ce9539048eaaf66",
-      "639f66e86ce9539048eaaf58"
-    );
-    console.log(a);
+    let a = await Data.animalData.getAllAnimalPosts();
+    console.log(a[0].locationinfo);
     // console.log(a);
   } catch (error) {
     console.log(error);

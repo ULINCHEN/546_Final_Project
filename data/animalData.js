@@ -30,10 +30,10 @@ const createAnimalPost = async (
     filepath = "public/images/default.png";
   } else {
     await createImg(file);
-    console.log(file);
+    // console.log(file);
     filepath =
       file.destination + file.filename + "." + file.mimetype.split("/")[1];
-    console.log(filepath);
+    // console.log(filepath);
   }
 
   // console.log(filepath);
@@ -77,7 +77,11 @@ const createAnimalPost = async (
 
 const createImg = async (file) => {
   // console.log(file, body);
-  return new Promise((resolve, reject) => {
+  // if (file.size > maxsize) {
+  //   removeImg("public/images/" + file.filename);
+  //   throw "File too large";
+  // }
+  return new Promise(async (resolve, reject) => {
     fs.readFile(file.path, async (err, data) => {
       if (err) {
         reject(err);
@@ -108,6 +112,7 @@ const createImg = async (file) => {
           reject(err);
         }
         // success and return
+        // console.log(imgName);
         resolve(`./public/uploads/${imgName}`);
       });
     });
@@ -210,6 +215,8 @@ const getAllAnimalPosts = async () => {
   for (let index = 0; index < postList.length; index++) {
     const element = postList[index];
     element._id = element._id.toString();
+    let locationInfo = await locationdb.getLocationById(element.location_id);
+    element.locationinfo = locationInfo;
   }
   return postList;
 };
@@ -324,7 +331,7 @@ const putFollowInUser = async (animalid, userid) => {
 };
 
 /**
- * 
+ *
  * @param {*} animalid - ID of posts that need to delete
  * @param {*} userid - ID of current user
  * @returns - boolean
@@ -338,7 +345,6 @@ const removeFollow = async (animalid, userid) => {
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let FollowanimalidList = User.follow_animal_ids;
   let FollowuseridList = animal.followers_id;
-  let animalidList = User.animal_ids;
   for (let index = 0; index < FollowanimalidList.length; index++) {
     const element = FollowanimalidList[index];
     if (element === animalid) {

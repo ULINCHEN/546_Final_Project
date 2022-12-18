@@ -31,7 +31,7 @@ router.route("/")
 router.route("/detail/:id")
     .get(async (req, res) => {
         //code here for GET
-        let id = req.params.id;
+        let id = publicMethods.checkDatabaseId(req.params.id);
         let login = false;
         if (req.session.user)
             login = true;
@@ -54,7 +54,7 @@ router.route("/detail/:id")
     .delete(async (req, res) => {
         if (req.session.user){
             //code here for DELETE
-            let post_id = req.params.id;
+            let post_id = publicMethods.checkDatabaseId(req.params.id);
             try {
                 const postData = await volunteerData.getVolunteerById(post_id);
             } catch (e) {
@@ -102,7 +102,7 @@ router.route("/new")
     .post(async (req, res) => {
         //code here for GET
         if (req.session.user) {
-            console.log(req.body);
+            //console.log(req.body);
             //add volunteer post paras
             let volunteer_name = null;
             let contact = null;
@@ -111,16 +111,11 @@ router.route("/new")
             let description = null;
             let username = req.session.user.username;
             try {
-                volunteer_name = xss(req.body.volunteer_name);
-                contact = xss(req.body.contact);
+                volunteer_name = publicMethods.checkName(xss(req.body.volunteer_name), "volunteer name");
+                contact = publicMethods.checkVolunteerInfo(xss(req.body.contact));
                 location = xss(req.body.location);
-                type = xss(req.body.type);
-                description = xss(req.body.description);
-                volunteer_name = publicMethods.checkName(volunteer_name, "volunteer name");
-                //contact = publicMethods.checkVolunteerInfo(contact);
-                //location = 
-                type = publicMethods.checkVolunteerPost(type);
-                description = publicMethods.checkArticle(description);
+                type = publicMethods.checkVolunteerPost(xss(req.body.type));
+                description = publicMethods.checkArticle(xss(req.body.description), "description");
             } catch(e) {
                 res.status(400);
                 return res.render('addVolunteerPost',  {
