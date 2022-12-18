@@ -87,19 +87,28 @@ router.route("/detail/:id")
         //code here for GET
         let id = req.params.id;
         let login = false;
+        let follow = false;
         if (req.session.user)
             login = true;
         try {
             let post = await animalData.getAnimalPostById(id);
             let comments = await commentData.getCommentByPostId(id);
             let locationData = await animalData.getLocationByA(post._id.toString());
+            if (login){
+                let follow_animal_list = await userData.getFollowAnimalList(req.session.user.username);
+                if (follow_animal_list.indexOf(id) != -1){
+                    follow = true;
+                }
+            }
             post.location = locationData.location;
             res.render('postDetail', {
                 animal_id: 'animal/detail/' + id,
                 follow_url: 'animal/follow/' + id,
+                unfollow_url: 'animal/unfollow/' + id,
                 post: post,
                 comments: comments,
-                login: login
+                login: login,
+                follow: follow
             });
         } catch (e) {
             res.status(400);
@@ -399,14 +408,16 @@ router.route("/follow/:id")
                 login: false
             });
         }
-    })
-    .delete(async (req, res) => {
+    });
+
+router.route("/unfollow/:id")
+    .post(async (req, res) => {
         if (req.session.user) {
             let post_id = req.params.id;
             let postData = await animalData.getAnimalPostById(post_id);
             try {
                 if (req.session.user.userid === postData.user_id) throw "You can not follow the animal you have posted.";
-                const follow = await animalData.removeFollowFromUser(post_id, req.session.user.userid)
+                const unfollow = await animalData.removeFollow(post_id, req.session.user.userid)
             } catch (e) {
                 res.status(400);
                 return res.render('error', {
@@ -434,7 +445,7 @@ router.route("/follow/:id")
         } else {
             res.status(400);
             return res.render('error', {
-                errorMsg: 'Please login to follow.',
+                errorMsg: 'Please login to unfollow.',
                 login: false
             });
         }
