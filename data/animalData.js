@@ -101,7 +101,7 @@ const createImg = async (file) => {
         }
       });
       // 验证是否存入
-      await fs.stat(path.join(`./public/uploads/${imgName}`), (err) => {
+      await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
         if (err) {
           reject(err);
         }
