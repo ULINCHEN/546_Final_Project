@@ -240,6 +240,7 @@ const removeAnimalById = async (animalid) => {
   }
   await userdb.removeAnimalFromU(animalid, animal.user_id);
   await locationdb.removeLocationByAId(animalid, animal.location_id);
+  await removeImg(animal.animal_photo);
   const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete animal post with id of ${animalid}`;
