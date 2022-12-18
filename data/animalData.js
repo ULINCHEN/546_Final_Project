@@ -27,11 +27,13 @@ const createAnimalPost = async (
   let time = validation.getDate();
   let filepath = "";
   if (!file) {
-    filepath = "public\\images\\default.png";
+    filepath = "public/images/default.png";
   } else {
     await createImg(file);
-    filepath = file.path + "." + file.mimetype.split("/")[1];
-    // console.log(filepath);
+    console.log(file);
+    filepath =
+      file.destination + file.filename + "." + file.mimetype.split("/")[1];
+    console.log(filepath);
   }
 
   // console.log(filepath);
@@ -106,7 +108,24 @@ const createImg = async (file) => {
           reject(err);
         }
         // 成功就返回图片相对地址
-        resolve(`xxx\\${imgName}`);
+        resolve(`./public/uploads/${imgName}`);
+      });
+    });
+  });
+};
+
+const removeImg = async (filepath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, async (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      // 删除二进制文件
+      await fs.unlink(filepath, (err) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(`${filepath}`);
       });
     });
   });
@@ -436,4 +455,5 @@ module.exports = {
   getFollowAnimalByUser,
   createAnimalPostForSeed,
   getLocationByA,
+  removeImg,
 };

@@ -119,7 +119,9 @@ const main = async () => {
   // }
 
   try {
-    let a = await Data.animalData.getLocationByA("639e48b7e3e9c4619c71b0a1");
+    let a = await Data.animalData.removeImg(
+      "public/uploads/ed6742ca142bc4907af1150d2ee5075d.png"
+    );
     console.log(a);
     // console.log(a);
   } catch (error) {
