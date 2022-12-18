@@ -394,9 +394,32 @@ router.route("/follow/:id")
 router.route("/map")
     .get(async (req, res) => {
         const postData = await animalData.getAllAnimalPosts();
+        console.log(postData);
         res.render('test', {
             postData: postData,
         })
+        // try {
+        //     let postData = await animalData.getAllAnimalPosts();
+        //     console.log(postData);
+        //     if (postData === null) throw "No animal post found.";
+        //     for (let i = 0, len = postData.length; i < len; i++) {
+
+        //         let locationData = await animalData.getLocationByA(postData[i]._id);
+
+        //         postData[i].location = locationData.location;
+        //     }
+        //     //console.log(postData);
+        //     res.render('animalPosts', {
+        //         postData: postData,
+        //         login: login
+        //     });
+        // } catch (e) {
+        //     res.status(400);
+        //     return res.render('error', {
+        //         errorMsg: e,
+        //         login: login
+        //     });
+        // }
     })
 // 测试用
 

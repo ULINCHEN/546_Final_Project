@@ -6,7 +6,7 @@ function addTogether(infoArray) {
         hoboken = L.latLng(40.745255, -74.034775)
 
     var map = L.map('map-main', { center: hoboken, zoom: 13, layers: [tiles] });
-    
+
     var mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
         cats = L.featureGroup(),
         dogs = L.featureGroup(),
