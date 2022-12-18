@@ -3,7 +3,7 @@
     <div class="row" id="searchBar">
         <div class="col-3"></div>
         <form class="d-flex col-12 col-lg-6" role="search" id="mapSearch">
-            <input class="form-control me-2" type="search" placeholder="Search Location" aria-label="Search">
+            <input class="form-control me-2" id="address" type="search" placeholder="Search Location" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div class="col-3"></div>
@@ -68,8 +68,6 @@
         <p id="catFact"></p>
     </div>
     <script src="../public/js/getRandomFact.js"></script>
-    <script src="../public/js/map/together.js">
-    </script>
     <script>
         let lat = 40.7447099
         let lng = -74.0289506
@@ -79,8 +77,9 @@
             infoArray[i].lat = (lat).toString();
             infoArray[i].lng = (lng).toString();
         }
-        addTogether(infoArray);
+
     </script>
-    <script src="../public/js/mapSearch.js"></script>
+    <script src="../public/js/map/mapSearch.js"></script>
     <script src="../public/js/map/display.js"></script>
+    
 </main>
