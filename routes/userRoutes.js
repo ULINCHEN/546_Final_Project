@@ -28,6 +28,10 @@ router.route("/usercenter/:id")
                 //     }
                 // }
                 let follow_animal_posts = await animalData.getFollowAnimalByUser(username);
+                for (let i = 0, len = follow_animal_posts.length; i < len; i++){
+                    let locationData = await animalData.getLocationByA(follow_animal_posts[i]._id.toString());
+                    follow_animal_posts[i].location = locationData.location;  
+                }
 
                 // let animal_ids = user.animal_ids;
                 // let animal_posts = [];
@@ -38,6 +42,10 @@ router.route("/usercenter/:id")
                 //     }
                 // }
                 let animal_posts = await animalData.getAnimalByUser(username);
+                for (let i = 0, len = animal_posts.length; i < len; i++){
+                    let locationData = await animalData.getLocationByA(animal_posts[i]._id.toString()); 
+                    animal_posts[i].location = locationData.location;
+                }
 
                 // let volunteer_ids = user.volunteer_ids;
                 // let volunteer_posts = [];
@@ -261,13 +269,13 @@ router.route("/edit/:id")
             try {
                 const user_id = req.params.id;
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
-                const userData = await getUserById(user_id);
+                const user = await userData.getUserById(user_id);
                 const url = "/user/edit/" + user_id + "?_method=PUT";
                 return res.render('editUserInfo', {
                     url: url,
                     login: true,
-                    first_name: userData.first_name,
-                    last_name: userData.last_name,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
                 });
             } catch (e) {
                 return res.render('error', {
