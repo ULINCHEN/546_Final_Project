@@ -323,6 +323,12 @@ const putFollowInUser = async (animalid, userid) => {
   return true;
 };
 
+/**
+ * 
+ * @param {*} animalid - ID of posts that need to delete
+ * @param {*} userid - ID of current user
+ * @returns - boolean
+ */
 const removeFollow = async (animalid, userid) => {
   animalid = validation.checkDatabaseId(animalid);
   userid = validation.checkDatabaseId(userid);
