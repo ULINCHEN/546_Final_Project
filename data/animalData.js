@@ -361,7 +361,7 @@ const createAnimalPostForSeed = async (
   location,
   time,
   userid,
-  file
+  filepath
 ) => {
   animalName = validation.checkName(animalName);
   species = validation.checkAnimalSpecies(species);
@@ -373,14 +373,14 @@ const createAnimalPostForSeed = async (
   // let time = new Date();
   // time = time.toUTCString();
   //  let time = validation.getDate();
-  let filepath = "";
-  if (!file) {
-    filepath = "public\\images\\default.png";
-  } else {
-    await createImg(file);
-    filepath = file.path + "." + file.mimetype.split("/")[1];
-    // console.log(filepath);
-  }
+  // let filepath = "";
+  // if (!file) {
+  //   filepath = "public\\images\\default.png";
+  // } else {
+  //   await createImg(file);
+  //   filepath = file.path + "." + file.mimetype.split("/")[1];
+  //   // console.log(filepath);
+  // }
 
   // console.log(filepath);
   const postData = {

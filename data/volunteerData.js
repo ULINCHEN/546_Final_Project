@@ -27,6 +27,7 @@ const createVolunteerPost = async (
     volunteer_decription: description,
     user_id: userid,
   };
+  await validation.convertLocation(location);
   const volunteerdb = await db.volunteerCollection();
   const insertInfo = await volunteerdb.insertOne(VollunteerData);
   if (!insertInfo.acknowledged || !insertInfo.insertedId) {

@@ -177,6 +177,56 @@ const main = async () => {
     console.log(error);
   }
   try {
+    let follow2 = await Data.animalData.putFollowInUser(
+      animal6.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow3 = await Data.animalData.putFollowInUser(
+      animal9.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow4 = await Data.animalData.putFollowInUser(
+      animal5.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow5 = await Data.animalData.putFollowInUser(
+      animal7.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow6 = await Data.animalData.putFollowInUser(
+      animal8.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
     let getanimalbyuser1 = await Data.animalData.getAnimalByUser(
       "test@123.com"
     );
@@ -205,7 +255,127 @@ const main = async () => {
   } catch (error) {
     console.log(error);
   }
+  try {
+    let addcomment3 = await Data.commentData.createComment(
+      "niceaaa",
+      "test@123.com",
+      animal2.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment4 = await Data.commentData.createComment(
+      "I like he",
+      "test@123.com",
+      animal5.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment5 = await Data.commentData.createComment(
+      "cuttttteeeeeee!!!!!!!!!",
+      "abcd@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment6 = await Data.commentData.createComment(
+      "poor child",
+      "test@123.com",
+      animal6.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment7 = await Data.commentData.createComment(
+      "lovely",
+      "test@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment8 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal9.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment9 = await Data.commentData.createComment(
+      "good boy",
+      "abcd@123.com",
+      animal1.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment10 = await Data.commentData.createComment(
+      "good boy",
+      "abcdef@123.com",
+      animal9.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment11 = await Data.commentData.createComment(
+      "good boy",
+      "abcdef@123.com",
+      animal2.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment12 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal8.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
 
+  try {
+    let addcomment13 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal4.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addcomment14 = await Data.commentData.createComment(
+      "good boy",
+      "test@123.com",
+      animal7.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
   try {
     let addvolunteer1 = await Data.volunteerData.createVolunteerPost(
       "nicehouse",
@@ -221,9 +391,9 @@ const main = async () => {
   }
   try {
     let addvolunteer2 = await volunteerData.createVolunteerPost(
-      "ggiuviu",
+      "Bob",
       "1234567890",
-      "location",
+      "Stevens institute of technology",
       "Individual",
       "description",
       "test@123.com"
@@ -233,10 +403,54 @@ const main = async () => {
     console.log(error);
   }
   try {
+    let addvolunteer3 = await volunteerData.createVolunteerPost(
+      "Alice",
+      "1234567890",
+      "536 Washington St, Hoboken",
+      "Individual",
+      "nice person",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
   } catch (error) {
     console.log(error);
   }
   try {
+    let addvolunteer4 = await volunteerData.createVolunteerPost(
+      "Lee",
+      "1234567890",
+      "300 Garden Laundry",
+      "Individual",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer5 = await volunteerData.createVolunteerPost(
+      "Lee",
+      "1234567890",
+      "300 Garden Laundry",
+      "Individual",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer6 = await volunteerData.createVolunteerPost(
+      "peter",
+      "1231764939",
+      "100 Park Ave",
+      "Organization",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
   } catch (error) {
     console.log(error);
   }
