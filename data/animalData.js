@@ -106,15 +106,16 @@ const createImg = async (file) => {
           reject(err);
         }
       });
-      // verify storage
-      await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
-        if (err) {
-          reject(err);
-        }
-        // success and return
-        // console.log(imgName);
-        resolve(`./public/uploads/${imgName}`);
-      });
+      // // verify storage
+      // await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
+      //   if (err) {
+      //     reject(err);
+      //   }
+      //   // success and return
+      //   // console.log(imgName);
+      //   resolve(`./public/uploads/${imgName}`);
+      // });
+      resolve(`./public/uploads/${imgName}`);
     });
   });
 };
