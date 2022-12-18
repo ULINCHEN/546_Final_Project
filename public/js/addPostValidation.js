@@ -1,5 +1,7 @@
 $(function () {
 
+    let formReady = true;
+
     // helper function
     const checkInputLenth = (input, inputName, minLength, maxLength, errorArray) => {
         if (!input) {
@@ -82,8 +84,53 @@ $(function () {
 
             // // fire ajax
             // $.ajax(ajaxPostConfig);
-            $("#addAnimalForm").trigger('submit');
-
+            if (formReady === true) {
+                $("#addAnimalForm").trigger('submit');
+            }
         }
     })
+
+    const checkFile = (file, errorArr) => {
+
+        if (!file) {
+            errorArr.push("No image input");
+            return;
+        }
+
+        if (file.size >= 16777216) {
+            errorArr.push("Image Size should smaller than 16mb ");
+            return;
+        }
+
+        if (file.type != "image/jpeg" && file.type != "image/png") {
+            errorArr.push("Image type should be jpeg or png ");
+            return;
+        }
+        return;
+    }
+
+
+    $("#photo1").on("change", (event) => {
+        const errorMsg = [];
+        $("#fileError").empty();
+        // event.preventDefault();
+        const file = event.target.files[0];
+        console.log(event.target.files[0]);
+        checkFile(file, errorMsg);
+        if (errorMsg.length > 0) {
+            formReady = false;
+            for (let msg of errorMsg) {
+                const li = document.createElement("li");
+                li.append(msg);
+                li.style = "color:red";
+                $("#fileError").append(li);
+            }
+        }
+        else {
+            formReady = true;
+        }
+
+    })
+
+
 });
