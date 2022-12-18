@@ -24,7 +24,11 @@ router.route("/")
         if (req.session.user)
             login = true;
         try {
-            const postData = await animalData.getAllAnimalPosts();
+            let postData = await animalData.getAllAnimalPosts();
+            for (let i = 0, len = postData.length; i < len; i++){
+                let locationData = await animalData.getLocationByA(postData[i]._id.toString());
+                postData[i].location = locationData.location; 
+            }
             //console.log(postData);
             res.render('animalPosts', {
                 postData: postData,
@@ -85,8 +89,11 @@ router.route("/detail/:id")
         try {
             let post = await animalData.getAnimalPostById(id);
             let comments = await commentData.getCommentByPostId(id);
+            let locationData = await animalData.getLocationByA(post._id.toString());
+            post.location = locationData.location;  
             res.render('postDetail', {
                 animal_id: 'animal/detail/' + id,
+                follow_url: 'animal/follow/' + id,
                 post: post,
                 comments: comments,
                 login: login
@@ -343,7 +350,7 @@ router.route("/follow/:id")
     .post(async (req, res) => {
         if (req.session.user) {
             let post_id = req.params.id;
-            let postData = animalData.getAnimalPostById(post_id);
+            let postData = await animalData.getAnimalPostById(post_id);
             try {
                 if (req.session.user.userid === postData.user_id) throw "You can not follow the animal you have posted.";
                 const follow = await animalData.putFollowInUser(post_id, req.session.user.userid)
