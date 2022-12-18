@@ -119,8 +119,9 @@ const main = async () => {
   // }
 
   try {
-    let a = await Data.animalData.removeImg(
-      "public/uploads/ed6742ca142bc4907af1150d2ee5075d.png"
+    let a = await Data.animalData.removeFollow(
+      "639f66ec6ce9539048eaaf66",
+      "639f66e86ce9539048eaaf58"
     );
     console.log(a);
     // console.log(a);

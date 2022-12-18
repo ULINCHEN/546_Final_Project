@@ -96,18 +96,18 @@ const createImg = async (file) => {
           }
         }
       );
-      // 删除二进制文件
+      // delete binary file
       await fs.unlink(file.path, (err) => {
         if (err) {
           reject(err);
         }
       });
-      // 验证是否存入
+      // verify storage
       await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
         if (err) {
           reject(err);
         }
-        // 成功就返回图片相对地址
+        // success and return
         resolve(`./public/uploads/${imgName}`);
       });
     });
@@ -120,7 +120,7 @@ const removeImg = async (filepath) => {
       if (err) {
         reject(err);
       }
-      // 删除二进制文件
+      // delete img
       await fs.unlink(filepath, (err) => {
         if (err) {
           reject(err);
@@ -240,7 +240,9 @@ const removeAnimalById = async (animalid) => {
   }
   await userdb.removeAnimalFromU(animalid, animal.user_id);
   await locationdb.removeLocationByAId(animalid, animal.location_id);
-  await removeImg(animal.animal_photo);
+  if (animal.animal_photo !== "public/images/default.png") {
+    await removeImg(animal.animal_photo);
+  }
   const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
   if (deletionInfo.deletedCount === 0) {
     throw `Could not delete animal post with id of ${animalid}`;
@@ -304,6 +306,45 @@ const putFollowInUser = async (animalid, userid) => {
   }
   FollowanimalidList.push(animalid);
   FollowuseridList.push(userid);
+  const updateinfo1 = await userdb.updateOne(
+    { _id: ObjectId(userid) },
+    { $set: { follow_animal_ids: FollowanimalidList } }
+  );
+  if (!updateinfo1) {
+    throw "can not put animal in user";
+  }
+  const updateinfo2 = await animaldb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: { followers_id: FollowuseridList } }
+  );
+  if (!updateinfo2) {
+    throw "can not put animal in user";
+  }
+  return true;
+};
+
+const removeFollow = async (animalid, userid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  userid = validation.checkDatabaseId(userid);
+  const animaldb = await db.animalPostCollection();
+  const userdb = await db.userCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  const User = await userdb.findOne({ _id: ObjectId(userid) });
+  let FollowanimalidList = User.follow_animal_ids;
+  let FollowuseridList = animal.followers_id;
+  let animalidList = User.animal_ids;
+  for (let index = 0; index < FollowanimalidList.length; index++) {
+    const element = FollowanimalidList[index];
+    if (element === animalid) {
+      FollowanimalidList.splice(index, 1);
+    }
+  }
+  for (let index = 0; index < FollowuseridList.length; index++) {
+    const element = FollowuseridList[index];
+    if (userid === element) {
+      FollowuseridList.splice(index, 1);
+    }
+  }
   const updateinfo1 = await userdb.updateOne(
     { _id: ObjectId(userid) },
     { $set: { follow_animal_ids: FollowanimalidList } }
@@ -453,6 +494,7 @@ module.exports = {
   removeCommentFromA,
   createImg,
   putFollowInUser,
+  removeFollow,
   getFollowAnimalByUser,
   createAnimalPostForSeed,
   getLocationByA,
