@@ -25,13 +25,13 @@ $(function () {
     }
 
     // this function use to reset form input after ajax completed
-    const formReset = () => {
-        $('#animal_name').val("");
-        $('#description').val("");
-        $('#photo1').val("");
-        $('#photo2').val("");
-        $('#photo3').val("");
-    }
+    // const formReset = () => {
+    //     $('#animal_name').val("");
+    //     $('#description').val("");
+    //     $('#photo1').val("");
+    //     $('#photo2').val("");
+    //     $('#photo3').val("");
+    // }
 
     //---------------------------------------------------------------------------------
     //jquery
