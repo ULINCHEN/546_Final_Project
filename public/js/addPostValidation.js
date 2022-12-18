@@ -115,6 +115,10 @@ $(function () {
         $("#fileError").empty();
         // event.preventDefault();
         const file = event.target.files[0];
+        if (!file) {
+            formReady = true;
+            return;
+        }
         console.log(event.target.files[0]);
         checkFile(file, errorMsg);
         if (errorMsg.length > 0) {
