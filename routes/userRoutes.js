@@ -262,8 +262,9 @@ router.route("/edit/:id")
                 const user_id = req.params.id;
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
                 const userData = await getUserById(user_id);
+                const url = "/user/edit/" + user_id + "?_method=PUT";
                 return res.render('editUserInfo', {
-                    url: "/user/edit/" + user_id + "?_method=PUT",
+                    url: url,
                     login: true,
                     first_name: userData.first_name,
                     last_name: userData.last_name,
@@ -310,11 +311,12 @@ router.route("/edit/:id")
             try {
                 const password_change = await userData.updateUser(
                     req.session.user.username,
-                    password,
+                    new_password,
                     firstname,
                     lastname
                 );
                 req.session.destroy();
+                console.log("password_change:", password_change)
                 res.status(200);
                 return res.redirect('/user/login');
             } catch (e) {
