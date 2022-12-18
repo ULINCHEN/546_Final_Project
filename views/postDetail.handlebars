@@ -49,7 +49,7 @@
                 <hr>
                 <p>{{post.description}}</p>
                 <hr>
-                <p>Location:{{post.Location}} </p>
+                <p>Location:{{post.location}} </p>
                 <hr>
 
 
@@ -64,64 +64,42 @@
             </div>
             <div class="col-3"></div>
         </div>
-
         <div class="container">
-
-            <hr>
+            <div class="row">
+                <div class="col-3"></div>
+                <form action={{animal_id}} method="POST" class="col-12 col-lg-6" id="commentForm">
+                    <div class="mb-3 container text-center">
+                        <label for="newComment" class="form-label mb-3">Want to say something?</label>
+                        <textarea class="form-control mb-3" id="newComment" name="newComment" rows="3"></textarea>
+                        <ul class="errorInfo"></ul>
+                        <button type="submit" class="btn btn-primary mb-3" id="submitComment">Add Comment</button>
+                    </div>
+                </form>
+                <div class="col-3"></div>
+            </div>
             <div class="container">
-                <div class="row text-center">
+                <div class="row">
                     <div class="col-3"></div>
-                    <p class="ccol-12 col-lg-6">Comments</p>
+                    <p class="ccol-12 col-lg-6">Comments: </p>
                     <div class="col-3"></div>
                 </div>
                 <div class="row">
 
                     <div class="col-3"></div>
-                    <div class="col-12 col-lg-6 container">
+                    <div class="col-12 col-lg-6">
 
                         {{#if comments}}
                         {{#each comments}}
-                        <hr>
                         <div class="row">
-
-                            <p class="row comment-text"><span class="col">{{text}}</span></p>
-                            <p class="row comment-info">
-                                <span class="col">Author: {{username}}</span> <span class="col">Posted At:
-                                    {{time}}</span>
-                            </p>
+                            <hr>
+                            <p>{{username}}</p>
+                            <p>{{text}}</p>
+                            <p>{{time}}</p>
                         </div>
-                        <hr>
                         {{/each}}
                         {{else}}
                         <p class="row">No Comment Yet</p>
                         {{/if}}
-
-
-                        {{#if login}}
-                        <div class="row">
-
-                            <form action={{animal_id}} method="POST" class="col-12" id="commentForm">
-                                <div class="mb-3 container text-center">
-                                    <label for="newComment" class="form-label mb-3">Want to say something?</label>
-                                    <textarea class="form-control mb-3" id="newComment" name="newComment"
-                                        rows="3"></textarea>
-                                    <ul class="errorInfo"></ul>
-
-                                    <button type="submit" class="btn btn-primary mb-3" id="submitComment">Add
-                                        Comment</button>
-
-                                </div>
-                            </form>
-
-                        </div>
-                        {{else}}
-                        <div class="row text-center mb-3">
-                            <div class="col-3"></div>
-                            <p class="col-6">Please Login To Comment</p>
-                            <div class="col-3"></div>
-                        </div>
-                        {{/if}}
-
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -137,9 +115,7 @@
     <p>No Detail Infomation</p>
 
     {{/if}}
-    <div class="container text-center">
-        <a href="/animal" class="row"> <span class="col-12">Go Back</span> </a>
-    </div>
+    <a href="/animal" class="col-4">Go Back</a>
     <script src="../public/js/addCommentValidation.js"></script>
 
     {{!-- map single location --}}
