@@ -15,7 +15,12 @@ const constructorMethod = (app) => {
 
     app.get('/user/usercenter', (req, res) => {
         if (req.session.user)
-            res.redirect('/user/usercenter/' + req.session.user.userid);
+            return res.redirect('/user/usercenter/' + req.session.user.userid);
+        else
+            return res.render('error', {
+                errorMsg: "Please log in to view User Center",
+                login: false
+            })
     })
 
     app.use('*', (req, res) => {
