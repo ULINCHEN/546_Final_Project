@@ -1,10 +1,29 @@
-<main class="container px-4 text-center">
+<main class="container px-4">
+    <hr>
+    <div class="row container text-center">
+        <h5>Fun Fact</h5>
+        <p id="catFact"></p>
+    </div>
+    <hr>
+    <div class="dropdown text-center">
+        <span>Choose your location: </span>
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{#if location}}
+            {{location}}
+            {{else}}
+            All
+            {{/if}}
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/animal/location/hoboken">Hoboken</a></li>
+            <li><a class="dropdown-item" href="/animal/location/jersey_city">Jersey City</a></li>
+            <li><a class="dropdown-item" href="/animal/location/newyork">NewYork City</a></li>
+            <li><a class="dropdown-item" href="/animal/location/newport">New Port</a></li>
+        </ul>
+    </div>
+    
     <div class="container row row-cols-auto">
         {{#if postData}}
-        <div id="map-main">
-
-        </div>
-
         {{#each postData}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
@@ -31,10 +50,9 @@
             card.appendChild(newlink);
         </script>
         {{/each}}
-        
         {{/if}}
-
     </div>
+    <script src="../public/js/getRandomFact.js"></script>
 </main>
 
 <!--* 如果用户未上传图片 则显示一张通用图片*-->

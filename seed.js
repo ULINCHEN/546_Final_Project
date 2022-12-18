@@ -1,100 +1,219 @@
-// fake data, run this before test
+// // fake data, run this before test
 
-
-// const { userCollection } = require('../config/mongoCollections');
-const { dbConnection, closeConnection } = require('./config/mongoConnection');
-const { userCollection, animalPostCollection, volunteerCollection } = require('./config/mongoCollection');
-const { createAnimalPost, getAllAnimalPosts } = require('./data/animalData');
-const { createVolunteer } = require('./data/volunteerData');
-const { createUser } = require('./data/userData');
-const { getDate } = require('./publicMethods');
+const dbcon = require("./config/mongoConnection");
+const { volunteerData } = require("./data");
+// const db = require("./config/mongoCollection");
+const Data = require("./data");
 
 const main = async () => {
+  const Database = await dbcon.dbConnection();
+  await Database.dropDatabase();
+  try {
+    var user1 = await Data.userData.createUser(
+      "abcd@123.com",
+      "abcd123",
+      "Mary",
+      "May"
+    );
+    // console.log(user1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var user2 = await Data.userData.createUser(
+      "test@123.com",
+      "test123",
+      "Maryyyy",
+      "May"
+    );
+    // console.log(user2);
+    // console.log(user2.userID);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var user3 = await Data.userData.createUser(
+      "abcdef@123.com",
+      "abcdefg123",
+      "April",
+      "May"
+    );
+    // console.log(user1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal1 = await Data.animalData.createAnimalPost(
+      "miaomiao",
+      "Cat",
+      "cute!!!!!",
+      "Normal",
+      "hoboken nj",
+      user2.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal2 = await Data.animalData.createAnimalPost(
+      "wangwang",
+      "Dog",
+      "cute!!!!!",
+      "Normal",
+      "hoboken nj",
+      user2.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal3 = await Data.animalData.createAnimalPost(
+      "mimi",
+      "Cat",
+      "cute!!!!!",
+      "Good",
+      "Stevens institute of technology",
+      user2.userid
+    );
+    // console.log(animal3);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal4 = await Data.animalData.createAnimalPost(
+      "doggggggggg",
+      "Dog",
+      "cute!!!!!",
+      "Bad",
+      "hoboken nj",
+      user1.userid
+    );
+    // console.log(animal4);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal5 = await Data.animalData.createAnimalPost(
+      "afaufiafaof",
+      "Dog",
+      "cute!!!!!",
+      "Good",
+      "706 Eastern Pkwy, Brooklyn, NY 11213",
+      user1.userid
+    );
+    // console.log(animal4);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal6 = await Data.animalData.createAnimalPost(
+      "haha",
+      "Others",
+      "cute!!!!!",
+      "Normal",
+      "Stamford Town Center",
+      user3.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var animal7 = await Data.animalData.createAnimalPost(
+      "hahahaha",
+      "Others",
+      "cute!!!!!",
+      "Normal",
+      "Flatbush Ave",
+      user3.userid
+    );
+    // console.log(animal1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let follow1 = await Data.animalData.putFollowInUser(
+      animal4.animalid,
+      user2.userid
+    ); //639b8a7f243dbaead1371918
+    // console.log(a.comm);
+    // console.log(follow1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let getanimalbyuser1 = await Data.animalData.getAnimalByUser(
+      "test@123.com"
+    );
+    // console.log(getanimalbyuser1);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    var addcomment1 = await Data.commentData.createComment(
+      "ababababaaaaa",
+      "test@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment1);
+  } catch (error) {
+    console.log(error);
+  }
 
-    const db = await dbConnection();
-    await db.dropDatabase();
-    let dataScale = 25;
+  try {
+    let addcomment2 = await Data.commentData.createComment(
+      "cuttttteeeeeee",
+      "test@123.com",
+      animal3.animalid
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
 
-    // fake animal post data
-    let baseName = 'testdog';
-    let species = 'dog';
-    let description = 'Departure so attention pronounce satisfied daughters am. But shy tedious pressed studied opinion entered windows off. Advantage dependent suspicion convinced provision him yet. Timed balls match at by rooms we. Fat not boy neat left had with past here call. Court nay merit few nor party learn. Why our year her eyes know even how. Mr immediate remaining conveying allowance do or.';
-    let healthCondition = 'bad';
-    let time = getDate();
-    let animalPhoto = 'https://plus.unsplash.com/premium_photo-1667099521841-8078e09b47f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
-    let location = '40.7447099, -74.0289506';
-
-    // first add user, should be add to database
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            let animalName = baseName + i;
-            await createAnimalPost(animalName, species, description, healthCondition, time, animalPhoto, location);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-
-    // fake user data
-    let first_name = 'Owen';
-    let last_name = 'Wang';
-    let user_account = 'owenwang@gmail.com';
-    let user_password = '1234567ABCabc';
-
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            await createUser(user_account + i, user_password, first_name, last_name);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-    // fake volunteer data
-    let name = 'Paws hospital';
-    let contact = 'testtest@gmail.com';
-    location = 'Jersey City, 6th st';
-    let type = 'organazation';
-    let decription = 'An organazation that orders free treatment for stray animals.';
-
-    try {
-        for (let i = 0; i < dataScale; ++i) {
-            await createVolunteer(name, contact + i, location, type, decription);
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-
-
-
-    // connect to database and return all document
-    let col = await animalPostCollection();
-    let cursor = await col.find().toArray();
-
-
-    console.log('all animal post: ', cursor);
-
-
-    col = await userCollection();
-    cursor = await col.find().toArray();
-
-    console.log('all user data: ', cursor);
-
-
-    col = await volunteerCollection();
-    cursor = await col.find().toArray();
-
-    console.log('all volunteer data: ', cursor);
-
-
-    console.log("Seeding Process Finished");
-
-    // close 
-    closeConnection();
-
-}
-
+  try {
+    let addvolunteer1 = await Data.volunteerData.createVolunteerPost(
+      "nicehouse",
+      "1231234444",
+      "6th ST",
+      "Organization",
+      "An organazation that orders free treatment for stray animals.",
+      "test@123.com"
+    );
+    // console.log(addcomment);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    let addvolunteer2 = await volunteerData.createVolunteerPost(
+      "ggiuviu",
+      "1234567890",
+      "location",
+      "Individual",
+      "description",
+      "test@123.com"
+    );
+    // console.log(addvolunteer);
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+  //   try {
+  //     let checkuser1 = await Data.userData.checkUser("abcd@123.com", "abcd123");
+  //     console.log(checkuser1);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  dbcon.closeConnection();
+};
 
 main();

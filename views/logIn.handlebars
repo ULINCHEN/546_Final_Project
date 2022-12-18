@@ -17,7 +17,11 @@
                 <input type="password" class="form-control" name="password" id="inputPassword">
             </div>
             <div class="mb-3">
-                <ul class="errorInfo"></ul>
+                <ul class="errorInfo">
+                    {{#if error}}
+                    <li>{{error}}</li>
+                    {{/if}}
+                </ul>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             <a href="/user/signin">Not our user yet?</a>

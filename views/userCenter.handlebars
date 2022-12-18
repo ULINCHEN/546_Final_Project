@@ -1,51 +1,62 @@
 <main class="container text-center">
+    <hr>
     <div class="row mb-3">
         <h1>HELLO! {{first_name}} {{last_name}}</h1>
     </div>
     <div class="row mb-3">
         <a href="/animal/new" class="col">Upload New Stray Animal</a>
         <a href="/volunteer/new" class="col">Upload New Volunteer Info</a>
-        <a href="/user/edit/currentid" class="col">Account Setting</a>
+        <a href="/user/edit/{{user_id}}" class="col">Account Setting</a>
     </div>
+    <hr>
 
-    <div class="row userCenterInfo mb-3">
-        <h5>My Animal Posts</h5>
-        {{#if myAnimalPostData}}
-        {{#each myAnimalPostData}}
-        <div class="gx-3 gy-3">
-            <div class="card col" style="width: 18rem;" id={{_id}}>
+    <h5>My Animal Posts</h5>
+    <div class="userCenterInfo container-fluid" style="overflow-y: scroll;">
+        <div class="row flex-row flex-nowrap mt-3">
+            {{#if animal_posts}}
+            {{#each animal_posts}}
+            <div class="card col-3" style="width: 280px; margin-left: 20px" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top" alt="Picture">
-                <div class="card-body">
-                    <h5 class="card-title">Find Time: {{find_time}}</h5>
+                <div class="card-body row text-center">
+                    <h1 class="card-title row"> <span class="col"> {{animal_name}} </span></h1>
+                    <hr>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: {{animal_name}}</li>
+                    <li class="list-group-item">Find Time: {{find_time}}</li>
                     <li class="list-group-item">Species: {{species}}</li>
                     <li class="list-group-item">Health Condition: {{health_condition}}</li>
-                    <li class="list-group-item">Location: {{location_id}}</li>
+                    {{!-- <li class="list-group-item">Location: {{location_id}}</li> --}}
                 </ul>
             </div>
+            <script>
+                var id = "{{_id}}";
+                var address = '/animal/detail/' + id;
+                var card = document.getElementById(id).querySelector('div');
+                var newlink = document.createElement('a');
+                newlink.href = address;
+                newlink.className = "list-link";
+                newlink.classList.add("col");
+                newlink.textContent = 'Get Detail';
+                card.appendChild(newlink);
+                var editAddress = "/animal/edit/" + id;
+                var editLink = document.createElement("a");
+                editLink.href = editAddress;
+                editLink.className = "editLink";
+                editLink.classList.add("col");
+                editLink.textContent = "Edit";
+                card.appendChild(editLink);
+            </script>
+            {{/each}}
+            {{else}}
+            <p>No Value</p>
+            {{/if}}
         </div>
-        <script>
-            var id = "{{_id}}";
-            var address = '/animal/detail/' + id;
-            var card = document.getElementById(id).querySelector('div');
-            var newlink = document.createElement('a');
-            newlink.href = address;
-            newlink.className = "list-link";
-            newlink.textContent = 'Get Detail';
-            card.appendChild(newlink);
-        </script>
-        {{/each}}
-        {{else}}
-        <p>No Value</p>
-        {{/if}}
     </div>
     <div class="row userCenterInfo mb-3">
         <h5>My followed animal posts</h5>
 
-        {{#if myAnimalPostData}}
-        {{#each myAnimalPostData}}
+        {{#if follow_animal_posts}}
+        {{#each follow_animal_posts}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top" alt="Picture">
@@ -80,8 +91,8 @@
     <div class="row userCenterInfo mb-3">
         <h5>My volunteer posts</h5>
 
-        {{#if postData}}
-        {{#each postData}}
+        {{#if volunteer_posts}}
+        {{#each volunteer_posts}}
         <div class="gx-3 gy-3">
             <div class="card col" style="width: 18rem;" id={{_id}}>
                 <div class="card-body">

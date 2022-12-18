@@ -15,8 +15,8 @@ main {
 }
 
 .userCenterInfo {
-    height: 450px;
-    border: 1px solid gray;
+    height: 500px;
+    border: 1px solid rgb(187, 186, 186);
     border-radius: 15px;
 }
 
@@ -34,4 +34,38 @@ main {
 
 .errorInfo {
     color: red;
+}
+
+.testimonial-group>.row {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.testimonial-group>.row>.col-4 {
+    display: inline-block;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.alertPage {
+    height: 80rem;
+}
+
+.comment-text {
+    font-size: large;
+    font-weight: 600;
+}
+
+.comment-info {
+    font-size: small;
 }

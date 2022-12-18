@@ -1,65 +1,365 @@
-const { animalPostCollection } = require('../config/mongoCollection');
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
+const db = require("../config/mongoCollection");
+const userdb = require("./userData");
+const locationdb = require("./locationData");
+const fs = require("fs");
+const path = require("path");
+const validation = require("../publicMethods");
 
+//create,update,search,delete
 const createAnimalPost = async (
-    animalName,
-    species,
-    description,
-    healthCondition,
-    time,
-    animalPhoto,
-    location,
+  animalName,
+  species,
+  description,
+  healthCondition,
+  location,
+  userid,
+  file
 ) => {
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
+  const animaldb = await db.animalPostCollection();
+  // use current date as animal post time
+  let time = new Date();
+  time = time.toUTCString();
+  let filepath = "";
+  if (!file) {
+    filepath = "public\\images\\default.png";
+  } else {
+    await createImg(file);
+    filepath = file.path + "." + file.mimetype.split("/")[1];
+    // console.log(filepath);
+  }
 
-    if (!animalName) throw 'Animal name can not be empty';
-    if (!species) throw 'Species can not be empty';
-    if (!description) throw 'Description can not be empty';
-    if (!healthCondition) throw 'HealthCondition can not be empty';
-    if (!time) throw 'Time can not be empty';
-    // animal photo can be empty
-    if (!location) throw 'Location can not be empty';
+  // console.log(filepath);
+  const postData = {
+    animal_name: animalName,
+    species: species,
+    description: description,
+    health_condition: healthCondition,
+    find_time: time,
+    animal_photo: filepath,
+    location_id: null,
+    user_id: userid,
+    followers_id: [],
+    comment_ids: [],
+  };
+  const info = await animaldb.insertOne(postData);
+  if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
+  let addressInfo = await locationdb.LocationD(location);
+  // let animalid = info.insertedId.toString();
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    info.insertedId.toString()
+  );
+  const updatedInfo = await animaldb.updateOne(
+    { _id: info.insertedId },
+    { $set: { location_id: createInfo.locationid } }
+  );
+  if (!updatedInfo) {
+    throw "location_id update failed";
+  }
+  // if (!createInfo) {
+  //   throw "could not create location information";
+  // }
 
-    // locationId = somefunction(location) 这里应该要把location 转化成 locationId
-    // location 暂时没加入postData
-    const postData = {
-        animal_name: animalName,
-        species: species,
-        description: description,
-        health_condition: healthCondition,
-        find_time: time,
-        animal_photo: animalPhoto,
-        location_id: [],
-        user_id: [],
-        comment_id: [],
-    }
+  if (userid) {
+    await userdb.putAnimalIn(info.insertedId.toString(), userid);
+  }
+  return { insertedAnimalPost: true, animalid: info.insertedId.toString() };
+};
 
-    const col = await animalPostCollection();
+const createImg = async (file) => {
+  // console.log(file, body);
+  return new Promise((resolve, reject) => {
+    fs.readFile(file.path, async (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      // get the extname
+      let extName = file.mimetype.split("/")[1];
+      // concatenate picture path
+      let imgName = `${file.filename}.${extName}`;
+      // write file in uploads
+      await fs.writeFile(
+        path.join(`public\\uploads\\${imgName}`),
+        data,
+        (err) => {
+          if (err) {
+            reject(err);
+          }
+        }
+      );
+      // 删除二进制文件
+      await fs.unlink(file.path, (err) => {
+        if (err) {
+          reject(err);
+        }
+      });
+      // 验证是否存入
+      await fs.stat(path.join(`public\\uploads\\${imgName}`), (err) => {
+        if (err) {
+          reject(err);
+        }
+        // 成功就返回图片相对地址
+        resolve(`xxx\\${imgName}`);
+      });
+    });
+  });
+};
 
-    const info = await col.insertOne(postData);
-    if (!info.acknowledged || !info.insertedId) throw 'Could not add this user';
-    return { insertedAnimalPost: true };
+const putPhotoSrc = async () => {};
 
-}
+/**
+ * 传id进来
+ *
+ */
+const updateAnimalPost = async (
+  animalid,
+  animalName,
+  species,
+  description,
+  healthCondition,
+  location,
+  userid
+) => {
+  animalid = validation.checkDatabaseId(animalid);
+  animalName = validation.checkName(animalName);
+  species = validation.checkAnimalSpecies(species);
+  description = validation.checkArticle(description);
+  healthCondition = validation.checkAnimalHealth(healthCondition);
+  userid = validation.checkDatabaseId(userid);
+  let time = new Date();
+  time = time.toUTCString();
+  const animaldb = await db.animalPostCollection();
+  const checkexist = await animaldb.findOne({ _id: ObjectId(animalid) });
+  if (userid !== checkexist.user_id.toString()) {
+    throw "This post is not your post";
+  }
+  await locationdb.removeLocationByAId(
+    checkexist._id.toString(),
+    checkexist.location_id.toString()
+  );
+  let addressInfo = await locationdb.LocationD(location);
+  let createInfo = await locationdb.createLocation(
+    location,
+    addressInfo,
+    animalid
+  );
+  const updateData = {
+    animal_name: animalName,
+    species: species,
+    description: description,
+    health_condition: healthCondition,
+    find_time: time,
+    animal_photo: checkexist.animal_photo,
+    location_id: createInfo.locationid,
+    user_id: userid,
+    followers_id: [],
+    comment_ids: [],
+  };
+
+  const updatedInfo = await animaldb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: updateData }
+  );
+  if (!updatedInfo) throw "Could not add this user";
+  return true;
+};
 
 const getAllAnimalPosts = async () => {
-    const col = await animalPostCollection();
-    const postList = await col.find({}).toArray();
-    if (postList.length == 0) throw 'No Animal in database';
-    return postList;
-}
+  const animaldb = await db.animalPostCollection();
+  const postList = await animaldb.find({}).toArray();
+  if (postList.length == 0) throw "No Animal in database";
+  postList.sort((a, b) => {
+    let m = new Date(a.find_time);
+    let n = new Date(b.find_time);
+    if (m.getTime() > n.getTime()) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  for (let index = 0; index < postList.length; index++) {
+    const element = postList[index];
+    element._id = element._id.toString();
+  }
+  return postList;
+};
 
 const getAnimalPostById = async (id) => {
-    if (!id) throw 'You mush provide an ID to search for';
-    if (typeof id !== 'string') throw 'Type of ID must be a string';
-    if (id.trim().length === 0) throw 'ID can not be an empty string or just spaces';
-    id = id.trim();
-    if (!ObjectId.isValid(id)) throw 'Invalid ID';
-    const col = await animalPostCollection();
-    const post = await col.findOne({ _id: ObjectId(id) });
-    if (post == null) throw `No post with id: ${Id}`;
-    return post;
-}
+  id = validation.checkDatabaseId(id);
+  const animaldb = await db.animalPostCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(id) });
+  if (!animal) {
+    throw `can not find animal post with id of ${id}`;
+  }
+  animal._id = animal._id.toString();
+  return animal;
+};
 
+// Before use this funtion, please use removeCommentByA(animalid) in commentData in routes first
+const removeAnimalById = async (animalid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  const animaldb = await db.animalPostCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  if (!animal) {
+    throw "This animal post is not exist";
+  }
+  const followList = animal.followers_id;
+  for (let index = 0; index < followList.length; index++) {
+    const element = followList[index];
+    await userdb.removeFollowFromU(animalid, element);
+  }
+  await userdb.removeAnimalFromU(animalid, animal.user_id);
+  await locationdb.removeLocationByAId(animalid, animal.location_id);
+  const deletionInfo = await animaldb.deleteOne({ _id: ObjectId(animalid) });
+  if (deletionInfo.deletedCount === 0) {
+    throw `Could not delete animal post with id of ${animalid}`;
+  }
+  return `The animal post ${animal._id} has been successfully deleted!`;
+};
 
+const getAnimalByType = async (type) => {
+  type = validation.checkAnimalSpecies(type);
+  const animaldb = await db.animalPostCollection();
+  const animalList = await animaldb.find({ species: type }).toArray();
+  animalList.sort((a, b) => {
+    let m = new Date(a.find_time);
+    let n = new Date(b.find_time);
+    if (m.getTime() > n.getTime()) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  for (let index = 0; index < animalList.length; index++) {
+    const element = animalList[index];
+    element._id = element._id.toString();
+  }
+  return animalList;
+};
 
-module.exports = { createAnimalPost, getAllAnimalPosts, getAnimalPostById }
+const getAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
+  let animalidList = await userdb.getAnimalList(username);
+  let animalList = [];
+  for (let index = 0; index < animalidList.length; index++) {
+    const element = animalidList[index];
+    let animal = await getAnimalPostById(element);
+    animalList.push(animal);
+  }
+  return animalList;
+};
+
+const putFollowInUser = async (animalid, userid) => {
+  animalid = validation.checkDatabaseId(animalid);
+  userid = validation.checkDatabaseId(userid);
+  const animaldb = await db.animalPostCollection();
+  const userdb = await db.userCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  const User = await userdb.findOne({ _id: ObjectId(userid) });
+  let FollowanimalidList = User.follow_animal_ids;
+  let FollowuseridList = animal.followers_id;
+  let animalidList = User.animal_ids;
+  for (let index = 0; index < animalidList.length; index++) {
+    const element = animalidList[index];
+    if (animalid === element) {
+      throw "you can not follow the animal you have posted";
+    }
+  }
+  for (let index = 0; index < FollowuseridList.length; index++) {
+    const element = FollowuseridList[index];
+    if (userid === element) {
+      throw "you can not follow the animal again";
+    }
+  }
+  FollowanimalidList.push(animalid);
+  FollowuseridList.push(userid);
+  const updateinfo1 = await userdb.updateOne(
+    { _id: ObjectId(userid) },
+    { $set: { follow_animal_ids: FollowanimalidList } }
+  );
+  if (!updateinfo1) {
+    throw "can not put animal in user";
+  }
+  const updateinfo2 = await animaldb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: { followers_id: FollowuseridList } }
+  );
+  if (!updateinfo2) {
+    throw "can not put animal in user";
+  }
+  return true;
+};
+
+const getFollowAnimalByUser = async (username) => {
+  username = validation.accountValidation(username);
+  let animalidList = await userdb.getFollowAnimalList(username);
+  let animalList = [];
+  for (let index = 0; index < animalidList.length; index++) {
+    const element = animalidList[index];
+    let animal = await getAnimalPostById(element);
+    animalList.push(animal);
+  }
+  return animalList;
+};
+
+const putCommentIn = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
+  const animaldb = await db.animalPostCollection();
+  const animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  let commenidtList = animal.comment_ids;
+  commenidtList.push(commentid);
+  const updateinfo = await animaldb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: { comment_ids: commenidtList } }
+  );
+  if (!updateinfo) {
+    throw "can not put comment in animal";
+  }
+  return true;
+};
+
+const removeCommentFromA = async (commentid, animalid) => {
+  commentid = validation.checkDatabaseId(commentid);
+  animalid = validation.checkDatabaseId(animalid);
+  const animaldb = await db.animalPostCollection();
+  const Animal = await animaldb.findOne({ _id: ObjectId(animalid) });
+  let commenidtList = Animal.comment_ids;
+  for (let index = 0; index < commenidtList.length; index++) {
+    const element = commenidtList[index];
+    if (element == commentid) {
+      commenidtList.splice(index, 1);
+    }
+  }
+  const userdb = await db.userCollection();
+  const updateinfo = await userdb.updateOne(
+    { _id: ObjectId(animalid) },
+    { $set: { comment_ids: commenidtList } }
+  );
+  if (!updateinfo) {
+    throw `could not remove commentid from animal ${animalid}`;
+  }
+  return true;
+};
+
+module.exports = {
+  createAnimalPost,
+  getAllAnimalPosts,
+  getAnimalPostById,
+  getAnimalByUser,
+  updateAnimalPost,
+  getAnimalByType,
+  removeAnimalById,
+  putCommentIn,
+  removeCommentFromA,
+  createImg,
+  putFollowInUser,
+  getFollowAnimalByUser,
+};
