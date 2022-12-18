@@ -7,7 +7,7 @@ router.route("/")
     .get(async (req, res) => {
         //code here for GET
         const postData = await getAllAnimalPosts();
-        console.log(postData);
+
         res.render('animalPosts', {
             postData: postData,
 
