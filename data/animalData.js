@@ -77,9 +77,12 @@ const createAnimalPost = async (
 
 const createImg = async (file) => {
   // console.log(file, body);
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    console.log("a");
     fs.readFile(file.path, async (err, data) => {
+      console.log("b");
       if (err) {
+        console.log("c");
         reject(err);
       }
       // get the extname
@@ -104,10 +107,12 @@ const createImg = async (file) => {
       });
       // verify storage
       await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
+        console.log(imgName);
         if (err) {
           reject(err);
         }
         // success and return
+        console.log(imgName);
         resolve(`./public/uploads/${imgName}`);
       });
     });
@@ -210,6 +215,8 @@ const getAllAnimalPosts = async () => {
   for (let index = 0; index < postList.length; index++) {
     const element = postList[index];
     element._id = element._id.toString();
+    let locationInfo = await locationdb.getLocationById(element.location_id);
+    element.locationinfo = locationInfo;
   }
   return postList;
 };
@@ -332,7 +339,6 @@ const removeFollow = async (animalid, userid) => {
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let FollowanimalidList = User.follow_animal_ids;
   let FollowuseridList = animal.followers_id;
-  let animalidList = User.animal_ids;
   for (let index = 0; index < FollowanimalidList.length; index++) {
     const element = FollowanimalidList[index];
     if (element === animalid) {
