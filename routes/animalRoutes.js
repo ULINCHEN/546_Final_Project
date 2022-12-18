@@ -8,7 +8,6 @@ const commentData = data.commentData;
 const router = express.Router();
 const maxsize = 16777216;
 const multer = require("multer");
-const { JSONParser } = require('formidable/lib/json_parser');
 const upload = multer({
     dest: "public/uploads/",
     limits: { fileSize: maxsize },
@@ -207,19 +206,19 @@ router.route("/edit/:id")
         }
     })
     .put(async (req, res) => {
-        console.log("Put body: ", req.body);
         if (req.session.user) {
             let animalName = null;
             let species = null;
             let description = null;
             let healthCondition = null;
             let location = null;
+            let post_id = req.params.id;
+            console.log(post_id);
+            let user_id = null;
             //console.log(location);
-
             try {
-                let post_id = req.params.id;
-                const animalPost = animalData.getAnimalPostById(post_id);
-                const user_id = animalPost.user_id;
+                const animalPost = await animalData.getAnimalPostById(post_id);
+                user_id = animalPost.user_id;
                 if (req.session.user.userid !== user_id) throw 'Please login to edit your animal post.';
                 animalName = publicMethods.checkName(xss(req.body.animal_name), "Animal Name");
                 species = xss(req.body.species);
@@ -235,8 +234,8 @@ router.route("/edit/:id")
                     login: true
                 });
             }
-
             try {
+
                 const new_animal_post = await animalData.updateAnimalPost(
                     post_id,
                     animalName,
@@ -246,10 +245,12 @@ router.route("/edit/:id")
                     location,
                     user_id
                 );
+                console.log(new_animal_post);
                 res.status(200);
-                return res.redirect('/animal/detail/' + id);
+                return res.redirect('/animal/detail/' + post_id);
             } catch (e) {
                 res.status(500);
+                console.log(e);
                 return res.render('editAnimalPost', {
                     error: e,
                     login: true
@@ -282,21 +283,24 @@ router.route("/new")
     })
     .post(upload.single("photo1"), async (req, res) => {
         if (req.session.user) {
-            let animalName = xss(req.body.animal_name);
-            let species = xss(req.body.species);
-            let description = xss(req.body.description);
-            let healthCondition = xss(req.body.condition);
-            let location = xss(req.body.location);
+            let animalName = null;
+            let species = null;
+            let description = null;
+            let healthCondition = null;
+            let location = null;
             let userid = req.session.user.userid;
-            console.log(req.body);
+            //console.log(req.body);
             //[xss(req.body.photo1), xss(req.body.photo2), xss(req.body.photo3)];
 
             //console.log(location);
 
             try {
-                animalName = publicMethods.checkName(animalName, "Animal Name");
-                [species, healthCondition] = publicMethods.checkAnimalPost(species, healthCondition);
-                description = publicMethods.checkArticle(description);
+                animalName = publicMethods.checkName(xss(req.body.animal_name));
+                species = xss(req.body.species);
+                description = publicMethods.checkArticle(xss(req.body.description));
+                healthCondition = xss(req.body.condition);
+                location = xss(req.body.location);
+                userid = req.session.user.userid;
                 // animal photo can be empty
                 // location check
             } catch (e) {

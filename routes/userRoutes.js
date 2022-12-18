@@ -200,7 +200,7 @@ router.route("/logout")
             return res.render('logoutAlert', {
                 logMsg: "You have successfully logged out!",
                 url: '/',
-                login: true
+                login: false
             });
         } else {
             res.status(400);
