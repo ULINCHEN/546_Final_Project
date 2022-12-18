@@ -95,6 +95,7 @@ const updateUser = async (username, password, firstName, lastName) => {
   if (!updatedInfo) {
     throw `could not update user ${username}`;
   }
+  return true;
 };
 
 const getAnimalList = async (username) => {

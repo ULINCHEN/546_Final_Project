@@ -98,6 +98,18 @@ const createLocation = async (location, addressInfo, animalid) => {
   return { locationid: info.insertedId.toString() };
 };
 
+const getLocationById = async (locationid) => {
+  const locationdb = await db.locationCollection();
+  const locationinfo = await locationdb.findOne({
+    _id: ObjectId(locationid),
+  });
+  if (!locationinfo) {
+    throw "could not find location";
+  }
+  locationinfo._id = locationinfo._id.toString();
+  return locationinfo;
+};
+
 // const getLocationByCity = async (City, State) => {
 //   const locationdb = await db.locationCollection();
 //   const locationList = await locationdb
@@ -150,6 +162,7 @@ const removeLocationByAId = async (animalid, locationid) => {
   if (!removeinfo) {
     throw "Could not remove this animal's location";
   }
+  return true;
 };
 
 // LocationD("hoboken nj");
@@ -158,6 +171,7 @@ module.exports = {
   LocationD,
   createLocation,
   removeLocationByAId,
+  getLocationById,
   // getLocationByCity,
   updateTotalNum,
 };
