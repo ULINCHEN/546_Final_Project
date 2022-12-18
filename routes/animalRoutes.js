@@ -244,7 +244,7 @@ router.route("/edit/:id")
                 });
             }
             try {
-
+                
                 const new_animal_post = await animalData.updateAnimalPost(
                     post_id,
                     animalName,
@@ -371,6 +371,45 @@ router.route("/follow/:id")
                     post: post,
                     comments: comments,
                     follow: true,
+                    login: true
+                });
+            } catch (e) {
+                res.status(400);
+                return res.render('error', {
+                    errorMsg: e,
+                    login: true
+                });
+            }
+        } else {
+            res.status(400);
+            return res.render('error', {
+                errorMsg: 'Please login to follow.',
+                login: false
+            });
+        }
+    })
+    .delete(async (req, res) => {
+        if (req.session.user) {
+            let post_id = req.params.id;
+            let postData = await animalData.getAnimalPostById(post_id);
+            try {
+                if (req.session.user.userid === postData.user_id) throw "You can not follow the animal you have posted.";
+                const follow = await animalData.removeFollowFromUser(post_id, req.session.user.userid)
+            } catch (e) {
+                res.status(400);
+                return res.render('error', {
+                    errorMsg: e,
+                    login: true
+                });
+            }
+            try {
+                let post = await animalData.getAnimalPostById(post_id);
+                let comments = await commentData.getCommentByPostId(post_id);
+                res.render('postDetail', {
+                    animal_id: 'animal/detail/' + post_id,
+                    post: post,
+                    comments: comments,
+                    follow: false,
                     login: true
                 });
             } catch (e) {
