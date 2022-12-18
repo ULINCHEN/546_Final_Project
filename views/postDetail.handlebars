@@ -29,6 +29,9 @@
             </div>
         </div>
         <div class="row">
+            <div class="col" id="map"></div>
+        </div>
+        <div class="row">
             <div class="col-3"></div>
             <div class="col-12 col-lg-6">
                 <hr>
@@ -113,13 +116,10 @@
 
     {{!-- map --}}
     <script>
-        const animalLocation = "{{post.location}}"
-        const map = L.map('map').setView([40.7447099, -74.0289506], 15);
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-        const marker = L.marker([40.7447099, -74.0289506]).addTo(map);
+        const singlelocation = "{{post.Location}}";
     </script>
-
+    <script src="../public/js/map/singlelocation.js"></script>
+    <script>
+        singleLocation(singlelocation);
+    </script>
 </main>

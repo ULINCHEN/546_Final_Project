@@ -18,7 +18,7 @@ const main = async () => {
     // fake animal post data
     let baseName = 'testdog';
     let species = 'dog';
-    let description = 'testtesttesttesttesttesttesttesttesttesttesttest';
+    let description = 'Departure so attention pronounce satisfied daughters am. But shy tedious pressed studied opinion entered windows off. Advantage dependent suspicion convinced provision him yet. Timed balls match at by rooms we. Fat not boy neat left had with past here call. Court nay merit few nor party learn. Why our year her eyes know even how. Mr immediate remaining conveying allowance do or.';
     let healthCondition = 'bad';
     let time = getDate();
     let animalPhoto = 'https://plus.unsplash.com/premium_photo-1667099521841-8078e09b47f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
