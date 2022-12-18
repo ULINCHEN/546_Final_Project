@@ -2,34 +2,38 @@
     {{#if post}}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-3"></div>
-            <!--img slide-->
-            <div id="carouselExampleControls" class="carousel slide col-sm-6" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+            <div class="col-6">
+                {{!-- <div class="col-12 col-sm-3"></div> --}}
+                <!--img slide-->
+                <div id="carouselExampleControls" class="carousel slide col" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                        </div>
+                        {{!-- <div class="carousel-item">
+                            <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src={{post.animal_photo}} class="d-block w-100" alt="...">
+                        </div> --}}
                     </div>
-                    <div class="carousel-item">
-                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src={{post.animal_photo}} class="d-block w-100" alt="...">
-                    </div>
+                    {{!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button> --}}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
-        <div class="row">
-            <div class="col" id="map"></div>
+            <div class="col-6">
+
+                <div class="col" id="map"></div>
+
+            </div>
         </div>
         <div class="row">
             <div class="col-3"></div>
@@ -48,7 +52,15 @@
                 <p>Location:{{post.Location}} </p>
                 <hr>
 
-                <button type="button" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
+
+                <form action={{follow_url}} method="POST" id="followForm">
+                    {{#if follow}}
+                    {{!-- <button type="submit" class="col-12 mb-3 btn btn-primary">Followed</button> --}}
+                    <p>followed</p>
+                    {{else}}
+                    <button type="submit" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
+                    {{/if}}
+                </form>
             </div>
             <div class="col-3"></div>
         </div>
@@ -129,4 +141,13 @@
         <a href="/animal" class="row"> <span class="col-12">Go Back</span> </a>
     </div>
     <script src="../public/js/addCommentValidation.js"></script>
+
+    {{!-- map single location --}}
+    <script>
+        const singlelocation = "{{post.Location}}";
+    </script>
+    <script src="../public/js/map/singlelocation.js"></script>
+    <script>
+        singleLocation(singlelocation);
+    </script>
 </main>

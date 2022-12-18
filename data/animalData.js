@@ -32,7 +32,7 @@ const createAnimalPost = async (
     await createImg(file);
     console.log(file.path);
     filepath = file.path + "." + file.mimetype.split("/")[1];
-    // console.log(filepath);
+    console.log(filepath);
   }
 
   // console.log(filepath);
