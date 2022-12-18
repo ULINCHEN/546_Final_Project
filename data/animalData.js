@@ -77,12 +77,13 @@ const createAnimalPost = async (
 
 const createImg = async (file) => {
   // console.log(file, body);
+  // if (file.size > maxsize) {
+  //   removeImg("public/images/" + file.filename);
+  //   throw "File too large";
+  // }
   return new Promise(async (resolve, reject) => {
-    console.log("a");
     fs.readFile(file.path, async (err, data) => {
-      console.log("b");
       if (err) {
-        console.log("c");
         reject(err);
       }
       // get the extname
@@ -107,7 +108,6 @@ const createImg = async (file) => {
       });
       // verify storage
       await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
-        console.log(imgName);
         if (err) {
           reject(err);
         }

@@ -4,3 +4,4 @@ package-lock.json
 datatest.js
 publicMethods.js
 public/uploads
+routes/animalRoutes.js
