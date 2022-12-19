@@ -106,7 +106,7 @@ const createImg = async (file) => {
           reject(err);
         }
       });
-      // // verify storage
+      // verify storage
       // await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
       //   if (err) {
       //     reject(err);
