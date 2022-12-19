@@ -177,7 +177,7 @@ router
         "first name"
       );
       lastname = publicMethods.checkName(xss(req.body.lastname), "last name");
-      username = publicMethods.accountValidation(xss(req.body.username));
+      username = publicMethods.accountValidation(xss(req.body.account));
       password = publicMethods.passwordValidation(xss(req.body.password));
       password_again = publicMethods.passwordValidation(
         xss(req.body.password_again)
