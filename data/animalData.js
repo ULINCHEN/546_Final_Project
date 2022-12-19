@@ -229,6 +229,8 @@ const getAnimalPostById = async (id) => {
   if (!animal) {
     throw `can not find animal post with id of ${id}`;
   }
+  let locationInfo = await locationdb.getLocationById(animal.location_id);
+  animal.locationinfo = locationInfo;
   animal._id = animal._id.toString();
   return animal;
 };

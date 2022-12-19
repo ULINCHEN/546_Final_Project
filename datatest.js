@@ -120,8 +120,8 @@ const main = async () => {
 
   try {
     //merge again
-    let a = await Data.animalData.getAllAnimalPosts();
-    console.log(a[0].locationinfo);
+    let a = await Data.animalData.getAnimalPostById("639f9b052c3804d1b7349deb");
+    console.log(a.locationinfo);
     // console.log(a);
   } catch (error) {
     console.log(error);
