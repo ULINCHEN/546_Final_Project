@@ -93,7 +93,7 @@ router.route("/detail/:id")
         try {
             let post = await animalData.getAnimalPostById(id);
             let comments = await commentData.getCommentByPostId(id);
-            let locationData = await animalData.getLocationByA(post._id.toString());
+            let locationData = await animalData.getLocationByA(post._id);
             if (login){
                 let follow_animal_list = await userData.getFollowAnimalList(req.session.user.username);
                 if (follow_animal_list.indexOf(id) != -1){
@@ -206,7 +206,7 @@ router.route("/edit/:id")
             try {
                 const post_id = publicMethods.checkDatabaseId(req.params.id);
                 const postData = await animalData.getAnimalPostById(post_id);
-                const locationObj = await animalData.getLocationByA(post_id.toString());
+                const locationObj = await animalData.getLocationByA(post_id);
                 // console.log(locationObj.location);
                 // const locationData = locationObj.location
                 const user_id = publicMethods.checkDatabaseId(postData.user_id);
@@ -456,21 +456,25 @@ router.route("/unfollow/:id")
 router.route("/map")
     .get(async (req, res) => {
         let login = false;
-        if (user.session.user)
+        if (req.session.user)
             login = true;
         try{
             const postData = await animalData.getAllAnimalPosts();
-            if (postData === null) throw "No animal post found.";
+            if (!postData) throw "Please add a animal post to view the map.";
+            for (let i = 0, len = postData.length; i < len; i++) {
+                let locationData = await animalData.getLocationByA(postData[i]._id);
+                postData[i].location = locationData.location;
+            }
             res.render('test', {
                 postData: postData,
                 login: login
             })
         } catch(e) {
             res.status(400);
-                return res.render('error', {
-                    errorMsg: e,
-                    login: true
-                });
+            return res.render('error', {
+                errorMsg: e,
+                login: true
+            });
         }
         
         const postData = await animalData.getAllAnimalPosts();
