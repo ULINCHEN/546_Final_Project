@@ -68,7 +68,3 @@ display.js
 mapSearch.js
 singlelocation.js
 locationData.js
-test.handlebars(map)
-postDetails.handlebarS(map)
-
-publicMethods(function convertLocation())
