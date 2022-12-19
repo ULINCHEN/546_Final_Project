@@ -29,7 +29,7 @@ router.route("/usercenter/:id")
                 // }
                 let follow_animal_posts = await animalData.getFollowAnimalByUser(username);
                 for (let i = 0, len = follow_animal_posts.length; i < len; i++){
-                    let locationData = await animalData.getLocationByA(follow_animal_posts[i]._id.toString());
+                    let locationData = await animalData.getLocationByA(follow_animal_posts[i]._id);
                     follow_animal_posts[i].location = locationData.location;  
                 }
 
@@ -43,7 +43,7 @@ router.route("/usercenter/:id")
                 // }
                 let animal_posts = await animalData.getAnimalByUser(username);
                 for (let i = 0, len = animal_posts.length; i < len; i++){
-                    let locationData = await animalData.getLocationByA(animal_posts[i]._id.toString()); 
+                    let locationData = await animalData.getLocationByA(animal_posts[i]._id); 
                     animal_posts[i].location = locationData.location;
                 }
 
