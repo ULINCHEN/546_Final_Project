@@ -155,13 +155,14 @@ router
         let comments = await commentData.getCommentByPostId(animal_id);
         let locationData = await animalData.getLocationByA(post._id.toString());
         post.location = locationData.location;
-        res.render("postDetail", {
-          animal_id: "animal/detail/" + animal_id,
-          post: post,
-          comments: comments,
-          login: true,
-          title: "Animal Detail",
-        });
+        res.redirect("/animal/detail/" + animal_id);
+        // res.render("postDetail", {
+        //   animal_id: "animal/detail/" + animal_id,
+        //   post: post,
+        //   comments: comments,
+        //   login: true,
+        //   title: "Animal Detail",
+        // });
       } catch (e) {
         res.status(400);
         return res.render("error", {
