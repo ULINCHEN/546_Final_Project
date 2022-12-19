@@ -43,7 +43,7 @@ Before downloading this program, you'll need to install the following items to y
 
 
 Tech Stack：
-handlebar, Express, mongoDB, axios, expresshandlebar, openstreetmap, leaflet, leaflet geosearch, Leaflet.markercluster, Multer, 
+handlebar, Express, mongoDB, axios, expresshandlebar, openstreetmap, leaflet, leaflet geosearch, Multer, 
 
 File Structure：
 
@@ -54,9 +54,9 @@ Seed.js - fake data
 helpers.js - public methods
 
 Config - 
-	- mongoCommection.js
-	- mongoCollection.js
-	- settings.json
+ - mongoCommection.js
+ - mongoCollection.js
+ - settings.json
 
 Data - @Chunzhi Li
 Index.js
@@ -94,3 +94,7 @@ display.js
 mapSearch.js
 singlelocation.js
 locationData.js
+test.handlebars(map)
+postDetails.handlebarS(map)
+
+publicMethods(function convertLocation())
