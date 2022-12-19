@@ -105,6 +105,7 @@ router
         }
       }
       post.location = locationData.location;
+
       res.render("postDetail", {
         animal_id: "animal/detail/" + id,
         follow_url: "animal/follow/" + id,
@@ -441,14 +442,16 @@ router.route("/follow/:id").post(async (req, res) => {
       let comments = await commentData.getCommentByPostId(post_id);
       let locationData = await animalData.getLocationByA(post._id.toString());
       post.location = locationData.location;
-      res.render("postDetail", {
-        animal_id: "animal/detail/" + post_id,
-        post: post,
-        comments: comments,
-        follow: true,
-        login: true,
-        title: "Animal Post Detail",
-      });
+
+      res.redirect("/animal/detail/" + post_id);
+      // res.render("postDetail", {
+      //   animal_id: "animal/detail/" + post_id,
+      //   post: post,
+      //   comments: comments,
+      //   follow: true,
+      //   login: true,
+      //   title: "Animal Post Detail",
+      // });
     } catch (e) {
       res.status(400);
       return res.render("error", {
@@ -491,14 +494,15 @@ router.route("/unfollow/:id").post(async (req, res) => {
       let comments = await commentData.getCommentByPostId(post_id);
       let locationData = await animalData.getLocationByA(post._id.toString());
       post.location = locationData.location;
-      res.render("postDetail", {
-        animal_id: "animal/detail/" + post_id,
-        post: post,
-        comments: comments,
-        follow: false,
-        login: true,
-        title: "Post Detail",
-      });
+      res.redirect("/animal/detail/" + post_id);
+      // res.render("postDetail", {
+      //   animal_id: "animal/detail/" + post_id,
+      //   post: post,
+      //   comments: comments,
+      //   follow: false,
+      //   login: true,
+      //   title: "Post Detail",
+      // });
     } catch (e) {
       res.status(400);
       return res.render("error", {
@@ -538,6 +542,11 @@ router.route("/map").get(async (req, res) => {
       title: "Error",
     });
   }
+  const postData = await animalData.getAllAnimalPosts();
+
+  res.render("test", {
+    postData: postData,
+  });
 
   // const postData = await animalData.getAllAnimalPosts();
   // // console.log(postData);
