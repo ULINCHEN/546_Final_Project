@@ -15,7 +15,7 @@ router.route("/usercenter/:id")
             try {
                 const user = await userData.getUserData(req.session.user.username);
                 const username = req.session.user.username;
-                const user_id = req.params.id;
+                const user_id = publicMethods.checkDatabaseId(req.params.id);
                 if (req.session.user.userid !== user_id) throw "Please login to view User Center.";
                 //console.log(user);
 
@@ -100,10 +100,8 @@ router.route("/login")
         let username = null;
         let password = null;
         try {
-            username = xss(req.body.account);
-            password = xss(req.body.password);
-            username = publicMethods.accountValidation(username);
-            password = publicMethods.passwordValidation(password);
+            username = publicMethods.accountValidation(xss(req.body.account));
+            password = publicMethods.passwordValidation(xss(req.body.password));
         } catch (e) {
             res.status(400);
             return res.render('logIn', {
@@ -162,15 +160,11 @@ router.route("/signin")
         let password = null;
         let password_again = null;
         try {
-            firstname = xss(req.body.firstname);
-            lastname = xss(req.body.lastname);
-            username = xss(req.body.account);
-            password = xss(req.body.password);
-            password_again = xss(req.body.password_again);
-            firstname = publicMethods.checkName(firstname, "first name");
-            lastname = publicMethods.checkName(lastname, "last name");
-            username = publicMethods.accountValidation(username);
-            password = publicMethods.passwordValidation(password);
+            firstname = publicMethods.checkName(xss(req.body.firstname), "first name");
+            lastname = publicMethods.checkName(xss(req.body.lastname), "last name");
+            username = publicMethods.accountValidation(xss(req.body.username));
+            password = publicMethods.passwordValidation(xss(req.body.password));
+            password_again = publicMethods.passwordValidation(xss(req.body.password_again));
             if (password !== password_again) throw "The password entered the first and second time does not match";
         } catch (e) {
             res.status(400);
@@ -267,7 +261,7 @@ router.route("/edit/:id")
     .get(async (req, res) => {
         if (req.session.user) {
             try {
-                const user_id = req.params.id;
+                const user_id = publicMethods.checkDatabaseId(req.params.id);
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
                 const user = await userData.getUserById(user_id);
                 const url = "/user/edit/" + user_id + "?_method=PUT";
@@ -291,7 +285,7 @@ router.route("/edit/:id")
         }
     })
     .put(async (req, res) => {
-        console.log(req.body);
+        //console.log(req.body);
         if (req.session.user) {
             let firstname = null;
             let lastname = null;
@@ -300,7 +294,7 @@ router.route("/edit/:id")
             let new_password_again = null;
 
             try {
-                const user_id = req.params.id;
+                const user_id = publicMethods.checkDatabaseId(req.params.id);
                 if (req.session.user.userid !== user_id) throw "Please login to set your account.";
                 firstname = publicMethods.checkName(xss(req.body.firstname), "first name");
                 lastname = publicMethods.checkName(xss(req.body.lastname), "last name");

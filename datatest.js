@@ -119,8 +119,9 @@ const main = async () => {
   // }
 
   try {
-    let a = await Data.animalData.getLocationByA("639e48b7e3e9c4619c71b0a1");
-    console.log(a);
+    //merge again
+    let a = await Data.animalData.getAllAnimalPosts();
+    console.log(a[0].locationinfo);
     // console.log(a);
   } catch (error) {
     console.log(error);
