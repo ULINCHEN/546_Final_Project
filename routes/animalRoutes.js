@@ -465,7 +465,7 @@ router.route("/follow/:id").post(async (req, res) => {
 
 router.route("/unfollow/:id").post(async (req, res) => {
   if (req.session.user) {
-    let post_id = publicMethods.checkDatabaseId(req.params.id);
+    let post_id = await publicMethods.checkDatabaseId(req.params.id);
     let postData = await animalData.getAnimalPostById(post_id);
     try {
       if (req.session.user.userid === postData.user_id)
