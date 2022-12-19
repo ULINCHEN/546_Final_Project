@@ -1,7 +1,6 @@
 // open street map from https://www.openstreetmap.org/copyright and leaftet function fron https://leafletjs.com/examples.html
 const singleLocation = (location, name, species, address) => {
     if (location) {
-        console.log(location)
         const map = L.map('map').setView([location[0], location[1]], 15);
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,

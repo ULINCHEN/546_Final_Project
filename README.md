@@ -17,7 +17,7 @@ Wei Guo
 
 
 Tech Stack：
-handlebar, Express, mongoDB, axios, expresshandlebar, openstreetmap, leaflet, leaflet geosearch, Multer, 
+handlebar, Express, mongoDB, axios, expresshandlebar, openstreetmap, leaflet, leaflet geosearch, Leaflet.markercluster, Multer, 
 
 File Structure：
 
@@ -68,7 +68,3 @@ display.js
 mapSearch.js
 singlelocation.js
 locationData.js
-test.handlebars(map)
-postDetails.handlebarS(map)
-
-publicMethods(function convertLocation())
