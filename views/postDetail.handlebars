@@ -8,7 +8,7 @@
                 <div id="carouselExampleControls" class="carousel slide col" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src={{post.animal_photo}} class="d-block w-100" alt="..."
+                            <img src={{post.animal_photo}} class="d-block w-100" alt="{{post.species}}"
                                 style="object-fit: cover;height: 500px; width:500px">
                         </div>
                         {{!-- <div class="carousel-item">
@@ -55,15 +55,15 @@
                 <hr>
 
                 {{#if follow}}
-                    <form action={{unfollow_url}} method="POST" id="unfollowForm">
-                        <button type="submit" class="col-12 mb-3 btn btn-primary">Remove from My Follow List</button>
-                    </form>
+                <form action={{unfollow_url}} method="POST" id="unfollowForm">
+                    <button type="submit" class="col-12 mb-3 btn btn-primary">Remove from My Follow List</button>
+                </form>
                 {{else}}
-                    <form action={{follow_url}} method="POST" id="followForm">
-                        <button type="submit" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
-                    </form>
+                <form action={{follow_url}} method="POST" id="followForm">
+                    <button type="submit" class="col-12 mb-3 btn btn-primary">Add to My Follow List</button>
+                </form>
                 {{/if}}
-                
+
             </div>
             <div class="col-3"></div>
         </div>
@@ -123,10 +123,12 @@
 
     {{!-- map single location --}}
     <script>
-        const singlelocation = "{{post.Location}}";
+        let singleLo = "{{post.Location}}";
+        let name = "{{post.animal_name}}";
+        let species = "{{post.species}}";
     </script>
     <script src="../public/js/map/singlelocation.js"></script>
     <script>
-        singleLocation(singlelocation);
+        singleLocation(singleLo, name, species);
     </script>
 </main>
