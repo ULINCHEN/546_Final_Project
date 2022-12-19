@@ -30,12 +30,12 @@ const createAnimalPost = async (
     filepath = "public/images/default.png";
   } else {
     await createImg(file);
-    console.log(file);
+    // console.log(file);
     filepath =
       file.destination + file.filename + "." + file.mimetype.split("/")[1];
-    console.log(filepath);
+    // console.log(filepath);
   }
-
+  let addressInfo = await locationdb.LocationD(location);
   // console.log(filepath);
   const postData = {
     animal_name: animalName,
@@ -51,7 +51,6 @@ const createAnimalPost = async (
   };
   const info = await animaldb.insertOne(postData);
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
-  let addressInfo = await locationdb.LocationD(location);
   // let animalid = info.insertedId.toString();
   let createInfo = await locationdb.createLocation(
     location,
@@ -75,9 +74,15 @@ const createAnimalPost = async (
   return { insertedAnimalPost: true, animalid: info.insertedId.toString() };
 };
 
+//refer from
+//https://blog.csdn.net/FuyuumiAI/article/details/109498598
 const createImg = async (file) => {
   // console.log(file, body);
-  return new Promise((resolve, reject) => {
+  // if (file.size > maxsize) {
+  //   removeImg("public/images/" + file.filename);
+  //   throw "File too large";
+  // }
+  return new Promise(async (resolve, reject) => {
     fs.readFile(file.path, async (err, data) => {
       if (err) {
         reject(err);
@@ -103,13 +108,15 @@ const createImg = async (file) => {
         }
       });
       // verify storage
-      await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
-        if (err) {
-          reject(err);
-        }
-        // success and return
-        resolve(`./public/uploads/${imgName}`);
-      });
+      // await fs.stat(path.resolve(`./public/uploads/${imgName}`), (err) => {
+      //   if (err) {
+      //     reject(err);
+      //   }
+      //   // success and return
+      //   // console.log(imgName);
+      //   resolve(`./public/uploads/${imgName}`);
+      // });
+      resolve(`./public/uploads/${imgName}`);
     });
   });
 };
@@ -210,6 +217,8 @@ const getAllAnimalPosts = async () => {
   for (let index = 0; index < postList.length; index++) {
     const element = postList[index];
     element._id = element._id.toString();
+    let locationInfo = await locationdb.getLocationById(element.location_id);
+    element.locationinfo = locationInfo;
   }
   return postList;
 };
@@ -221,6 +230,8 @@ const getAnimalPostById = async (id) => {
   if (!animal) {
     throw `can not find animal post with id of ${id}`;
   }
+  let locationInfo = await locationdb.getLocationById(animal.location_id);
+  animal.locationinfo = locationInfo;
   animal._id = animal._id.toString();
   return animal;
 };
@@ -324,7 +335,7 @@ const putFollowInUser = async (animalid, userid) => {
 };
 
 /**
- * 
+ *
  * @param {*} animalid - ID of posts that need to delete
  * @param {*} userid - ID of current user
  * @returns - boolean
@@ -338,7 +349,6 @@ const removeFollow = async (animalid, userid) => {
   const User = await userdb.findOne({ _id: ObjectId(userid) });
   let FollowanimalidList = User.follow_animal_ids;
   let FollowuseridList = animal.followers_id;
-  let animalidList = User.animal_ids;
   for (let index = 0; index < FollowanimalidList.length; index++) {
     const element = FollowanimalidList[index];
     if (element === animalid) {

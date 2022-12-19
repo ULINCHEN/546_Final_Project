@@ -16,13 +16,15 @@ router.route("/")
             //console.log(postData);
             res.render('volunteerPosts', {
                 postData: postData,
-                login: login
+                login: login,
+                title: "Volunteer"
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
                 errorMsg: e,
-                login: login
+                login: login,
+                title: "Error"
             });
         }
     });
@@ -42,12 +44,14 @@ router.route("/detail/:id")
                 id: id,
                 post: post,
                 login: login
+                
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
                 errorMsg: e,
-                login
+                login,
+                title: "Error"
             });
         }
     })
@@ -60,7 +64,8 @@ router.route("/detail/:id")
             } catch (e) {
                 return res.render('error', { 
                     errorMsg: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 }); 
             }
 
@@ -71,14 +76,16 @@ router.route("/detail/:id")
             } catch (e) {
                 return res.render('error', { 
                     errorMsg: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 }); 
             }
         } else {
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to delete your volunteer post.',
-                login: true
+                login: true,
+                title: "Error"
             }); 
         }
     });
@@ -95,7 +102,8 @@ router.route("/new")
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to add a new volunteer post.',
-                login: false
+                login: false,
+                title: "Error"
             }); 
         }
     })
@@ -120,7 +128,8 @@ router.route("/new")
                 res.status(400);
                 return res.render('addVolunteerPost',  {
                     error: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 });
             }
             try {
@@ -138,14 +147,16 @@ router.route("/new")
                 res.status(500);
                 return res.render('addVolunteerPost',  {
                     error: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 });
             }            
         } else {
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to add new post.',
-                login: false
+                login: false,
+                title: "Error"
             }); 
         }
     });
