@@ -105,6 +105,7 @@ router
         }
       }
       post.location = locationData.location;
+
       res.render("postDetail", {
         animal_id: "animal/detail/" + id,
         follow_url: "animal/follow/" + id,

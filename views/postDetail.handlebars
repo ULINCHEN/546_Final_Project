@@ -123,12 +123,15 @@
 
     {{!-- map single location --}}
     <script>
-        let singleLo = "{{post.Location}}";
-        let name = "{{post.animal_name}}";
-        let species = "{{post.species}}";
+        var lat = "{{ post.locationinfo.addressInfo.latitude }}";
+        var log = "{{ post.locationinfo.addressInfo.longitude }}";
+        var singleLo = [lat, log];
+        var address = "{{post.location}}";
+        var name = "{{post.animal_name}}";
+        var species = "{{post.species}}";
     </script>
     <script src="../public/js/map/singlelocation.js"></script>
     <script>
-        singleLocation(singleLo, name, species);
+        singleLocation(singleLo, name, species, address);
     </script>
 </main>

@@ -1,3 +1,5 @@
+// Geosearch from https://smeijer.github.io/leaflet-geosearch/
+// open street map from https://www.openstreetmap.org/copyright and leaftet function fron https://leafletjs.com/examples.html
 const providerOSM = new GeoSearch.OpenStreetMapProvider();
 $(function () {
     var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -26,6 +28,7 @@ $(function () {
         var description = info.description;
         var url = info.url;
         var species = info.species.toLowerCase();
+        var address = info.address;
         if (healfh == "bad") {
             var redIcon = new L.Icon({
                 iconUrl: '../../public/images/marker-icon-2x-red.png',
@@ -37,7 +40,7 @@ $(function () {
                 className: id
             });
 
-            marker = L.marker([lat, lng], { icon: redIcon, alt: "strayed " + species + " " + name });
+            marker = L.marker([lat, lng], { icon: redIcon, alt: "strayed " + species + " " + name + " at the " + address});
         }
         else if (healfh == "good") {
             var greenIcon = new L.Icon({
@@ -49,7 +52,7 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            marker = L.marker([lat, lng], {icon: greenIcon, alt: "strayed " + species + " " + name});
+            marker = L.marker([lat, lng], {icon: greenIcon, alt: "strayed " + species + " " + name + " at the " + address});
         }
         else {
             var normalIcon = new L.Icon({
@@ -61,7 +64,7 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            marker = L.marker([lat, lng], {icon: normalIcon, alt: "strayed animal " + name});
+            marker = L.marker([lat, lng], {icon: normalIcon, alt: "strayed animal " + name + " at the " + address});
         }
 
         if (species == "cat") {
@@ -97,15 +100,15 @@ $(function () {
     $("#mapSearch").on("submit", (event) => {
 
         event.preventDefault();
-        console.log("Searched!");
+        // console.log("Searched!");
         const addressString = address.val();
         let location = new Array();
         const syncResults = async (address) => {
             const results = await providerOSM.search({ query: address });
-            console.log(results[0])
-            console.log(results[0].y, results[0].x);
+            // console.log(results[0])
+            // console.log(results[0].y, results[0].x);
             location.push(Number(results[0].y), Number(results[0].x));
-            console.log(location);
+            // console.log(location);
             const requestConfig = {
             // Set Ajax RequestConfig here
                 method: "GET",
