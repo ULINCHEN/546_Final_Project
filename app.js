@@ -28,7 +28,7 @@ app.use(async (req, res, next) => {
   const timeStamp = new Date().toUTCString();
   const method = req.method;
   const reqRoute = req.originalUrl;
-  const userAuthState = req.session.AuthCookie ? true : false;
+  const userAuthState = req.session.user ? true : false;
 
   console.log(
     "[",
