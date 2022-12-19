@@ -91,7 +91,6 @@ const checkName = (string, type) => {
   return string;
 };
 
-
 //cheak name with space.
 const checkNameWithSpace = (string, type) => {
   if (!string) throw `${type} should not be empty`;
@@ -117,7 +116,7 @@ const checkSpecialCharacterNoNumber = (string, inputName) => {
 
 const checkSpecialCharacterNoNumberButSpace = (string, inputName) => {
   string = string.trim();
-  var string = string.replace(/  +/g, ' ');
+  var string = string.replace(/  +/g, " ");
   const specialChars = /^[ A-Za-z]*$/;
   if (specialChars.test(string) === false)
     throw `${inputName} should only contains character a-z and A-Z and Space`;
@@ -131,8 +130,6 @@ const checkSpecialCharacter = (string, inputName) => {
     throw `${inputName} should not contain special character`;
   return string;
 };
-
-
 
 const getDate = () => {
   const date = new Date();
@@ -154,12 +151,16 @@ const checkDate = (inputdate) => {
   var day = parseInt(firstpart[1], 10);
   var month = parseInt(firstpart[0], 10);
   var year = parseInt(firstpart[2], 10);
-  var validyear = parseInt(date.getFullYear()) + 2
-  if(year < 1900 || year > validyear || month == 0 || month > 12) throw `${inputdate} is not a vaild date.`;
-  var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-  if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) monthLength[1] = 29;
-  if(!(day > 0 && day <= monthLength[month - 1])) throw `${inputdate} is not a vaild date1.`;
-  if (!(/^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(parts[1]))) throw `${inputdate} is not a vaild date2.`;
+  var validyear = parseInt(date.getFullYear()) + 2;
+  if (year < 1900 || year > validyear || month == 0 || month > 12)
+    throw `${inputdate} is not a vaild date.`;
+  var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    monthLength[1] = 29;
+  if (!(day > 0 && day <= monthLength[month - 1]))
+    throw `${inputdate} is not a vaild date1.`;
+  if (!/^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(parts[1]))
+    throw `${inputdate} is not a vaild date2.`;
 
   //const curDate = `${month}/${day}/${year} ${hour}:${minute}`; // do not need to return a Date objection.
   return inputdate;
@@ -222,7 +223,7 @@ const convertLocation = async (location) => {
   if (location.length == 0) throw "location should not contains only spaces";
   reg = /^(([A-Z]*[a-z]*(\d)*(\s)*(\,)*(\#)*(\*)*(\_)*))*$/;
   if (!reg.test(location)) {
-    console.log("1");
+    // console.log("1");
     throw "This is an invalid location";
   }
   let options = {
@@ -234,27 +235,27 @@ const convertLocation = async (location) => {
   let result = await geoCoder.geocode(location);
   // console.log(result[0]);
   if (result === undefined) {
-    console.log("2");
+    // console.log("2");
     throw "This is an invalid location";
   }
   if (result.length < 1) {
-    console.log(result);
-    console.log("3");
+    // console.log(result);
+    // console.log("3");
     throw "This is an invalid location";
   }
 
   // console.log(reg.test("afaf # 123 af*a_f"));
   if (!reg.test(result.state)) {
-    console.log("4");
+    // console.log("4");
     throw "This is an invalid location";
   }
   if (!reg.test(result.city)) {
-    console.log("5");
+    // console.log("5");
     throw "This is an invalid location";
   }
   if (result[0].state === undefined) {
-    console.log("6");
-    console.log(result.state);
+    // console.log("6");
+    // console.log(result.state);
     throw "This is an invalid location";
   }
   return result;
@@ -269,10 +270,6 @@ const checkDatabaseId = (id, varName) => {
   if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
   return id;
 };
-
-
-
-
 
 //console.log(checkDate('123123233123edsfasdf10/01/2024 04:01'))
 

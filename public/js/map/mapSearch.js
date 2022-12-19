@@ -105,23 +105,26 @@ $(function () {
         let location = new Array();
         const syncResults = async (address) => {
             const results = await providerOSM.search({ query: address });
+            // console.log(results)
             // console.log(results[0])
             // console.log(results[0].y, results[0].x);
-            location.push(Number(results[0].y), Number(results[0].x));
-            // console.log(location);
-            const requestConfig = {
-            // Set Ajax RequestConfig here
-                method: "GET",
-                url: "/map",
-                data: {
-                    location: location
+            if (results !== undefined && results.length > 0) {
+                location.push(Number(results[0].y), Number(results[0].x));
+                // console.log(location);
+                const requestConfig = {
+                    // Set Ajax RequestConfig here
+                    method: "GET",
+                    url: "/map",
+                    data: {
+                        location: location
+                    }
                 }
-            }
 
-            $.ajax(requestConfig).then((res) => {
-                // Define how to render response data on page
-                map.setView([location[0], location[1]], 13)
-            })  
+                $.ajax(requestConfig).then((res) => {
+                    // Define how to render response data on page
+                    map.setView([location[0], location[1]], 13)
+                })
+            }
         }
         syncResults(addressString);
         // const requestConfig = {

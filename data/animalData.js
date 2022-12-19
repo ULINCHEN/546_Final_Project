@@ -35,7 +35,7 @@ const createAnimalPost = async (
       file.destination + file.filename + "." + file.mimetype.split("/")[1];
     // console.log(filepath);
   }
-
+  let addressInfo = await locationdb.LocationD(location);
   // console.log(filepath);
   const postData = {
     animal_name: animalName,
@@ -51,7 +51,6 @@ const createAnimalPost = async (
   };
   const info = await animaldb.insertOne(postData);
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
-  let addressInfo = await locationdb.LocationD(location);
   // let animalid = info.insertedId.toString();
   let createInfo = await locationdb.createLocation(
     location,
