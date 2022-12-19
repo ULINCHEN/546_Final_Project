@@ -37,12 +37,14 @@ router
       res.render("animalPosts", {
         postData: postData,
         login: login,
+        title: "Animal Posts"
       });
     } catch (e) {
       res.status(400);
       return res.render("error", {
         errorMsg: e,
         login: login,
+        title: "Error"
       });
     }
   })
@@ -56,12 +58,14 @@ router
       res.render("animalPosts", {
         postData: postData,
         login: login,
+        title: "Animal Posts"
       });
     } catch (e) {
       res.status(400);
       return res.render("error", {
         errorMsg: e,
         login: login,
+        title: "Error"
       });
     }
   });
@@ -76,6 +80,7 @@ router.route("/location/:location").get(async (req, res) => {
     location: location,
     postData: postData,
     login: login,
+    title: "Animal Posts"
   });
 });
 
@@ -108,12 +113,14 @@ router
         comments: comments,
         login: login,
         follow: follow,
+        title: "Animal Detail"
       });
     } catch (e) {
       res.status(400);
       return res.render("error", {
         errorMsg: e,
         login: login,
+        title: "Error"
       });
     }
   })
@@ -139,6 +146,7 @@ router
         return res.render("error", {
           errorMsg: e,
           login: true,
+          title: "Error"
         });
       }
       try {
@@ -149,12 +157,14 @@ router
           post: post,
           comments: comments,
           login: true,
+          title: "Animal Detail"
         });
       } catch (e) {
         res.status(400);
         return res.render("error", {
           errorMsg: e,
           login: true,
+          title: "Error"
         });
       }
     } else {
@@ -162,6 +172,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to comment.",
         login: false,
+        title: "Error"
       });
     }
   })
@@ -180,6 +191,7 @@ router
         return res.render("error", {
           errorMsg: e,
           login: true,
+          title: "Error"
         });
       }
       try {
@@ -189,11 +201,13 @@ router
         // return res.redirect('/user/userCenter/' + post_id);
         return res.render("deleteAlert", {
           id: user_id,
+          title: "Delete Successful"
         });
       } catch (e) {
         return res.render("error", {
           errorMsg: e,
           login: true,
+          title: "Error"
         });
       }
     } else {
@@ -201,6 +215,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to delete your animal post.",
         login: true,
+        title: "Error"
       });
     }
   });
@@ -227,11 +242,13 @@ router
           locationData: locationObj,
           url: putUrl,
           login: true,
+          title: "Edit Animal Post"
         });
       } catch (e) {
         return res.render("error", {
           errorMsg: e,
           login: true,
+          title: "Error"
         });
       }
     } else {
@@ -239,6 +256,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to edit your animal post.",
         login: false,
+        title: "Error"
       });
     }
   })
@@ -278,6 +296,7 @@ router
         return res.render("editAnimalPost", {
           error: e,
           login: true,
+          title: "Edit Animal Post"
         });
       }
       try {
@@ -299,6 +318,7 @@ router
         return res.render("editAnimalPost", {
           error: e,
           login: true,
+          title: "Edit Animal Post"
         });
       }
     } else {
@@ -306,6 +326,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to edit your post.",
         login: false,
+        title: "Error"
       });
     }
   });
@@ -324,6 +345,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to add a new animal post.",
         login: false,
+        title: "Error"
       });
     }
   })
@@ -359,6 +381,7 @@ router
         return res.render("addPost", {
           error: e,
           login: true,
+          title: "Add New Post"
         });
       }
 
@@ -379,6 +402,7 @@ router
         return res.render("addPost", {
           error: e,
           login: true,
+          title: "Add New Post"
         });
       }
     } else {
@@ -386,6 +410,7 @@ router
       return res.render("error", {
         errorMsg: "Please login to add new post.",
         login: false,
+        title: "Error"
       });
     }
   });
@@ -406,6 +431,7 @@ router.route("/follow/:id").post(async (req, res) => {
       return res.render("error", {
         errorMsg: e,
         login: true,
+        title: "Error"
       });
     }
     try {
@@ -417,12 +443,14 @@ router.route("/follow/:id").post(async (req, res) => {
         comments: comments,
         follow: true,
         login: true,
+        title: "Animal Post Detail"
       });
     } catch (e) {
       res.status(400);
       return res.render("error", {
         errorMsg: e,
         login: true,
+        title: "Error"
       });
     }
   } else {
@@ -430,6 +458,7 @@ router.route("/follow/:id").post(async (req, res) => {
     return res.render("error", {
       errorMsg: "Please login to follow.",
       login: false,
+      title: "Error"
     });
   }
 });
@@ -450,6 +479,7 @@ router.route("/unfollow/:id").post(async (req, res) => {
       return res.render("error", {
         errorMsg: e,
         login: true,
+        title: "Error"
       });
     }
     try {
@@ -461,12 +491,14 @@ router.route("/unfollow/:id").post(async (req, res) => {
         comments: comments,
         follow: false,
         login: true,
+        title: "Post Detail"
       });
     } catch (e) {
       res.status(400);
       return res.render("error", {
         errorMsg: e,
         login: true,
+        title: "Error"
       });
     }
   } else {
@@ -474,6 +506,7 @@ router.route("/unfollow/:id").post(async (req, res) => {
     return res.render("error", {
       errorMsg: "Please login to unfollow.",
       login: false,
+      title: "Error"
     });
   }
 });
@@ -484,26 +517,31 @@ router.route("/map")
     let login = false;
     if (req.session.user)
       login = true;
+
     try {
       const postData = await animalData.getAllAnimalPosts();
       if (postData === null) throw "No animal post found.";
       res.render('test', {
         postData: postData,
-        login: login
+        login: login,
+        title: "Map View"
       })
-    } catch (e) {
+    }
+
+    catch (e) {
       res.status(400);
       return res.render('error', {
         errorMsg: e,
-        login: true
+        login: true,
+        title: "Error"
       });
     }
 
-    const postData = await animalData.getAllAnimalPosts();
-    console.log(postData);
-    res.render('test', {
-      postData: postData,
-    })
+    // const postData = await animalData.getAllAnimalPosts();
+    // // console.log(postData);
+    // res.render('test', {
+    //   postData: postData,
+    // })
     // try {
     //     let postData = await animalData.getAllAnimalPosts();
     //     console.log(postData);
