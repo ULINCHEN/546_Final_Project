@@ -1,3 +1,5 @@
+// Geosearch from https://smeijer.github.io/leaflet-geosearch/
+// open street map from https://www.openstreetmap.org/copyright and leaftet function fron https://leafletjs.com/examples.html
 const providerOSM = new GeoSearch.OpenStreetMapProvider();
 $(function () {
     var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -98,15 +100,15 @@ $(function () {
     $("#mapSearch").on("submit", (event) => {
 
         event.preventDefault();
-        console.log("Searched!");
+        // console.log("Searched!");
         const addressString = address.val();
         let location = new Array();
         const syncResults = async (address) => {
             const results = await providerOSM.search({ query: address });
-            console.log(results[0])
-            console.log(results[0].y, results[0].x);
+            // console.log(results[0])
+            // console.log(results[0].y, results[0].x);
             location.push(Number(results[0].y), Number(results[0].x));
-            console.log(location);
+            // console.log(location);
             const requestConfig = {
             // Set Ajax RequestConfig here
                 method: "GET",
