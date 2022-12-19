@@ -1,4 +1,4 @@
-// // fake data, run this before test
+// fake data, run this before test, need wait a little bit
 
 const dbcon = require("./config/mongoConnection");
 const { volunteerData } = require("./data");
@@ -46,7 +46,7 @@ const main = async () => {
     var animal1 = await Data.animalData.createAnimalPostForSeed(
       "miaomiao",
       "Cat",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "hoboken nj",
       "12/2/2022 12:22",
@@ -61,7 +61,7 @@ const main = async () => {
     var animal2 = await Data.animalData.createAnimalPostForSeed(
       "wangwang",
       "Dog",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "hoboken nj",
       "12/2/2022 12:02",
@@ -76,7 +76,7 @@ const main = async () => {
     var animal3 = await Data.animalData.createAnimalPostForSeed(
       "mimi",
       "Cat",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Good",
       "Stevens institute of technology",
       "12/12/2022 12:22",
@@ -91,7 +91,7 @@ const main = async () => {
     var animal4 = await Data.animalData.createAnimalPostForSeed(
       "doggggggggg",
       "Dog",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Bad",
       "hoboken nj",
       "12/22/2022 12:02",
@@ -106,7 +106,7 @@ const main = async () => {
     var animal5 = await Data.animalData.createAnimalPostForSeed(
       "afaufiafaof",
       "Dog",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Good",
       "706 Eastern Pkwy, Brooklyn, NY 11213",
       "12/12/2022 12:2",
@@ -121,7 +121,7 @@ const main = async () => {
     var animal6 = await Data.animalData.createAnimalPostForSeed(
       "haha",
       "Others",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "Stamford Town Center",
       "11/2/2022 12:22",
@@ -137,7 +137,7 @@ const main = async () => {
     var animal7 = await Data.animalData.createAnimalPostForSeed(
       "hahahaha",
       "Others",
-      "cute!!!!!",
+      "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "Flatbush Ave",
       "11/2/2022 10:22",
