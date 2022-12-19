@@ -1,4 +1,5 @@
-// 这里写公用方法 数据校验等
+// helper functions
+// Geosearch from https://smeijer.github.io/leaflet-geosearch/
 let nodeGeocoder = require("node-geocoder");
 const { ObjectId } = require("mongodb");
 /*

@@ -16,13 +16,15 @@ router.route("/")
             //console.log(postData);
             res.render('volunteerPosts', {
                 postData: postData,
-                login: login
+                login: login,
+                title: "Volunteer"
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
                 errorMsg: e,
-                login: login
+                login: login,
+                title: "Error"
             });
         }
     });
@@ -31,7 +33,7 @@ router.route("/")
 router.route("/detail/:id")
     .get(async (req, res) => {
         //code here for GET
-        let id = req.params.id;
+        let id = publicMethods.checkDatabaseId(req.params.id);
         let login = false;
         if (req.session.user)
             login = true;
@@ -42,25 +44,28 @@ router.route("/detail/:id")
                 id: id,
                 post: post,
                 login: login
+                
             });
         } catch (e) {
             res.status(400);
             return res.render('error', {
                 errorMsg: e,
-                login
+                login,
+                title: "Error"
             });
         }
     })
     .delete(async (req, res) => {
         if (req.session.user){
             //code here for DELETE
-            let post_id = req.params.id;
+            let post_id = publicMethods.checkDatabaseId(req.params.id);
             try {
                 const postData = await volunteerData.getVolunteerById(post_id);
             } catch (e) {
                 return res.render('error', { 
                     errorMsg: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 }); 
             }
 
@@ -71,14 +76,16 @@ router.route("/detail/:id")
             } catch (e) {
                 return res.render('error', { 
                     errorMsg: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 }); 
             }
         } else {
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to delete your volunteer post.',
-                login: true
+                login: true,
+                title: "Error"
             }); 
         }
     });
@@ -95,14 +102,15 @@ router.route("/new")
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to add a new volunteer post.',
-                login: false
+                login: false,
+                title: "Error"
             }); 
         }
     })
     .post(async (req, res) => {
         //code here for GET
         if (req.session.user) {
-            console.log(req.body);
+            //console.log(req.body);
             //add volunteer post paras
             let volunteer_name = null;
             let contact = null;
@@ -111,21 +119,17 @@ router.route("/new")
             let description = null;
             let username = req.session.user.username;
             try {
-                volunteer_name = xss(req.body.volunteer_name);
-                contact = xss(req.body.contact);
+                volunteer_name = publicMethods.checkName(xss(req.body.volunteer_name), "volunteer name");
+                contact = publicMethods.checkVolunteerInfo(xss(req.body.contact));
                 location = xss(req.body.location);
-                type = xss(req.body.type);
-                description = xss(req.body.description);
-                volunteer_name = publicMethods.checkName(volunteer_name, "volunteer name");
-                //contact = publicMethods.checkVolunteerInfo(contact);
-                //location = 
-                type = publicMethods.checkVolunteerPost(type);
-                description = publicMethods.checkArticle(description);
+                type = publicMethods.checkVolunteerPost(xss(req.body.type));
+                description = publicMethods.checkArticle(xss(req.body.description), "description");
             } catch(e) {
                 res.status(400);
                 return res.render('addVolunteerPost',  {
                     error: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 });
             }
             try {
@@ -143,14 +147,16 @@ router.route("/new")
                 res.status(500);
                 return res.render('addVolunteerPost',  {
                     error: e,
-                    login: true
+                    login: true,
+                    title: "Error"
                 });
             }            
         } else {
             res.status(400);
             return res.render('error', { 
                 errorMsg: 'Please login to add new post.',
-                login: false
+                login: false,
+                title: "Error"
             }); 
         }
     });

@@ -168,6 +168,7 @@ const removeLocationByAId = async (animalid, locationid) => {
 // LocationD("hoboken nj");
 
 module.exports = {
+  getLocation,
   LocationD,
   createLocation,
   removeLocationByAId,
