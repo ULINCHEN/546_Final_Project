@@ -539,6 +539,11 @@ router.route("/map").get(async (req, res) => {
       title: "Error",
     });
   }
+  const postData = await animalData.getAllAnimalPosts();
+
+  res.render("test", {
+    postData: postData,
+  });
 
   // const postData = await animalData.getAllAnimalPosts();
   // // console.log(postData);
