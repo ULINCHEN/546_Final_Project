@@ -28,22 +28,7 @@ $(function () {
         var species = info.species.toLowerCase();
         if (healfh == "bad") {
             var redIcon = new L.Icon({
-            iconUrl: '../../public/images/marker-icon-2x-red.png',
-            shadowUrl: '/public/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41],
-            className: id
-            });
-
-            var marker = L.marker([lat, lng], {
-                icon: redIcon
-            });
-        }
-        else if (healfh == "good") {
-            var greenIcon = new L.Icon({
-                iconUrl: '/public/images/marker-icon-2x-green.png',
+                iconUrl: '../../public/images/marker-icon-2x-red.png',
                 shadowUrl: '/public/images/marker-shadow.png',
                 iconSize: [25, 41],
                 iconAnchor: [12, 41],
@@ -51,9 +36,20 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            var marker = L.marker([lat, lng], {
-                icon: greenIcon
+
+            marker = L.marker([lat, lng], { icon: redIcon, alt: "strayed " + species + " " + name });
+        }
+        else if (healfh == "good") {
+            var greenIcon = new L.Icon({
+                iconUrl: '../../public/images/marker-icon-2x-green.png',
+                shadowUrl: '/public/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+                className: id
             });
+            marker = L.marker([lat, lng], {icon: greenIcon, alt: "strayed " + species + " " + name});
         }
         else {
             var normalIcon = new L.Icon({
@@ -65,9 +61,7 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            var marker = L.marker([lat, lng], {
-                icon: normalIcon
-            });
+            marker = L.marker([lat, lng], {icon: normalIcon, alt: "strayed animal " + name});
         }
 
         if (species == "cat") {
