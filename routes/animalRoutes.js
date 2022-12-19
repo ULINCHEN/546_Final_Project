@@ -439,6 +439,8 @@ router.route("/follow/:id").post(async (req, res) => {
     try {
       let post = await animalData.getAnimalPostById(post_id);
       let comments = await commentData.getCommentByPostId(post_id);
+      let locationData = await animalData.getLocationByA(post._id.toString());
+      post.location = locationData.location;
       res.render("postDetail", {
         animal_id: "animal/detail/" + post_id,
         post: post,
@@ -487,6 +489,8 @@ router.route("/unfollow/:id").post(async (req, res) => {
     try {
       let post = await animalData.getAnimalPostById(post_id);
       let comments = await commentData.getCommentByPostId(post_id);
+      let locationData = await animalData.getLocationByA(post._id.toString());
+      post.location = locationData.location;
       res.render("postDetail", {
         animal_id: "animal/detail/" + post_id,
         post: post,
