@@ -17,7 +17,7 @@ Wei Guo
 
 
 Tech Stack：
-handlebar, Express, mongoDB, axios, expresshandlebar，
+handlebar, Express, mongoDB, axios, expresshandlebar, openstreetmap, leaflet, leaflet geosearch, Leaflet.markercluster, Multer, 
 
 File Structure：
 
@@ -47,10 +47,6 @@ userCenter …
 userLogin …
 volunteer …get, post, delete, patch
 
-
-
-
-
 Public - 
 Main-style.css
 
@@ -66,39 +62,9 @@ Sign in (No auth req)
 userCenter （need auth）
 allVolunteer （No auth req）
 volunteerDetail （need auth）
-发布页面（待定）
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Map - @Wei Guo
+display.js
+mapSearch.js
+singlelocation.js
+locationData.js
