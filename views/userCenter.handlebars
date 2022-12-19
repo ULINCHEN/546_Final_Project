@@ -10,7 +10,7 @@
     </div>
     <hr>
 
-    <h5>My Animal Posts</h5>
+    <h1>My Animal Posts</h1>
     <div class="userCenterInfo container-fluid" style="overflow-y: scroll;">
         <div class="row flex-row flex-nowrap mt-3">
             {{#if animal_posts}}
@@ -18,9 +18,9 @@
             <div class="card col-3" style="width: 280px; margin-left: 20px" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top cardImage" alt="Picture">
                 <div class="card-body row text-center">
-                    <h4 class="card-title row"> <span class="col">
+                    <h2 class="card-title row"> <span class="col">
                             {{animal_name}} </span>
-                    </h4>
+                    </h2>
                     <hr>
                     <a class="col" href="/animal/detail/{{_id}}">Detail</a>
                     <a class="col" href="/animal/edit/{{_id}}">Edit</a>
@@ -61,7 +61,7 @@
             {{/if}}
         </div>
     </div>
-    <h5>My followed animal posts</h5>
+    <h2>My followed animal posts</h2>
     <div class="userCenterInfo container-fluid" style="overflow-y: scroll;">
 
         <div class="row flex-row flex-nowrap mt-3">
@@ -70,8 +70,8 @@
             <div class="card col-3" style="width: 280px; margin-left: 20px" id={{_id}}>
                 <img src={{animal_photo}} class="card-img-top cardImage" alt="Picture">
                 <div class="card-body row text-center">
-                    <h4 class="card-title row"> <span class="col" style="overflow: hidden;"> {{animal_name}} </span>
-                    </h4>
+                    <h2 class="card-title row"> <span class="col" style="overflow: hidden;"> {{animal_name}} </span>
+                    </h2>
                     <hr>
                     <a class="col" href="/animal/detail/{{_id}}">Detail</a>
                 </div>
