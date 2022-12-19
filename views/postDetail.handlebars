@@ -123,9 +123,11 @@
     {{!-- map single location --}}
     <script>
         let singleLo = "{{post.Location}}";
+        let name = "{{post.animal_name}}";
+        let species = "{{post.species}}";
     </script>
     <script src="../public/js/map/singlelocation.js"></script>
     <script>
-        singleLocation(singleLo);
+        singleLocation(singleLo, name, species);
     </script>
 </main>

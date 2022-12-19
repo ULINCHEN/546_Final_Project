@@ -1,4 +1,4 @@
-const singleLocation = location => {
+const singleLocation = (location, name, species) => {
     if (location) {
         console.log(location)
         const map = L.map('map').setView([location[0], location[1]], 15);
@@ -6,7 +6,7 @@ const singleLocation = location => {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        const marker = L.marker([location[0], location[1]]).addTo(map);
+        const marker = L.marker([location[0], location[1]], {alt: "strayed " + species + " " + name}).addTo(map);
     }
     else {
         const map = L.map('map').setView([40.7447099, -74.0289506], 15);
@@ -14,6 +14,6 @@ const singleLocation = location => {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        // const marker = L.marker([40.7447099, -74.0289506]).addTo(map);
+        // const marker = L.marker([40.7447099, -74.0289506], {alt: "strayed " + species + " " + name }).addTo(map);
     }
 }
