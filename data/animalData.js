@@ -16,7 +16,7 @@ const createAnimalPost = async (
   userid,
   file
 ) => {
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);
@@ -158,7 +158,7 @@ const updateAnimalPost = async (
   userid
 ) => {
   animalid = validation.checkDatabaseId(animalid);
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);
@@ -440,7 +440,7 @@ const createAnimalPostForSeed = async (
   userid,
   filepath
 ) => {
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);

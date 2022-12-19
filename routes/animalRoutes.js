@@ -280,7 +280,7 @@ router
         user_id = publicMethods.checkDatabaseId(animalPost.user_id);
         if (req.session.user.userid !== user_id)
           throw "Please login to edit your animal post.";
-        animalName = publicMethods.checkName(
+        animalName = publicMethods.checkNameWithSpace(
           xss(req.body.animal_name),
           "Animal Name"
         );
@@ -367,7 +367,9 @@ router
       //console.log(location);
 
       try {
-        animalName = publicMethods.checkName(xss(req.body.animal_name));
+        animalName = publicMethods.checkNameWithSpace(
+          xss(req.body.animal_name)
+        );
         species = publicMethods.checkAnimalSpecies(xss(req.body.species));
         description = publicMethods.checkArticle(
           xss(req.body.description),
