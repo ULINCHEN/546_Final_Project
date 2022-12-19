@@ -11,7 +11,7 @@ const createVolunteerPost = async (
   description,
   username
 ) => {
-  volunteername = validation.checkName(volunteername);
+  volunteername = validation.checkNameWithSpace(volunteername);
   contact = validation.checkVolunteerInfo(contact);
   type = validation.checkVolunteerPost(type);
   description = validation.checkArticle(description);

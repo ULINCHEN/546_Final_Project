@@ -155,13 +155,14 @@ router
         let comments = await commentData.getCommentByPostId(animal_id);
         let locationData = await animalData.getLocationByA(post._id.toString());
         post.location = locationData.location;
-        res.render("postDetail", {
-          animal_id: "animal/detail/" + animal_id,
-          post: post,
-          comments: comments,
-          login: true,
-          title: "Animal Detail",
-        });
+        res.redirect("/animal/detail/" + animal_id);
+        // res.render("postDetail", {
+        //   animal_id: "animal/detail/" + animal_id,
+        //   post: post,
+        //   comments: comments,
+        //   login: true,
+        //   title: "Animal Detail",
+        // });
       } catch (e) {
         res.status(400);
         return res.render("error", {
@@ -279,7 +280,7 @@ router
         user_id = publicMethods.checkDatabaseId(animalPost.user_id);
         if (req.session.user.userid !== user_id)
           throw "Please login to edit your animal post.";
-        animalName = publicMethods.checkName(
+        animalName = publicMethods.checkNameWithSpace(
           xss(req.body.animal_name),
           "Animal Name"
         );
@@ -366,7 +367,9 @@ router
       //console.log(location);
 
       try {
-        animalName = publicMethods.checkName(xss(req.body.animal_name));
+        animalName = publicMethods.checkNameWithSpace(
+          xss(req.body.animal_name)
+        );
         species = publicMethods.checkAnimalSpecies(xss(req.body.species));
         description = publicMethods.checkArticle(
           xss(req.body.description),
@@ -542,11 +545,11 @@ router.route("/map").get(async (req, res) => {
       title: "Error",
     });
   }
-  // const postData = await animalData.getAllAnimalPosts();
+  const postData = await animalData.getAllAnimalPosts();
 
-  // res.render("test", {
-  //   postData: postData,
-  // });
+  res.render("test", {
+    postData: postData,
+  });
 
   // const postData = await animalData.getAllAnimalPosts();
   // // console.log(postData);

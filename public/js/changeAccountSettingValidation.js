@@ -88,14 +88,13 @@ $(function () {
 
         const firstname = $("#firstname").val();
         const lastname = $("#lastname").val();
-        // const account = $("#account").val();
         const old_password = $("#old_password").val();
         const password = $("#password").val();
         const password_again = $("#password_again").val();
 
         checkInputLenth(firstname, "firstname", 1, 25, errorMsg);
         checkInputLenth(lastname, "lastname", 1, 25, errorMsg);
-        accountValidation(account, errorMsg);
+        // accountValidation(account, errorMsg);
         passwordValidation(password, errorMsg);
         if (password == old_password) errorMsg.push("New password can not be same as old one");
         if (password_again != password) errorMsg.push("The password entered the first and second time does not match");

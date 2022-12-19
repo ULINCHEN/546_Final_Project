@@ -16,7 +16,7 @@ const createAnimalPost = async (
   userid,
   file
 ) => {
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);
@@ -35,7 +35,7 @@ const createAnimalPost = async (
       file.destination + file.filename + "." + file.mimetype.split("/")[1];
     // console.log(filepath);
   }
-
+  let addressInfo = await locationdb.LocationD(location);
   // console.log(filepath);
   const postData = {
     animal_name: animalName,
@@ -51,7 +51,6 @@ const createAnimalPost = async (
   };
   const info = await animaldb.insertOne(postData);
   if (!info.acknowledged || !info.insertedId) throw "Could not add this user";
-  let addressInfo = await locationdb.LocationD(location);
   // let animalid = info.insertedId.toString();
   let createInfo = await locationdb.createLocation(
     location,
@@ -159,7 +158,7 @@ const updateAnimalPost = async (
   userid
 ) => {
   animalid = validation.checkDatabaseId(animalid);
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);
@@ -441,7 +440,7 @@ const createAnimalPostForSeed = async (
   userid,
   filepath
 ) => {
-  animalName = validation.checkName(animalName);
+  animalName = validation.checkNameWithSpace(animalName);
   species = validation.checkAnimalSpecies(species);
   description = validation.checkArticle(description);
   healthCondition = validation.checkAnimalHealth(healthCondition);
