@@ -52,9 +52,9 @@
                     health: "{{health_condition}}",
                     species: species,
                     description: "{{description}}",
-                    address: address,
-                    lat: "{{lat}}",
-                    lng: "{{lng}}"
+                    address: "{{this.locationinfo.city}}" + ", " + "{{this.locationinfo.state}}",
+                    lat: Number("{{this.locationinfo.addressInfo.latitude}}"),
+                    lng: Number("{{this.locationinfo.addressInfo.longitude}}"),
                 });
             </script>
             {{/each}}
@@ -69,15 +69,7 @@
     </div>
     <script src="../public/js/getRandomFact.js"></script>
     <script>
-        let lat = 40.7447099
-        let lng = -74.0289506
-        for (let i = 0; i < infoArray.length; i++) {
-            lat = lat;
-            lng = lng;
-            infoArray[i].lat = (lat).toString();
-            infoArray[i].lng = (lng).toString();
-        }
-
+        
     </script>
     <script src="../public/js/map/mapSearch.js"></script>
     <script src="../public/js/map/display.js"></script>

@@ -26,6 +26,7 @@ $(function () {
         var description = info.description;
         var url = info.url;
         var species = info.species.toLowerCase();
+        var address = info.address;
         if (healfh == "bad") {
             var redIcon = new L.Icon({
                 iconUrl: '../../public/images/marker-icon-2x-red.png',
@@ -37,7 +38,7 @@ $(function () {
                 className: id
             });
 
-            marker = L.marker([lat, lng], { icon: redIcon, alt: "strayed " + species + " " + name });
+            marker = L.marker([lat, lng], { icon: redIcon, alt: "strayed " + species + " " + name + " at the " + address});
         }
         else if (healfh == "good") {
             var greenIcon = new L.Icon({
@@ -49,7 +50,7 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            marker = L.marker([lat, lng], {icon: greenIcon, alt: "strayed " + species + " " + name});
+            marker = L.marker([lat, lng], {icon: greenIcon, alt: "strayed " + species + " " + name + " at the " + address});
         }
         else {
             var normalIcon = new L.Icon({
@@ -61,7 +62,7 @@ $(function () {
                 shadowSize: [41, 41],
                 className: id
             });
-            marker = L.marker([lat, lng], {icon: normalIcon, alt: "strayed animal " + name});
+            marker = L.marker([lat, lng], {icon: normalIcon, alt: "strayed animal " + name + " at the " + address});
         }
 
         if (species == "cat") {

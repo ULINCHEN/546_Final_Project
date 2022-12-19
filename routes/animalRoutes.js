@@ -100,6 +100,7 @@ router
         }
       }
       post.location = locationData.location;
+      console.log(post);
       res.render("postDetail", {
         animal_id: "animal/detail/" + id,
         follow_url: "animal/follow/" + id,
@@ -500,7 +501,6 @@ router.route("/map")
     }
 
     const postData = await animalData.getAllAnimalPosts();
-    console.log(postData);
     res.render('test', {
       postData: postData,
     })
