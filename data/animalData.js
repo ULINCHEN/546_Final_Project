@@ -75,6 +75,8 @@ const createAnimalPost = async (
   return { insertedAnimalPost: true, animalid: info.insertedId.toString() };
 };
 
+//refer from
+//https://blog.csdn.net/FuyuumiAI/article/details/109498598
 const createImg = async (file) => {
   // console.log(file, body);
   // if (file.size > maxsize) {
