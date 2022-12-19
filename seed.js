@@ -51,7 +51,7 @@ const main = async () => {
       "hoboken nj",
       "12/2/2022 12:22",
       user2.userid,
-      "public/uploads/1.avif",
+      "public/uploads/1.avif"
     );
     // console.log(animal1);
   } catch (error) {
@@ -66,7 +66,7 @@ const main = async () => {
       "hoboken nj",
       "12/2/2022 12:02",
       user2.userid,
-      "public/uploads/2.avif",
+      "public/uploads/2.avif"
     );
     // console.log(animal1);
   } catch (error) {
@@ -81,7 +81,7 @@ const main = async () => {
       "Stevens institute of technology",
       "12/12/2022 12:22",
       user2.userid,
-      "public/uploads/3.avif",
+      "public/uploads/3.avif"
     );
     // console.log(animal3);
   } catch (error) {
@@ -96,7 +96,7 @@ const main = async () => {
       "hoboken nj",
       "12/22/2022 12:02",
       user1.userid,
-      "public/uploads/4.avif",
+      "public/uploads/4.avif"
     );
     // console.log(animal4);
   } catch (error) {
@@ -104,14 +104,14 @@ const main = async () => {
   }
   try {
     var animal5 = await Data.animalData.createAnimalPostForSeed(
-      "afaufiafaof",
+      "Ant",
       "Dog",
       "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Good",
       "706 Eastern Pkwy, Brooklyn, NY 11213",
       "12/12/2022 12:2",
       user1.userid,
-      "public/uploads/5.avif",
+      "public/uploads/5.avif"
     );
     // console.log(animal4);
   } catch (error) {
@@ -119,15 +119,14 @@ const main = async () => {
   }
   try {
     var animal6 = await Data.animalData.createAnimalPostForSeed(
-      "haha",
+      "Dante",
       "Others",
       "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "Stamford Town Center",
       "11/2/2022 12:22",
       user3.userid,
-      "public/uploads/6.avif",
-
+      "public/uploads/6.avif"
     );
     // console.log(animal1);
   } catch (error) {
@@ -135,14 +134,14 @@ const main = async () => {
   }
   try {
     var animal7 = await Data.animalData.createAnimalPostForSeed(
-      "hahahaha",
+      "Ben",
       "Others",
       "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern.",
       "Normal",
       "Flatbush Ave",
       "11/2/2022 10:22",
       user3.userid,
-      "public/uploads/7.avif",
+      "public/uploads/7.avif"
     );
     // console.log(animal1);
   } catch (error) {
@@ -150,12 +149,12 @@ const main = async () => {
   }
   try {
     var animal8 = await Data.animalData.createAnimalPost(
-      "abab",
+      "Max",
       "Others",
       "cute!!!!!",
       "Normal",
       "Stamford Town Center",
-      user3.userid,
+      user3.userid
     );
     // console.log(animal1);
   } catch (error) {
@@ -163,7 +162,7 @@ const main = async () => {
   }
   try {
     var animal9 = await Data.animalData.createAnimalPost(
-      "lhfahafioahfia",
+      "Molly",
       "Cat",
       "cute!!!!!",
       "Normal",
@@ -244,7 +243,7 @@ const main = async () => {
   }
   try {
     var addcomment1 = await Data.commentData.createComment(
-      "ababababaaaaa",
+      "so cute",
       "test@123.com",
       animal3.animalid
     );
@@ -325,7 +324,7 @@ const main = async () => {
   }
   try {
     let addcomment9 = await Data.commentData.createComment(
-      "good boy",
+      "Save him",
       "abcd@123.com",
       animal1.animalid
     );
@@ -335,7 +334,7 @@ const main = async () => {
   }
   try {
     let addcomment10 = await Data.commentData.createComment(
-      "good boy",
+      "Help him",
       "abcdef@123.com",
       animal9.animalid
     );
@@ -345,7 +344,7 @@ const main = async () => {
   }
   try {
     let addcomment11 = await Data.commentData.createComment(
-      "good boy",
+      "I want to take away this boy",
       "abcdef@123.com",
       animal2.animalid
     );
@@ -355,7 +354,7 @@ const main = async () => {
   }
   try {
     let addcomment12 = await Data.commentData.createComment(
-      "good boy",
+      "I like him",
       "test@123.com",
       animal8.animalid
     );
@@ -438,7 +437,7 @@ const main = async () => {
   }
   try {
     let addvolunteer5 = await volunteerData.createVolunteerPost(
-      "Lee",
+      "Sam",
       "1234567890",
       "300 Garden Laundry",
       "Individual",
