@@ -70,38 +70,5 @@ singlelocation.js
 locationData.js
 test.handlebars(map)
 postDetails.handlebarS(map)
-function convertLocation
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+publicMethods(function convertLocation())
